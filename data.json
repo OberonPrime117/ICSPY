@@ -1,0 +1,76 @@
+{
+    "1": {
+        "Frame Number": "1",
+        "Protocol": "BACnet/IP",
+        "Source IP": "192.168.42.29:47808",
+        "Destination IP": "192.168.42.207:47808",
+        "Frame Length": "68",
+        "Additional Information": {
+            "Ethernet": {
+                "dst": "00:a0:03:ff:84:cd",
+                "src": "2c:d4:44:b5:02:1f",
+                "type": "IPv4"
+            },
+            "IP": {
+                "version": "4",
+                "ihl": "5",
+                "tos": "0x0",
+                "len": "75",
+                "id": "1528",
+                "flags": "",
+                "frag": "0",
+                "ttl": "128",
+                "proto": "udp",
+                "chksum": "0x0",
+                "src": "192.168.42.29",
+                "dst": "192.168.42.207"
+            },
+            "UDP": {
+                "sport": "47808",
+                "dport": "47808",
+                "len": "55",
+                "chksum": "0xd685"
+            },
+            "Raw": {
+                "load": "'\\\\x81\\n\\x00/\\x01\\x000\\x00\\x0e\\x0c\\x04@\\x00X\\x1e)&N\\x0e\\x0c\\x00\\x01\\x01\\\\xff\\x0f.\\\\xb4\\x00\\x00\\x00\\\\xffDA@\\x00\\x00/9\\x00O)UN!\\x0cO\\x1f'"
+            }
+        }
+    },
+    "2": {
+        "Frame Number": "2",
+        "Protocol": "BACnet/IP",
+        "Source IP": "192.168.42.29:47808",
+        "Destination IP": "192.168.42.207:47808",
+        "Frame Length": "89",
+        "Additional Information": {
+            "Ethernet": {
+                "dst": "00:a0:03:ff:84:cd",
+                "src": "2c:d4:44:b5:02:1f",
+                "type": "IPv4"
+            },
+            "IP": {
+                "version": "4",
+                "ihl": "5",
+                "tos": "0x0",
+                "len": "75",
+                "id": "1528",
+                "flags": "",
+                "frag": "0",
+                "ttl": "128",
+                "proto": "udp",
+                "chksum": "0x0",
+                "src": "192.168.42.29",
+                "dst": "192.168.42.207"
+            },
+            "UDP": {
+                "sport": "47808",
+                "dport": "47808",
+                "len": "55",
+                "chksum": "0xd685"
+            },
+            "Raw": {
+                "load": "'\\\\x81\\n\\x00/\\x01\\x000\\x00\\x0e\\x0c\\x04@\\x00X\\x1e)&N\\x0e\\x0c\\x00\\x01\\x01\\\\xff\\x0f.\\\\xb4\\x00\\x00\\x00\\\\xffDA@\\x00\\x00/9\\x00O)UN!\\x0cO\\x1f'"
+            }
+        }
+    }
+}
