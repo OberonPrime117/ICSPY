@@ -1,10 +1,12 @@
 import json
+from tabulate import tabulate
 from scapy.all import *
 import pandas as pd
 import binascii
 import matplotlib.pyplot as plt
 from tkinter import filedialog as fd
 from scapy.layers.inet import IP
+from mac_vendor_lookup import MacLookup
 from scapy.layers.inet import TCP, UDP
 def select_file():
     filetypes = (
@@ -26,6 +28,8 @@ packets = rdpcap(filep)
 i=0
 data = {}
 final = {}
+mac_src = []
+mac_dst = []
 tcpportlist = {}
 udpportlist = {}
 packet_dict = {}
@@ -33,7 +37,7 @@ protocol = {"BACnet":[47808], "DNP3": [20000,20000], "EtherCAT": [34980], "Ether
             "FL-net" : [55000 , 55001 ,55002 ,55003 ] , "Foundation Fieldbus HSE": [1089 ,1090 ,1091, 1089  ], "ICCP":[102], "Modbus TCP":[502],
             "OPC UA Discovery Server" : [4840], "OPC UA XML": [80,443], "PROFINET": [34962 ,34963 ,34964],"ROC Plus" : [4000]}
 
-keys_to_remove = {"802.3"}
+#keys_to_remove = {"802.3"}
 
 
 
@@ -49,9 +53,15 @@ for packet in packets:
         elif '=' in line:
             key, val = line.split('=', 1)
             packet_dict[layer][key.strip()] = val.strip()
-
+    #print(conf.ifaces)
     #e = frame[Ether]
     #print(e.src,e.dst)
+    try:
+        #print("YO")
+        mac_src.append(MacLookup().lookup(packet_dict['Ethernet']['src']))
+        mac_dst.append(MacLookup().lookup(packet_dict['Ethernet']['dst']))
+    except:
+        print(str(i))
 
     if x[5] == '115':
         data[str(i)] = {'Frame Number': str(i),
@@ -197,13 +207,6 @@ for packet in packets:
         'Protocol': x[4], 'Source IP': x[5], 'Destination IP': x[7],
         'Frame Length': str(length), 'Additional Information': packet_dict }
 
-
-    for key in keys_to_remove:
-        try:
-            del data[str(i)]["Additional Information"]["802.3"]
-        except KeyError:
-            pass
-
     if 'TCP' in packet_dict.keys():
         try:
             if int(data[str(i)]["Additional Information"]["TCP"]["sport"]) not in list(tcpportlist.keys()):
@@ -254,7 +257,7 @@ pcap = pcap + rdpcap(filep)
 ethernet_frame = pcap[101]
 ip_packet = ethernet_frame.payload
 segment = ip_packet.payload
-data = segment.payload
+
 
 ethernet_type = type(ethernet_frame)
 ip_type = type(ip_packet)
@@ -467,3 +470,21 @@ for port, val in list(udpportlist.items()):
 
 with open('device.json', 'w') as f:
     json.dump(final, f,indent=4)
+
+transfer = []
+j = i
+i = 0
+for packet in packets:
+    temp = []
+    print(i)
+    try:
+        temp.append(data[str(i)]['Source IP'])
+    except:
+        print(i)
+    temp.append(data[str(i)]['Destination IP'])
+    temp.append(mac_src[i])
+    temp.append(mac_dst[i])
+    i = i + 1
+    transfer.append(temp)
+
+print(tabulate(transfer, headers=["Src IP Address", "Dst IP Address", "Vendor Device Src", "Vendor Device Dst"]))
