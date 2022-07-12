@@ -1,10 +1,17 @@
 import json
+import pprint
+import requests
+from OuiLookup import OuiLookup
 from tabulate import tabulate
 from scapy.all import *
+from scapy.layers.l2 import getmacbyip, Ether
 import pandas as pd
 import binascii
 import matplotlib.pyplot as plt
 from tkinter import filedialog as fd
+import urllib.request as urllib2
+import json
+import codecs
 from scapy.layers.inet import IP
 from mac_vendor_lookup import MacLookup
 from scapy.layers.inet import TCP, UDP
@@ -28,6 +35,8 @@ packets = rdpcap(filep)
 i=0
 data = {}
 final = {}
+ip_new = {}
+newance = []
 mac_src = []
 mac_dst = []
 tcpportlist = {}
@@ -54,14 +63,9 @@ for packet in packets:
             key, val = line.split('=', 1)
             packet_dict[layer][key.strip()] = val.strip()
     #print(conf.ifaces)
-    #e = frame[Ether]
-    #print(e.src,e.dst)
-    try:
+    
         #print("YO")
-        mac_src.append(MacLookup().lookup(packet_dict['Ethernet']['src']))
-        mac_dst.append(MacLookup().lookup(packet_dict['Ethernet']['dst']))
-    except:
-        print(str(i))
+
 
     if x[5] == '115':
         data[str(i)] = {'Frame Number': str(i),
@@ -180,15 +184,11 @@ for packet in packets:
                         'Frame Length': str(length), 'Additional Information': packet_dict}
 
     elif x[2] == ">":
-        print(packet.summary())
-        print(str(i))
         data[str(i)] = {'Frame Number': str(i),
         'Protocol': x[7], 'Source IP': x[1], 'Destination IP': x[3],
         'Frame Length': str(length), 'Additional Information': packet_dict }
 
     elif x[4] == "/" or x[4]=="has":
-        print(packet.summary())
-        print(str(i))
         try:
             data[str(i)] = {'Frame Number': str(i),
             'Protocol': x[2], 'Source IP': x[5], 'Destination IP': x[7],
@@ -201,8 +201,6 @@ for packet in packets:
                 'Frame Length': str(length), 'Additional Information': packet_dict }
 
     elif x[4] != "/" or x[4]!="has":
-        print(packet.summary())
-        print(str(i))
         data[str(i)] = {'Frame Number': str(i),
         'Protocol': x[4], 'Source IP': x[5], 'Destination IP': x[7],
         'Frame Length': str(length), 'Additional Information': packet_dict }
@@ -239,6 +237,23 @@ for packet in packets:
                     data[str(i)]["Protocol"] = proto
         except :
             pass
+    #print(list(ip_new.keys()))
+    temp = packet.sprintf("%IP.src%,%IP.dst%")
+    if temp == "??,??":
+        try:
+            print(str(data[str(i)]["Additional Information"]["802.3"]["src"])+","+str(data[str(i)]["Additional Information"]["802.3"]["dst"]))
+        except:
+            print(str(i))
+    else:
+        #print(IP.src)
+        print(temp)
+    if (data[str(i)]["Source IP"], data[str(i)]["Destination IP"]) in list(ip_new.keys()):
+        ip_new[(data[str(i)]["Source IP"], data[str(i)]["Destination IP"])] = ip_new[(data[str(i)]["Source IP"], data[str(i)]["Destination IP"])] + 1
+    else:
+        ip_new[(data[str(i)]["Source IP"], data[str(i)]["Destination IP"])] = 1
+    
+    
+
 
 
 with open('data.json', 'w') as f:
@@ -365,21 +380,65 @@ for port, val in list(udpportlist.items()):
 
 with open('device.json', 'w') as f:
     json.dump(final, f,indent=4)
+print("/////////// IDENTIFYING DEVICES DONE ////////////")
+print("/////////// PAYLOAD CHECK ////////////")
+
+j = i
+i = 1
 
 transfer = []
-j = i
-i = 0
+transfer2 = []
 for packet in packets:
+
+    mac = getmacbyip()
+
+    
+    mac = OuiLookup().query(str(data[str(i)]["Additional Information"]["Ethernet"]["src"]))
+    #print(str(data[str(i)]["Additional Information"]["Ethernet"]["dst"]))
+    mac2 = OuiLookup().query(str(data[str(i)]["Additional Information"]["Ethernet"]["dst"]))
+    #print(list(mac2[0].items())[0][1])
+
+    
+    #print(list(mac[0].items())[0][1])
     temp = []
-    print(i)
-    try:
-        temp.append(data[str(i)]['Source IP'])
-    except:
-        print(i)
+    temp.append(data[str(i)]['Source IP'])
     temp.append(data[str(i)]['Destination IP'])
-    temp.append(mac_src[i])
-    temp.append(mac_dst[i])
+    temp.append(list(mac[0].items())[0][1])
+    temp.append(list(mac2[0].items())[0][1])
+    #print(temp)
     i = i + 1
     transfer.append(temp)
 
-print(tabulate(transfer, headers=["Src IP Address", "Dst IP Address", "Vendor Device Src", "Vendor Device Dst"]))
+ip_new = dict(sorted(ip_new.items(),key=lambda item: item[1], reverse=True))
+i=int(0)
+for key in ip_new.keys():
+    if i<10:
+        #print(key)
+        newance = []
+        newance.append(key[0])
+        newance.append(key[1])
+        newance.append(ip_new[key])
+        #print(newance)
+        transfer2.append(newance)
+    i = i+1
+#print(transfer2)
+    
+
+#print(transfer2)
+#print(transfer)
+tabling = tabulate(transfer, headers=["Src IP Address", "Dst IP Address", "Vendor Device Src", "Vendor Device Dst"])
+#print(transfer2)
+tabling2 = tabulate(transfer2, headers=["Src IP Address", "Dst IP Address", "Number of Packets Shared"])
+
+
+print("/////////// PAYLOAD CHECK DONE ////////////")
+print("/////////// COMPILING REPORT ////////////")
+#print(ip_new)
+#print(tabling2)
+#print(tabling)
+with open('report.txt', 'w') as f:
+    f.write("Top 10 IP Addresses which exchange packets : \n\n")
+    f.write(tabling2)
+with open('report.txt', 'a') as f:
+    f.write("\n\n\nVendor Name Derived from Payload : \n\n")
+    f.write(tabling)
