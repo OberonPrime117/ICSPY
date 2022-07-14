@@ -29,6 +29,13 @@ def select_file():
 
     return filename
 
+def get_mac_details(mac_address):
+    url = "https://api.macvendors.com/"
+    response = requests.get(url+mac_address)
+    if response.status_code != 200:
+        raise Exception("[!] Invalid MAC Address!")
+    return response.content.decode()
+
 def proto_name_by_num(proto_num):
     for name,num in vars(socket).items():
         if name.startswith("IPPROTO") and proto_num == num:
@@ -63,6 +70,7 @@ def main():
 
     print("/////////// LOADING ////////////")
     for packet in packets:
+        print(str(i))
 
         # /////////////////////////////////////////////////////////////////////////////////
         # ADDITIONAL INFORMATION INSIDE DATA.JSON 
@@ -131,6 +139,7 @@ def main():
 
         temp.append(data[str(i)]['Source IP'])
         temp.append(data[str(i)]['Destination IP'])
+        
 
         # /////////////////////////////////////////////////////////////////////////////////
         # IF IP ADDRESS HAS LESS THAN 5 NUMBER
@@ -157,25 +166,32 @@ def main():
             
         # /////////////////////////////////////////////////////////////////////////////////
         # MAC ADDRESS OF PACKET = mac_src  mac_dst
-        try:
-            mac_src = getmacbyip(str(data[str(i)]["Source IP"]))
-        except:
-            try:
-                #data[str(i)]["Source IP"] = packet[Ether].src
-                mac_src = packet[Ether].src
-            except:
-                mac_src = data[str(i)]["Additional Information"]["802.3"]["src"]
-
-        try:
-            mac_dst = getmacbyip(str(data[str(i)]["Destination IP"]))
-        except:
-            try:
-                #data[str(i)]["Destination IP"] = packet[Ether].dst
-                mac_dst = packet[Ether].dst
-            except:
-                mac_dst = data[str(i)]["Additional Information"]["802.3"]["dst"]
         
+        if str(data[str(i)]["Source IP"]) == "0.0.0.0":
+            mac_src = "00:21:6a:2d:3b:8e"
+        
+        if str(data[str(i)]["Destination IP"]) == "255.255.255.255":
+            mac_dst = "ff:ff:ff:ff:ff:ff"
+        
+        else:
+            try:
+                mac_src = getmacbyip(str(data[str(i)]["Source IP"]))
+            except:
+                try:
+                    #data[str(i)]["Source IP"] = packet[Ether].src
+                    mac_src = packet[Ether].src
+                except:
+                    mac_src = data[str(i)]["Additional Information"]["802.3"]["src"]
 
+            try:
+                mac_dst = getmacbyip(str(data[str(i)]["Destination IP"]))
+            except:
+                try:
+                    #data[str(i)]["Destination IP"] = packet[Ether].dst
+                    mac_dst = packet[Ether].dst
+                except:
+                    mac_dst = data[str(i)]["Additional Information"]["802.3"]["dst"]
+        
         # /////////////////////////////////////////////////////////////////////////////////
         # IP OCCURENCE IP_NEW
 
@@ -190,8 +206,8 @@ def main():
         # IP OCCURENCE
 
         if "::" in str(data[str(i)]["Source IP"]) and "::" in str(data[str(i)]["Destination IP"]):
-            mac1 = str(packet[Ether].src)
-            mac21 = str(packet[Ether].dst)
+            mac_src = str(packet[Ether].src)
+            mac_dst = str(packet[Ether].dst)
         else:
             try:
                 mac_src = getmacbyip(str(data[str(i)]["Source IP"]))
@@ -211,26 +227,27 @@ def main():
                 except:
                     mac_dst = data[str(i)]["Additional Information"]["802.3"]["dst"]
 
-        
+        temp.append(mac_src)
+        temp.append(mac_dst)
         # /////////////////////////////////////////////////////////////////////////////////
         # OUILOOKUP QUERY 
-
-        try:
-            if mac_dst == 'ff:ff:ff:ff:ff:ff':
-                mac_dst = "Broadcast"
-                temp.append(mac_dst)
-            else:
-                mac_vendor_src = OuiLookup().query(mac_dst)
-                temp.append(list(mac_vendor_src[0].items())[0][1])
-        except:
-            temp.append("None")
 
         try:
             if mac_src == 'ff:ff:ff:ff:ff:ff':
                 mac_src = "Broadcast"
                 temp.append(mac_src)
             else:
-                mac_vendor_dst = OuiLookup().query(mac21)
+                mac_vendor_src = get_mac_details(mac_src)
+                temp.append(list(mac_vendor_src[0].items())[0][1])
+        except:
+            temp.append("None")
+
+        try:
+            if mac_dst == 'ff:ff:ff:ff:ff:ff':
+                mac_dst = "Broadcast"
+                temp.append(mac_dst)
+            else:
+                mac_vendor_dst = get_mac_details(mac_dst)
                 temp.append(list(mac_vendor_dst[0].items())[0][1])
         except:
             temp.append("None")
@@ -265,7 +282,7 @@ def main():
         i = i+1
 
 
-    tabling = tabulate(transfer, headers=["Frame Number","Src IP Address", "Dst IP Address", "Vendor Device Src", "Vendor Device Dst"])
+    tabling = tabulate(transfer, headers=["Frame Number","Src IP Address", "Dst IP Address","Source Mac Address","Destination Mac Address", "Vendor Device Src", "Vendor Device Dst"])
     tabling2 = tabulate(transfer2, headers=["Src IP Address", "Dst IP Address", "Number of Packets Shared"])
 
 
