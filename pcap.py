@@ -19,7 +19,7 @@ def select_file():
 
     filename = fd.askopenfilename(
         title='Open a file',
-        initialdir='/',
+        initialdir='/home/anon/Documents/Github/python-pcap-parser/',
         filetypes=filetypes)
 
     return filename
@@ -152,18 +152,18 @@ for packet in packets:
     else:
         data[str(i)]["Protocol"] = "Other" # 2
 
-    print(list(protocol.items()))
+    #print(list(protocol.items()))
     for key,l in list(protocol.items()):
-        print(key)
-        print(l)
+        #print(key)
+        #print(l)
         if data[str(i)]["Source Port"] in l or data[str(i)]["Destination Port"] in l:
-            print(key)
+            #print(key)
             try:
                 data[str(i)]["Protocol"] = key
-                print(key)
+                #print(key)
             except:
                 data[str(i)]["Protocol"] = key
-                print(key)
+                #print(key)
 
     # ////////////////// MAC ////////////////////////
 

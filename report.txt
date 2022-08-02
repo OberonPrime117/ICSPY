@@ -2,46 +2,94 @@ Top 10 Pair of IP Addresses which exchange most packets :
 
 Src IP Address     Dst IP Address       Number of Packets Shared
 -----------------  -----------------  --------------------------
-2c:d4:44:b5:02:1f  00:a0:03:ff:84:cd                           2
+00:08:a1:60:70:59  00:00:bc:21:ca:c2                         120
+00:00:bc:21:ca:c2  00:08:a1:60:70:59                         120
+00:00:81:e1:79:5c  01:80:c2:00:00:00                          30
+00:08:a1:60:70:59  00:03:47:32:b7:6b                           8
+00:03:47:32:b7:6b  01:00:5e:7f:ff:fa                           8
+00:03:47:32:b7:6b  ff:ff:ff:ff:ff:ff                           7
+00:00:81:e1:79:5c  01:00:81:00:01:00                           6
+00:00:81:e1:79:5c  01:00:81:00:01:01                           6
+00:03:47:32:b7:6b  00:08:a1:60:70:59                           4
+00:19:d1:ed:9a:c1  33:33:00:01:00:02                           4
 
 
 Top 10 Source which communicated the most : 
 
 Source               Number of Packets with this Source
 -----------------  ------------------------------------
-2c:d4:44:b5:02:1f                                     2
+00:08:a1:60:70:59                                   128
+00:00:bc:21:ca:c2                                   120
+00:00:81:e1:79:5c                                    42
+00:03:47:32:b7:6b                                    19
+00:19:d1:ed:9a:c1                                     5
+00:04:e2:34:3d:07                                     2
+00:19:d1:85:ea:17                                     1
+00:07:e9:e7:08:0e                                     1
+00:08:a1:61:70:fc                                     1
 
 
 Top 10 Destination which communicated the most : 
 
 Destination          Number of Packets with this Destination
 -----------------  -----------------------------------------
-00:a0:03:ff:84:cd                                          2
+00:08:a1:60:70:59                                        124
+00:00:bc:21:ca:c2                                        120
+01:80:c2:00:00:00                                         30
+ff:ff:ff:ff:ff:ff                                         13
+00:03:47:32:b7:6b                                          8
+01:00:5e:7f:ff:fa                                          8
+01:00:81:00:01:00                                          6
+01:00:81:00:01:01                                          6
+33:33:00:01:00:02                                          4
 
 
 Vendor Name Derived from Payload : 
 
-Vendor Name        Number of Packets with the Vendor
----------------  -----------------------------------
-FUJITSU LIMITED                                    4
+Vendor Name             Number of Packets with the Vendor
+--------------------  -----------------------------------
+CNet Technology Inc.                                  257
+Rockwell Automation                                   240
+Bay Networks                                           84
+Intel Corporation                                      32
+Broadcast                                              13
+Intel Corporate                                        10
+SMC Networks, Inc.                                      2
 
 
 Packets using Protocol : 
 
 Protocol      Number of Packets with this Protocol
 ----------  --------------------------------------
-UDP                                              2
+TCP                                            252
+Other                                           54
+UDP                                             13
 
 
 Packets using Particular Source Port : 
 
-  Source Port    Number of Packets using this Port
+Source Port      Number of Packets using this Port
 -------------  -----------------------------------
-        47808                                    2
+netbios_ns                                     140
+ssdp                                            71
+netbios_dgm                                     58
+dhcpv6_client                                   22
+ontobroker                                      12
+bootpc                                          10
+sflm                                             3
+N/A                                              2
+microsoft_ds                                     1
 
 
 Packets using Particular Destination Port : 
 
-  Destination Port    Number of Packets using this Port
+Destination Port      Number of Packets using this Port
 ------------------  -----------------------------------
-             47808                                    2
+netbios_ns                                          140
+ssdp                                                 83
+netbios_dgm                                          58
+dhcpv6_server                                        22
+bootps                                               10
+microsoft_ds                                          3
+N/A                                                   2
+sflm                                                  1
