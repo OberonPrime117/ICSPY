@@ -145,13 +145,28 @@ for packet in packets:
                 data[str(i)]["Source IP"] = str(packet[IP].src) # 0
                 data[str(i)]["Destination IP"] = str(packet[IP].dst) # 1
 
+    # ////////////////// PROTOCOL ////////////////////////
+    
     if IP in packet:
         data[str(i)]["Protocol"] = proto_name_by_num(int(packet[IP].proto)) # 2
     else:
         data[str(i)]["Protocol"] = "Other" # 2
-    #print(time.process_time() - start)
-    
-    #start = time.process_time()
+
+    print(list(protocol.items()))
+    for key,l in list(protocol.items()):
+        print(key)
+        print(l)
+        if data[str(i)]["Source Port"] in l or data[str(i)]["Destination Port"] in l:
+            print(key)
+            try:
+                data[str(i)]["Protocol"] = key
+                print(key)
+            except:
+                data[str(i)]["Protocol"] = key
+                print(key)
+
+    # ////////////////// MAC ////////////////////////
+
     if str(data[str(i)]["Source IP"]) == "0.0.0.0":
         data[str(i)]["Source MAC"] = "00:21:6a:2d:3b:8e" # 3
     
@@ -184,28 +199,21 @@ for packet in packets:
                     data[str(i)]["Destination MAC"] = packet_dict["802.3"]["dst"] # 4
                 except:
                     data[str(i)]["Destination MAC"] = "" # 4
-    #print(time.process_time() - start)
 
-    #if TCP in packet:
-       # print(packet[TCP].sport)
-    
-    #start = time.process_time()
+    # ////////////////// VENDOR ////////////////////////
     if data[str(i)]["Source MAC"] == 'ff:ff:ff:ff:ff:ff':
         data[str(i)]["Source Vendor"] = "Broadcast"
     else:
-        #print(data[str(i)]["Source MAC"])
         mac_vendor_src = OuiLookup().query(data[str(i)]["Source MAC"])
-        #print(mac_vendor_src)
         data[str(i)]["Source Vendor"] = list(mac_vendor_src[0].items())[0][1] # temp 6
 
     if data[str(i)]["Destination MAC"] == 'ff:ff:ff:ff:ff:ff':
         data[str(i)]["Destination Vendor"] = "Broadcast"
     else:
-        #print(data[str(i)]["Destination MAC"])
         mac_vendor_dst = OuiLookup().query(data[str(i)]["Destination MAC"])
-        #print(mac_vendor_dst)
         data[str(i)]["Destination Vendor"] = list(mac_vendor_src[0].items())[0][1]
     
+    # ////////////////// _NEW LIST FOR TABULATE DATA ////////////////////////
 
     if (str(data[str(i)]["Source IP"]), str(data[str(i)]["Destination IP"])) in list(ip_new.keys()):
         ip_new[(str(data[str(i)]["Source IP"]), str(data[str(i)]["Destination IP"]))] = ip_new[(str(data[str(i)]["Source IP"]), str(data[str(i)]["Destination IP"]))] + 1
@@ -213,8 +221,6 @@ for packet in packets:
         ip_new[(str(data[str(i)]["Source IP"]), str(data[str(i)]["Destination IP"]))] = 1
     
     ip_new = dict(sorted(ip_new.items(),key=lambda item: item[1], reverse=True))
-
-    # /////////////
 
     if str(data[str(i)]["Protocol"]) in list(proto_new.keys()):
         proto_new[str(data[str(i)]["Protocol"])] = proto_new[str(data[str(i)]["Protocol"])] + 1
