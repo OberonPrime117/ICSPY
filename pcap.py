@@ -32,6 +32,14 @@ def proto_name_by_num(proto_num):
             return name[8:]
     return "Protocol not found"
 
+def animate():
+    for c in itertools.cycle(['|', '/', '-', '\\']):
+        if done:
+            break
+        sys.stdout.write('\rloading ' + str(c))
+        sys.stdout.flush()
+        time.sleep(0.1)
+    sys.stdout.write('\nDone!\t')
 
 filep = select_file()
 packets = rdpcap(filep)
@@ -62,21 +70,16 @@ data = {}
 
 # ////////////////// LOADING ANIMATION ////////////////////////
 
-def animate():
-    for c in itertools.cycle(['|', '/', '-', '\\']):
-        if done:
-            break
-        sys.stdout.write('\rloading ' + str(c))
-        sys.stdout.flush()
-        time.sleep(0.1)
-    sys.stdout.write('\nDone!\t')
-
 t = threading.Thread(target=animate)
 t.start()
-
+start = time.time()
 
 for packet in packets:
     # ////////////////// INFO GATHER USING SCAPY ////////////////////////
+    print("////////////////////////")
+    # print(time.time() - start)
+    ## print("////////////")
+    start = time.time()
 
     length = len(packet)
     for line in packet.show2(dump=True).split('\n'):
@@ -88,6 +91,9 @@ for packet in packets:
             packet_dict[layer][key.strip()] = val.strip()
     
     # ////////////////// RESET VALUES ////////////////////////
+    # print("////////////")
+    # print(time.time() - start)
+    start = time.time()
     
     ip_mac_src_dst = [] 
     route = ""
@@ -98,10 +104,14 @@ for packet in packets:
     mac_vendor_dst = []
 
     # ////////////////// PORT ////////////////////////
+    # print("////////////")
+    # print(time.time() - start)
+    start = time.time()
 
     if 'UDP' in list(packet_dict.keys()):
         data[str(i)]["Source Port"] = packet_dict["UDP"]['sport']
         data[str(i)]["Destination Port"] = packet_dict["UDP"]['dport']
+        
 
     elif 'TCP' in list(packet_dict.keys()):
         data[str(i)]["Source Port"] = packet_dict["TCP"]['sport']
@@ -113,6 +123,10 @@ for packet in packets:
         data[str(i)]["Destination Port"] = "N/A"
 
     # ////////////////// IP ////////////////////////
+    # print("////////////")
+    # print(time.time() - start)
+    start = time.time()
+
 
     try:
         
@@ -140,11 +154,24 @@ for packet in packets:
             data[str(i)]["Destination IP"] = packet[Ether].dst # 1
 
     # ////////////////// PROTOCOL ////////////////////////
+    # print("////////////")
+    # print(time.time() - start)
+    start = time.time()
     
     if IP in packet:
         data[str(i)]["Protocol"] = proto_name_by_num(int(packet[IP].proto)) # 2
     else:
-        data[str(i)]["Protocol"] = "Other" # 2
+        #data[str(i)]["Protocol"] = "Other" # 2
+        flag = 0
+        y = packet.summary().split()
+        for b in y:
+            if b.isupper():
+                data[str(i)]["Protocol"] = b
+                #print(packet.summary())
+                flag = 1
+                continue
+            elif flag == 0: 
+                data[str(i)]["Protocol"] = "Other" 
 
     for l in protocol:
 
@@ -160,11 +187,13 @@ for packet in packets:
             continue
 
     # ////////////////// MAC ////////////////////////
-    try:
-        if str(data[str(i)]["Source IP"]) == "0.0.0.0":
-            data[str(i)]["Source MAC"] = "00:21:6a:2d:3b:8e" # 3
-    except:
-        print(str(i))
+    # print("////////////")
+    # print(time.time() - start)
+    start = time.time()
+    
+    if str(data[str(i)]["Source IP"]) == "0.0.0.0":
+        data[str(i)]["Source MAC"] = "00:21:6a:2d:3b:8e" # 3
+        data[str(i)]["Protocol"] = "DHCP"
         
     if str(data[str(i)]["Destination IP"]) == "255.255.255.255":
         data[str(i)]["Destination MAC"] = "ff:ff:ff:ff:ff:ff" # 4
@@ -190,34 +219,32 @@ for packet in packets:
             
         except:
             try:
-                data[str(i)]["Destination MAC"] = getmacbyip(str(data[str(i)]["Destination IP"])) # 4
+                data[str(i)]["Destination MAC"] = getmacbyip(str(data[str(i)]["Destination IP"]))
             except:
                 try:
-                    data[str(i)]["Destination MAC"] = packet_dict["802.3"]["dst"] # 4
+                    data[str(i)]["Destination MAC"] = packet_dict["802.3"]["dst"]
                 except:
-                    data[str(i)]["Destination MAC"] = "" # 4
+                    data[str(i)]["Destination MAC"] = ""
 
     # ////////////////// VENDOR ////////////////////////
-
 
     if data[str(i)]["Source MAC"] == 'ff:ff:ff:ff:ff:ff':
         data[str(i)]["Source Vendor"] = "Broadcast"
     else:
         mac_vendor_src = OuiLookup().query(data[str(i)]["Source MAC"])
-        data[str(i)]["Source Vendor"] = list(mac_vendor_src[0].items())[0][1] # temp 6
-        #print(packet.show())
-        
-
+        data[str(i)]["Source Vendor"] = list(mac_vendor_src[0].items())[0][1]
+    
     if data[str(i)]["Destination MAC"] == 'ff:ff:ff:ff:ff:ff':
         data[str(i)]["Destination Vendor"] = "Broadcast"
     else:
         mac_vendor_dst = OuiLookup().query(data[str(i)]["Destination MAC"])
         data[str(i)]["Destination Vendor"] = list(mac_vendor_src[0].items())[0][1]
+        print(packet.show())
 
-    #print(str(data[str(i)]["Source MAC"]))
-    #print(str(data[str(i)]["Destination MAC"]))
-    
     # ////////////////// SRC IP , DST IP ////////////////////////
+
+    print(time.time() - start)
+    start = time.time()
 
     if (str(data[str(i)]["Source IP"]), str(data[str(i)]["Destination IP"])) in list(ip_new.keys()):
         ip_new[(str(data[str(i)]["Source IP"]), str(data[str(i)]["Destination IP"]))] = ip_new[(str(data[str(i)]["Source IP"]), str(data[str(i)]["Destination IP"]))] + 1
@@ -227,6 +254,9 @@ for packet in packets:
     ip_new = dict(sorted(ip_new.items(),key=lambda item: item[1], reverse=True))
 
     # ////////////////// PROTOCOL ////////////////////////
+    # print("////////////")
+    print(time.time() - start)
+    start = time.time()
 
     if str(data[str(i)]["Protocol"]) in list(proto_new.keys()):
         proto_new[str(data[str(i)]["Protocol"])] = proto_new[str(data[str(i)]["Protocol"])] + 1
@@ -236,6 +266,9 @@ for packet in packets:
     proto_new = dict(sorted(proto_new.items(),key=lambda item: item[1], reverse=True))
 
     # ////////////////// SRC IP ////////////////////////
+    # print("////////////")
+    #print(time.time() - start)
+    start = time.time()
 
     if str(data[str(i)]["Source IP"]) in list(src_new.keys()):
         src_new[str(data[str(i)]["Source IP"])] = src_new[str(data[str(i)]["Source IP"])] + 1
@@ -245,6 +278,9 @@ for packet in packets:
     src_new = dict(sorted(src_new.items(),key=lambda item: item[1], reverse=True))
 
     # ////////////////// DST IP ////////////////////////
+    # print("////////////")
+    #print(time.time() - start)
+    start = time.time()
 
     if str(data[str(i)]["Destination IP"]) in list(dst_new.keys()):
         dst_new[str(data[str(i)]["Destination IP"])] = dst_new[str(data[str(i)]["Destination IP"])] + 1
@@ -254,6 +290,9 @@ for packet in packets:
     dst_new = dict(sorted(dst_new.items(),key=lambda item: item[1], reverse=True))
 
     # ////////////////// SRC VENDOR ////////////////////////
+    # print("////////////")
+    #print(time.time() - start)
+    start = time.time()
 
     if str(data[str(i)]["Source Vendor"]) in list(vendor_new.keys()):
         vendor_new[str(data[str(i)]["Source Vendor"])] = vendor_new[str(data[str(i)]["Source Vendor"])] + 1
@@ -263,6 +302,9 @@ for packet in packets:
     vendor_new = dict(sorted(vendor_new.items(),key=lambda item: item[1], reverse=True))
 
     # ////////////////// DST VENDOR ////////////////////////
+    # print("////////////")
+    #print(time.time() - start)
+    start = time.time()
 
     if str(data[str(i)]["Destination Vendor"]) in list(vendor_new.keys()):
         vendor_new[str(data[str(i)]["Destination Vendor"])] = vendor_new[str(data[str(i)]["Destination Vendor"])] + 1
@@ -272,6 +314,9 @@ for packet in packets:
     vendor_new = dict(sorted(vendor_new.items(),key=lambda item: item[1], reverse=True))
 
     # ////////////////// SRC PORT ////////////////////////
+    # print("////////////")
+    #print(time.time() - start)
+    start = time.time()
 
     if str(data[str(i)]["Source Port"]) in list(sport_new.keys()):
         sport_new[str(data[str(i)]["Source Port"])] = sport_new[str(data[str(i)]["Source Port"])] + 1
@@ -281,6 +326,9 @@ for packet in packets:
     sport_new = dict(sorted(sport_new.items(),key=lambda item: item[1], reverse=True))
 
     # ////////////////// DST PORT ////////////////////////
+    # print("////////////")
+    print(time.time() - start)
+    start = time.time()
 
     if str(data[str(i)]["Destination Port"]) in list(dport_new.keys()):
         dport_new[str(data[str(i)]["Destination Port"])] = dport_new[str(data[str(i)]["Destination Port"])] + 1
