@@ -76,7 +76,7 @@ start = time.time()
 
 for packet in packets:
     # ////////////////// INFO GATHER USING SCAPY ////////////////////////
-    print("////////////////////////")
+    #print("////////////////////////")
     # print(time.time() - start)
     ## print("////////////")
     start = time.time()
@@ -221,7 +221,6 @@ for packet in packets:
                 data[str(i)]["Destination MAC"] = getmacbyip(str(data[str(i)]["Destination IP"]))
             except:
                 try:
-                    print(packet.show())
                     data[str(i)]["Destination MAC"] = packet_dict["802.3"]["dst"]
                 except:
                     data[str(i)]["Destination MAC"] = ""

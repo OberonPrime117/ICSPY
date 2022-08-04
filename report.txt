@@ -2,98 +2,142 @@ Top 10 Pair of IP Addresses which exchange most packets :
 
 Src IP Address     Dst IP Address       Number of Packets Shared
 -----------------  -----------------  --------------------------
-192.168.0.46       192.168.0.101                             120
-192.168.0.101      192.168.0.46                              120
-00:00:81:e1:79:5c  01:80:c2:00:00:00                          42
-192.168.0.46       193.40.240.200                              8
-00:00:81:e1:79:5c  01:00:81:00:01:00                           6
-00:00:81:e1:79:5c  01:00:81:00:01:01                           6
-193.40.240.1       239.255.255.250                             5
-193.40.240.200     192.168.0.46                                4
-193.40.240.224     239.255.255.250                             3
-0.0.0.0            255.255.255.255                             2
+10.11.25.8         10.11.21.34                              1099
+10.11.21.34        10.11.25.8                                857
+00:12:7f:b6:f6:82  01:80:c2:00:00:00                          69
+00:30:48:71:c3:75  00:30:1b:af:35:07                          63
+170.170.170.170    170.170.170.170                            47
+00:30:1b:af:35:07  00:30:48:71:c3:75                           5
+10.11.21.34        10.37.115.8                                 5
+115.11.21.34       10.11.25.8                                  4
+10.11.25.8         10.37.115.34                                4
+42.11.25.8         10.11.21.34                                 4
 
 
 Top 10 Source which communicated the most : 
 
 Source               Number of Packets with this Source
 -----------------  ------------------------------------
-192.168.0.46                                        128
-192.168.0.101                                       120
-00:00:81:e1:79:5c                                    54
-193.40.240.1                                          5
-193.40.240.200                                        4
-193.40.240.224                                        3
-0.0.0.0                                               2
-192.168.0.71                                          1
-192.168.0.90                                          1
-192.168.0.52                                          1
+10.11.25.8                                         1185
+10.11.21.34                                         927
+00:12:7f:b6:f6:82                                    69
+00:30:48:71:c3:75                                    63
+170.170.170.170                                      47
+00:30:1b:af:35:07                                     5
+115.11.21.34                                          4
+10.37.115.34                                          4
+10.11.37.115                                          4
+42.11.25.8                                            4
 
 
 Top 10 Destination which communicated the most : 
 
 Destination          Number of Packets with this Destination
 -----------------  -----------------------------------------
-192.168.0.46                                             124
-192.168.0.101                                            120
-01:80:c2:00:00:00                                         42
-193.40.240.200                                             8
-239.255.255.250                                            8
-01:00:81:00:01:00                                          6
-01:00:81:00:01:01                                          6
-192.168.0.255                                              3
-255.255.255.255                                            2
+10.11.21.34                                             1181
+10.11.25.8                                               921
+01:80:c2:00:00:00                                         73
+00:30:1b:af:35:07                                         63
+170.170.170.170                                           58
+00:30:48:71:c3:75                                          5
+10.37.115.8                                                5
+10.37.115.34                                               5
+10.11.21.32                                                4
+10.11.21.170                                               4
 
 
 Vendor Name Derived from Payload : 
 
-Vendor Name             Number of Packets with the Vendor
---------------------  -----------------------------------
-CNet Technology Inc.                                  257
-Rockwell Automation                                   240
-Bay Networks                                           84
-Intel Corporation                                      32
-Broadcast                                              13
-Intel Corporate                                        10
-SMC Networks, Inc.                                      2
+Vendor Name                               Number of Packets with the Vendor
+--------------------------------------  -----------------------------------
+SHUTTLE, INC.                                                          2595
+Super Micro Computer, Inc.                                             1970
+None                                                                    212
+Cisco Systems, Inc                                                       62
+ST Electronics (Info-Security) Pte Ltd                                   22
+AXUS MICROSYSTEMS, INC.                                                   6
+BRYANT TECHNOLOGY, LTD.                                                   6
+eero inc.                                                                 4
+CradlePoint, Inc                                                          4
+CONEXANT SYSTEMS, INC.                                                    4
+SANTERA SYSTEMS, INC.                                                     2
+Dell EMC                                                                  2
+HARMONIX CORPORATION                                                      2
+Intellibyte Inc.                                                          2
+SOFTBOOK PRESS                                                            2
+Castlenet Technology Inc.                                                 2
+mPHASE Technologies, Inc.                                                 2
+Novell, Inc.                                                              2
+Advanced Technology & Systems                                             2
+HMS Industrial Networks                                                   2
+CHECKOUT COMPUTER SYSTEMS, LTD                                            2
+Marconi Communications                                                    2
+Spectrapoint Wireless, LLC                                                2
+BUSTEC PRODUCTION LTD.                                                    2
+Smartware                                                                 2
+MobyTEL                                                                   2
+DIVIO, INC.                                                               2
+RFM                                                                       2
+ASTRO TERRA CORP.                                                         2
+ORBACOM SYSTEMS, INC.                                                     2
+PowerCom Technology                                                       2
+NEON TECHNOLOGY, INC.                                                     2
+NORTHERN TELECOM/NETWORK                                                  2
+Basler AG                                                                 2
+CORNET TECHNOLOGY, INC.                                                   2
+Seiko Epson Corporation                                                   2
+CDVI Americas Ltd                                                         2
+Broadcast                                                                 2
+NEC Corporation                                                           2
+Riverbed Technology, Inc.                                                 1
 
 
 Packets using Protocol : 
 
-Protocol      Number of Packets with this Protocol
-----------  --------------------------------------
-TCP                                            252
-STP                                             30
-UDP                                             15
-SNAP                                            12
-ARP                                              8
-DHCP                                             2
+Protocol              Number of Packets with this Protocol
+------------------  --------------------------------------
+TCP                                                   2231
+Other                                                  117
+Protocol not found                                      70
+UDP                                                     21
+STP                                                     13
+(LOOP)                                                   8
+LLC                                                      3
+IPIP                                                     3
+ICMP                                                     2
+IPV6                                                     1
+IDP                                                      1
+IP                                                       1
+IGMP                                                     1
 
 
 Packets using Particular Source Port : 
 
-Source Port      Number of Packets using this Port
--------------  -----------------------------------
-netbios_ns                                     140
-ssdp                                            71
-netbios_dgm                                     58
-dhcpv6_client                                   22
-ontobroker                                      12
-bootpc                                          10
-sflm                                             3
-N/A                                              2
-microsoft_ds                                     1
+Source Port       Number of Packets using this Port
+--------------  -----------------------------------
+kerberos                                       2136
+rsf_1                                           277
+netbios_ns                                       27
+netbios_dgm                                      10
+N/A                                               6
+groove_dpp                                        3
+carrius_rshell                                    2
+domain                                            2
+mpc_lifenet                                       2
+netmagic                                          1
 
 
 Packets using Particular Destination Port : 
 
 Destination Port      Number of Packets using this Port
 ------------------  -----------------------------------
-netbios_ns                                          140
-ssdp                                                 83
-netbios_dgm                                          58
-dhcpv6_server                                        22
-bootps                                               10
-microsoft_ds                                          3
-N/A                                                   2
-sflm                                                  1
+netmagic                                           2048
+kerberos                                            286
+ssslic_mgr                                           48
+scanstat_1                                           31
+netbios_ns                                           25
+41354                                                10
+N/A                                                   6
+groove_dpp                                            6
+domain                                                4
+mpc_lifenet                                           3
