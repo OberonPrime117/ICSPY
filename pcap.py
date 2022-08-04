@@ -19,7 +19,7 @@ def select_file():
 
     filename = fd.askopenfilename(
         title='Open a file',
-        initialdir='/home/anon/Documents/Github/python-pcap-parser/',
+        initialdir='/home/artorias/Documents/Github/python-pcap-parser/',
         filetypes=filetypes)
 
     return filename
@@ -216,12 +216,12 @@ for packet in packets:
 
         try:
             data[str(i)]["Destination MAC"] = packet[Ether].dst # 4
-            
         except:
             try:
                 data[str(i)]["Destination MAC"] = getmacbyip(str(data[str(i)]["Destination IP"]))
             except:
                 try:
+                    print(packet.show())
                     data[str(i)]["Destination MAC"] = packet_dict["802.3"]["dst"]
                 except:
                     data[str(i)]["Destination MAC"] = ""
@@ -231,19 +231,25 @@ for packet in packets:
     if data[str(i)]["Source MAC"] == 'ff:ff:ff:ff:ff:ff':
         data[str(i)]["Source Vendor"] = "Broadcast"
     else:
-        mac_vendor_src = OuiLookup().query(data[str(i)]["Source MAC"])
-        data[str(i)]["Source Vendor"] = list(mac_vendor_src[0].items())[0][1]
+        #print(data[str(i)]["Source MAC"])
+        try:
+            mac_vendor_src = OuiLookup().query(data[str(i)]["Source MAC"])
+            data[str(i)]["Source Vendor"] = list(mac_vendor_src[0].items())[0][1]
+        except:
+            data[str(i)]["Source Vendor"] = ""
     
     if data[str(i)]["Destination MAC"] == 'ff:ff:ff:ff:ff:ff':
         data[str(i)]["Destination Vendor"] = "Broadcast"
     else:
-        mac_vendor_dst = OuiLookup().query(data[str(i)]["Destination MAC"])
-        data[str(i)]["Destination Vendor"] = list(mac_vendor_src[0].items())[0][1]
-        print(packet.show())
+        try:
+            mac_vendor_dst = OuiLookup().query(data[str(i)]["Destination MAC"])
+            data[str(i)]["Destination Vendor"] = list(mac_vendor_src[0].items())[0][1]
+        except:
+            data[str(i)]["Destination Vendor"] = ""
 
     # ////////////////// SRC IP , DST IP ////////////////////////
 
-    print(time.time() - start)
+    #print(time.time() - start)
     start = time.time()
 
     if (str(data[str(i)]["Source IP"]), str(data[str(i)]["Destination IP"])) in list(ip_new.keys()):
@@ -255,7 +261,7 @@ for packet in packets:
 
     # ////////////////// PROTOCOL ////////////////////////
     # print("////////////")
-    print(time.time() - start)
+    #print(time.time() - start)
     start = time.time()
 
     if str(data[str(i)]["Protocol"]) in list(proto_new.keys()):
@@ -327,7 +333,7 @@ for packet in packets:
 
     # ////////////////// DST PORT ////////////////////////
     # print("////////////")
-    print(time.time() - start)
+    #print(time.time() - start)
     start = time.time()
 
     if str(data[str(i)]["Destination Port"]) in list(dport_new.keys()):

@@ -2,273 +2,98 @@ Top 10 Pair of IP Addresses which exchange most packets :
 
 Src IP Address     Dst IP Address       Number of Packets Shared
 -----------------  -----------------  --------------------------
-192.168.0.19       192.168.0.24                             2621
-192.168.0.13       192.168.0.24                             2611
-192.168.0.24       192.168.0.13                             2601
-192.168.0.24       192.168.0.19                             2576
-170.170.170.170    170.170.170.170                           176
-00:10:dc:51:25:73  00:0c:6e:45:91:5f                         140
-00:0c:6e:45:25:73  00:10:dc:51:c9:1a                         118
-00:50:5b:00:25:73  00:0c:6e:45:91:5f                          90
-00:0c:6e:45:91:5f  00:10:dc:51:c9:1a                          89
-00:10:dc:51:25:73  00:4f:6e:45:91:5f                          49
+192.168.0.46       192.168.0.101                             120
+192.168.0.101      192.168.0.46                              120
+00:00:81:e1:79:5c  01:80:c2:00:00:00                          42
+192.168.0.46       193.40.240.200                              8
+00:00:81:e1:79:5c  01:00:81:00:01:00                           6
+00:00:81:e1:79:5c  01:00:81:00:01:01                           6
+193.40.240.1       239.255.255.250                             5
+193.40.240.200     192.168.0.46                                4
+193.40.240.224     239.255.255.250                             3
+0.0.0.0            255.255.255.255                             2
 
 
 Top 10 Source which communicated the most : 
 
 Source               Number of Packets with this Source
 -----------------  ------------------------------------
-192.168.0.24                                       5617
-192.168.0.19                                       2813
-192.168.0.13                                       2806
-00:10:dc:51:25:73                                   211
-00:0c:6e:45:25:73                                   194
-170.170.170.170                                     176
-00:0c:6e:45:91:5f                                   127
-00:50:5b:00:25:73                                    90
-00:0c:55:45:25:73                                    42
-00:93:5b:00:d8:db                                    34
+192.168.0.46                                        128
+192.168.0.101                                       120
+00:00:81:e1:79:5c                                    54
+193.40.240.1                                          5
+193.40.240.200                                        4
+193.40.240.224                                        3
+0.0.0.0                                               2
+192.168.0.71                                          1
+192.168.0.90                                          1
+192.168.0.52                                          1
 
 
 Top 10 Destination which communicated the most : 
 
 Destination          Number of Packets with this Destination
 -----------------  -----------------------------------------
-192.168.0.24                                            5615
-192.168.0.13                                            2812
-192.168.0.19                                            2799
-00:0c:6e:45:91:5f                                        275
-170.170.170.170                                          249
-00:10:dc:51:c9:1a                                        207
-00:50:5b:00:d8:db                                         59
-00:4f:6e:45:91:5f                                         49
-00:50:5b:00:47:db                                         42
-192.168.0.37                                              31
+192.168.0.46                                             124
+192.168.0.101                                            120
+01:80:c2:00:00:00                                         42
+193.40.240.200                                             8
+239.255.255.250                                            8
+01:00:81:00:01:00                                          6
+01:00:81:00:01:01                                          6
+192.168.0.255                                              3
+255.255.255.255                                            2
 
 
 Vendor Name Derived from Payload : 
 
-Vendor Name                                            Number of Packets with the Vendor
----------------------------------------------------  -----------------------------------
-ASUSTek COMPUTER INC.                                                              12278
-KAWASAKI LSI U.S.A., INC.                                                           6110
-MICRO-STAR INTERNATIONAL CO., LTD.                                                  6091
-None                                                                                1084
-ST Electronics (Info-Security) Pte Ltd                                                58
-Allied Telesis Labs, Inc.                                                             30
-Cisco Systems, Inc                                                                    22
-Newbury Networks, Inc.                                                                18
-MBARI                                                                                 16
-Winbest Technology CO,LT                                                              12
-Hyglo AB                                                                              12
-MAT S.A. (Mircrelec Advanced Technology)                                              12
-KONICA MINOLTA HOLDINGS, INC.                                                         12
-iBAHN                                                                                 10
-STORAGE COMPUTER CORPORATION                                                          10
-NETWORK ALCHEMY, INC.                                                                 10
-Openet information technology(shenzhen) Co., Ltd.                                     10
-Eve Systems GmbH                                                                       8
-Cheops Elektronik                                                                      8
-K-Patents Oy                                                                           8
-MEDIA4, INC.                                                                           8
-Grayhill, Inc                                                                          8
-Pronto Networks Inc                                                                    8
-Amtek system co.,LTD.                                                                  8
-Cubic Transportation Systems Inc                                                       8
-Broadcast                                                                              7
-CLP COMPUTER LOGISTIK PLANUNG GmbH                                                     6
-RIGHTECH CORPORATION                                                                   6
-SunCorp Industrial Limited                                                             6
-Seagate Technology                                                                     6
-Glunz & Jensen                                                                         6
-Tellium Incorporated                                                                   6
-BROADBAND NETWORKS, INC.                                                               6
-ArrowPoint Communications                                                              6
-BARCONET N.V.                                                                          6
-FUNASSET LIMITED                                                                       4
-ACROLOOP MOTION CONTROL                                                                4
-CONTEMPORARY CONTROL                                                                   4
-Avionic Design GmbH                                                                    4
-Coretronic Corporation                                                                 4
-Prostar Co., Ltd.                                                                      4
-MEGATON HOUSE, LTD.                                                                    4
-MACKIE Engineering Services Belgium BVBA                                               4
-Geomation, Inc.                                                                        4
-Tokyo Electron Device Limited                                                          4
-ENABLE SEMICONDUCTOR, INC.                                                             4
-WITTENSTEIN AG                                                                         4
-National Radio Astronomy Observatory                                                   4
-DAIN TELECOM CO., LTD.                                                                 4
-Cisco-Linksys, LLC                                                                     4
-QUANTUM DESIGNS (H.K.) LTD.                                                            4
-INTERNATIONAL DATACASTING CORPORATION                                                  4
-SigmaTel, Inc.                                                                         4
-MAYAN NETWORKS                                                                         4
-ASACA CORPORATION                                                                      4
-NET INSIGHT AB                                                                         4
-Xytronix Research & Design, Inc.                                                       4
-Neff Instrument Corp.                                                                  4
-M-SYSTEM CO., LTD.                                                                     4
-ABL CANADA, INC.                                                                       4
-Arcor AG&Co.                                                                           4
-NUERA COMMUNICATIONS, INC.                                                             2
-ELECTRONIC INDUSTRIES ASSOCIATION                                                      2
-CHAINTECH COMPUTER CO., LTD.                                                           2
-M&S Systems                                                                            2
-FUJITSU MICROELECTRONICS, INC.                                                         2
-Enwiser Inc.                                                                           2
-EDEVA, INC.                                                                            2
-Alacritech, Inc.                                                                       2
-IBM Corp                                                                               2
-ATEN INTERNATIONAL CO., LTD.                                                           2
-Scientific Technologies Inc.                                                           2
-Option International N.V.                                                              2
-IEC - TC57                                                                             2
-KODICOM CO.,LTD.                                                                       2
-ACC GmbH                                                                               2
-Fi WIn, Inc.                                                                           2
-Vectron Systems AG                                                                     2
-TECO INFORMATION SYSTEMS                                                               2
-Premier Technolgies, Inc                                                               2
-NX SERVER, ILNC.                                                                       2
-VSK ELECTRONICS                                                                        2
-Kurz Industrie-Elektronik GmbH                                                         2
-StorCase Technology, Inc.                                                              2
-Roll Systems Inc.                                                                      2
-MEDION AG                                                                              2
-Bose Corporation                                                                       2
-VANLINK COMMUNICATION TECHNOLOGY RESEARCH INSTITUTE                                    2
-The Parvus Corporation                                                                 2
-Beijer Electronics Products AB                                                         2
-Octasic Inc.                                                                           2
-HangZhou DeChangLong Tech&Info Co.,Ltd                                                 2
-TAS TELEFONBAU A. SCHWABE GMBH & CO. KG                                                2
-ENCANTO NETWORKS, INC.                                                                 2
-HAYES MICROCOMPUTER PRODUCTS                                                           2
-EION Inc.                                                                              2
-Microlink Communications Inc.                                                          2
-AC Tech corporation DBA Advanced Digital                                               2
-Interface Masters, Inc                                                                 2
-TelcoBridges Inc.                                                                      2
-Nortel Networks                                                                        2
-Communication System Design & Manufacturing (CSDM)                                     2
-COMOS TELECOM                                                                          2
-jp-embedded                                                                            2
-Sammy Corporation                                                                      2
-Shenzhen First Mile Communications Ltd                                                 2
-PRAXON, INC.                                                                           2
-FAR SYSTEMS S.p.A.                                                                     2
-AOS technologies AG                                                                    2
-Kollmorgen Corp                                                                        2
-OY COMSEL SYSTEM AB                                                                    2
-NETGEAR                                                                                2
-Sangoma Technologies                                                                   2
-Dangaard Telecom Denmark A/S                                                           2
-Internet Information Image Inc.                                                        2
-Glimmerglass Networks                                                                  2
-Holy Stone Ent. Co., Ltd.                                                              2
-OHM TECHNOLOGIES INTL, LLC                                                             2
-VOLAMP, LTD.                                                                           2
-Hand Held Products Inc                                                                 2
-GNP Computers                                                                          2
-InnoLabs Corporation                                                                   2
-VMware, Inc.                                                                           2
-Private                                                                                2
-SHINKO ELECTRIC INDUSTRIES CO.                                                         2
-TADIRAN COM. LTD.                                                                      2
-Ericsson                                                                               2
-TSINGHUA NOVEL ELECTRONICS                                                             2
-National Enhance Technology, Inc.                                                      2
-Animation Technologies Inc.                                                            2
-Scalent Systems, Inc.                                                                  2
-3COM                                                                                   2
-Toko Inc.                                                                              2
-MEDIA GLOBAL LINKS CO., LTD.                                                           2
-VIDEOJET SYSTEMS                                                                       2
-SIGNUM SYSTEMS CORP.                                                                   2
-RIOWORKS SOLUTIONS, INC.                                                               2
-Passave Inc.                                                                           2
-IBSmm Embedded Electronics Consulting                                                  2
-Genera Oy                                                                              2
-STARGUIDE DIGITAL NETWORKS                                                             2
-TELSON ELECTRONICS CO., LTD                                                            2
-OCTTEL Communication Co., Ltd.                                                         2
-ALCORN MCBRIDE INC.                                                                    2
-RADYNE CORPORATION                                                                     2
-DIABLO RESEARCH CO. LLC                                                                2
-AJA Video Systems Inc                                                                  2
-Mintera Corporation                                                                    2
-Phihong USA Corp.                                                                      2
-Communications & Power Industries / Satcom Division                                    2
-DIGITAL MICROWAVE CORPORATION                                                          2
-SUNDANCE TECHNOLOGY, INC.                                                              2
-BRAND INNOVATORS                                                                       2
-Diagnostic Instruments, Inc.                                                           2
-ACTIA                                                                                  2
-SIRONA DENTAL SYSTEMS GmbH & Co. KG                                                    2
-CMICRO CORPORATION                                                                     2
-Innominate Security Technologies AG                                                    2
-AIWA CO., LTD.                                                                         2
-TNS                                                                                    2
-Arbor Networks Inc                                                                     2
-Oracle Corporation                                                                     2
-Apple, Inc.                                                                            2
-CALISTA                                                                                2
-ABB STOTZ-KONTAKT GmbH                                                                 2
-OLICOM A/S                                                                             2
-Luxtera Inc                                                                            2
-Automated Interfaces, Inc.                                                             2
-MARINER NETWORKS                                                                       2
-X2 MSA Group                                                                           2
-Extel Communications P/L                                                               2
-AKCP                                                                                   2
-DaTARIUS Technologies GmbH                                                             2
-NEXO COMMUNICATIONS, INC.                                                              2
-IWATSU ELECTRIC CO., LTD.                                                              2
+Vendor Name             Number of Packets with the Vendor
+--------------------  -----------------------------------
+CNet Technology Inc.                                  257
+Rockwell Automation                                   240
+Bay Networks                                           84
+Intel Corporation                                      32
+Broadcast                                              13
+Intel Corporate                                        10
+SMC Networks, Inc.                                      2
 
 
 Packets using Protocol : 
 
-Protocol              Number of Packets with this Protocol
-------------------  --------------------------------------
-BACnet                                               12731
-UDP                                                    364
-Other                                                   13
-Protocol not found                                       7
-(DEBNI)                                                  6
-(FRARP)                                                  2
-IP                                                       1
-L2TP                                                     1
-ICMP                                                     1
+Protocol      Number of Packets with this Protocol
+----------  --------------------------------------
+TCP                                            252
+STP                                             30
+UDP                                             15
+SNAP                                            12
+ARP                                              8
+DHCP                                             2
 
 
 Packets using Particular Source Port : 
 
-  Source Port    Number of Packets using this Port
+Source Port      Number of Packets using this Port
 -------------  -----------------------------------
-        47808                                12262
-        43690                                  188
-        47653                                   38
-          192                                   34
-        29440                                   28
-         9587                                   26
-        39616                                   13
-        47812                                   12
-        45760                                   12
-        33034                                   11
+netbios_ns                                     140
+ssdp                                            71
+netbios_dgm                                     58
+dhcpv6_client                                   22
+ontobroker                                      12
+bootpc                                          10
+sflm                                             3
+N/A                                              2
+microsoft_ds                                     1
 
 
 Packets using Particular Destination Port : 
 
-  Destination Port    Number of Packets using this Port
+Destination Port      Number of Packets using this Port
 ------------------  -----------------------------------
-             47808                                12246
-             43690                                  212
-             29440                                   37
-               192                                   26
-              9587                                   22
-             47653                                   21
-             47786                                   16
-                 1                                   15
-             48064                                   15
-             47824                                   14
+netbios_ns                                          140
+ssdp                                                 83
+netbios_dgm                                          58
+dhcpv6_server                                        22
+bootps                                               10
+microsoft_ds                                          3
+N/A                                                   2
+sflm                                                  1
