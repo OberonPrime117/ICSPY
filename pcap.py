@@ -76,9 +76,7 @@ start = time.time()
 
 for packet in packets:
     # ////////////////// INFO GATHER USING SCAPY ////////////////////////
-    #print("////////////////////////")
-    # print(time.time() - start)
-    ## print("////////////")
+    
     start = time.time()
 
     length = len(packet)
