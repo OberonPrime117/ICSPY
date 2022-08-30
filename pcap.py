@@ -48,9 +48,8 @@ packets = rdpcap(filep)
 
 packet_dict = {}
 i=1
-protocol = [["BACnet",[47808]], ["DNP3", [20000,20000]], ["EtherCAT", [34980]], ["Ethernet/IP" , [44818,2222,44818]],
-            ["FL-net" , [55000 , 55001 ,55002 ,55003 ]] , ["Foundation Fieldbus HSE", [1089 ,1090 ,1091, 1089  ]], ["ICCP",[102]], ["Modbus TCP",[502]],
-            ["OPC UA Discovery Server" ,[4840]], ["OPC UA XML", [80,443]], ["PROFINET",[34962 ,34963 ,34964]],["ROC Plus" , [4000]]]
+protocol = {"bacnet" : "BACnet" , "dnp": "DNP3" ,  "mbap" : "Modbus TCP" }
+ethertype = {"0x88a4" : "EtherCat", "0x8892" : "PROFINET"}
 ip_new = {}
 proto_new = {}
 vendor_new = {}
@@ -154,7 +153,8 @@ for packet in packets:
     # ////////////////// PROTOCOL ////////////////////////
     # print("////////////")
     # print(time.time() - start)
-    start = time.time()
+    # start = time.time()
+    print(packet.show())
     
     if IP in packet:
         data[str(i)]["Protocol"] = proto_name_by_num(int(packet[IP].proto)) # 2
@@ -170,19 +170,28 @@ for packet in packets:
                 continue
             elif flag == 0: 
                 data[str(i)]["Protocol"] = "Other" 
-
-    for l in protocol:
-
-        try:
+    try :
+        for l in protocol:
             if int(data[str(i)]["Source Port"]) in l[1] or int(data[str(i)]["Destination Port"]) in l[1]:
-                
                 try:
                     data[str(i)]["Protocol"] = l[0]
                 except:
                     data[str(i)]["Protocol"] = l[0]
 
-        except ValueError:
-            continue
+            
+    except:
+        pass
+    
+    if data[str(i)]["Source Port"] in list(protocol.keys()):
+        data[str(i)]["Protocol"] = protocol[data[str(i)]["Source Port"]]
+        
+    if data[str(i)]["Destination Port"] in list(protocol.keys()):
+        data[str(i)]["Protocol"] = protocol[data[str(i)]["Destination Port"]]
+    
+    if str(packet_dict["Ethernet"]["type"]) in list(ethertype.keys()):
+        data[str(i)]["Protocol"] = ethertype[str(packet_dict["Ethernet"]["type"])]
+
+    
 
     # ////////////////// MAC ////////////////////////
     # print("////////////")
