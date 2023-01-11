@@ -2,54 +2,52 @@ Top 10 Pair of IP Addresses which exchange most packets :
 
 Src IP Address    Dst IP Address      Number of Packets Shared
 ----------------  ----------------  --------------------------
-192.168.41.176    192.168.41.212                            51
-192.168.41.212    192.168.41.176                            39
+192.168.222.128   10.0.218.174                             168
+10.0.218.174      192.168.222.128                          126
+192.168.222.128   192.168.222.255                           42
 
 
 Top 10 Source which communicated the most : 
 
-Source            Number of Packets with this Source
---------------  ------------------------------------
-192.168.41.176                                    51
-192.168.41.212                                    39
+Source             Number of Packets with this Source
+---------------  ------------------------------------
+192.168.222.128                                   210
+10.0.218.174                                      126
 
 
 Top 10 Destination which communicated the most : 
 
-Destination       Number of Packets with this Destination
---------------  -----------------------------------------
-192.168.41.212                                         51
-192.168.41.176                                         39
+Destination        Number of Packets with this Destination
+---------------  -----------------------------------------
+10.0.218.174                                           168
+192.168.222.128                                        126
+192.168.222.255                                         42
 
 
 Vendor Name Derived from Payload : 
 
-Vendor Name                  Number of Packets with the Vendor
--------------------------  -----------------------------------
-ABIT COMPUTER CORPORATION                                  102
-VMware, Inc.                                                78
+Vendor Name      Number of Packets with the Vendor
+-------------  -----------------------------------
+                                               630
+Broadcast                                       42
 
 
 Packets using Protocol : 
 
 Protocol      Number of Packets with this Protocol
 ----------  --------------------------------------
-TCP                                             90
+BACnet                                         336
 
 
 Packets using Particular Source Port : 
 
 Source Port      Number of Packets using this Port
 -------------  -----------------------------------
-entextnetwk                                     39
-58674                                           28
-58675                                           23
+bacnet                                         336
 
 
 Packets using Particular Destination Port : 
 
 Destination Port      Number of Packets using this Port
 ------------------  -----------------------------------
-entextnetwk                                          51
-58674                                                20
-58675                                                19
+bacnet                                              336

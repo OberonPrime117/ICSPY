@@ -1,0 +1,574 @@
+0 Python To Pseudocode convertor
+1 // ////////////////// ALL IMPORTS ////////////////////////
+2 
+3 from tabulate import tabulate
+4 from OuiLookup import OuiLookup
+5 from scapy.all import *
+6 from scapy.layers.l2 import getmacbyip, Ether
+7 from tkinter import filedialog as fd
+8 import time
+9 from scapy.layers.inet import IP
+10 import asyncio
+11 
+12 // ////////////////// PICK THE FILE FUNCTION ////////////////////////
+13 
+14 PROCEDURE  select_file:
+15     filetypes<-(
+16         ('PCAP', '*.pcap'),
+17         ('PCAPNG', '*.pcapng'),
+18         ('All files', '*.*')
+19     )
+20 ENDPROCEDURE
+21 
+22     filename<-fd.askopenfilename(
+23         title='Open a file',
+24         initialdir='/home/artorias/Documents/Github/python-pcap-parser/',
+25         filetypes<-filetypes)
+26 
+27     return filename
+28 
+29 // ////////////////// GET PROTOCOL NAME FROM ITS NUMBER ////////////////////////
+30 
+31 FUNCTION  proto_name_by_num(proto_num):
+32     RETURNS // What gets sent back?
+33     FOR name,num in vars(socket).items():  //Pseudocode can't handle this
+34         IF name.startswith("IPPROTO") and proto_num = num
+35             THEN
+36             return name[8:]
+37         ENDIF
+38     return "Protocol not found"
+39 ENDFUNCTION
+40 
+41 PROCEDURE  animate:
+42     FOR c in itertools.cycle(['|', '/', '-', '\\']):  //Pseudocode can't handle this
+43         IF done
+44             THEN
+45             break  //This might be better as a repeat loop
+46         ENDIF
+47         sys.stdout.write('\rloading ' + str(c))
+48         sys.stdout.flush()
+49         time.sleep(0.1)
+50     sys.stdout.write('\nDone!\t')
+51 ENDPROCEDURE
+52 
+53 async FUNCTION  dash(packet,data):
+54     RETURNS // What gets sent back?
+55     a<-proto(packet, data)
+56     await a
+57     return a
+58 ENDFUNCTION
+59 
+60 filep<-select_file()
+61 packets<-rdpcap(filep)
+62 
+63 // ////////////////// VARIABLE DECLARE ////////////////////////
+64 
+65 packet_dict<-{}
+66 i=1
+67 protocol<-{"bacnet" : "BACnet" , "dnp": "DNP3" ,  "mbap" : "Modbus TCP" }
+68 ethertype<-{"0x88a4" : "EtherCat", "0x8892" : "PROFINET"}
+69 ip_new<-{}
+70 proto_new<-{}
+71 vendor_new<-{}
+72 dst_new<-{}
+73 src_new<-{}
+74 sport_new<-{}
+75 dport_new<-{}
+76 transfer<-[]
+77 transfer2<-[]
+78 transfer3<-[]
+79 transfer4<-[]
+80 transfer5<-[]
+81 transfer6<-[]
+82 transfer7<-[]
+83 done<-False
+84 data<-{}
+85 
+86 // ////////////////// LOADING ANIMATION ////////////////////////
+87 
+88 t<-threading.Thread(target=animate)
+89 t.start()
+90 start<-time.time()
+91     
+92 FOR packet in packets:  //Pseudocode can't handle this
+93     // ////////////////// INFO GATHER USING SCAPY ////////////////////////
+94     length<-len(packet)
+95     FOR line in packet.show2(dump=True).split('\n'):  //Pseudocode can't handle this
+96         //OUTPUT line
+97         IF '//////' in line
+98             THEN
+99             layer<-line.strip('//[] ')
+100             packet_dict[layer]<-{}
+101         ENDIF
+102         elif '=' in line:  //You will need to change this to CASE OF
+103             key, val<-line.split('=', 1)
+104             packet_dict[layer][key.strip()]<-val.strip()
+105     
+106     // ////////////////// RESET VALUES ////////////////////////
+107     // // OUTPUT "////////////"
+108     
+109     start<-time.time()
+110     
+111     ip_mac_src_dst<-[] 
+112     route<-""
+113     data<-{}
+114     data[str(i)]<-{}
+115     data[str(i)]["Frame Number"]<-str(i)
+116     mac_vendor_src<-[]
+117     mac_vendor_dst<-[]
+118 
+119     // ////////////////// PORT ////////////////////////
+120     // // OUTPUT "////////////"
+121     OUTPUT "RESET time taken"
+122     finish<-time.time()
+123     OUTPUT finish - start
+124     start<-time.time()
+125 
+126     IF 'UDP' in list(packet_dict.keys())
+127         THEN
+128         data[str(i)]["Source Port"]<-packet_dict["UDP"]['sport']
+129         data[str(i)]["Destination Port"]<-packet_dict["UDP"]['dport']
+130         
+131     ENDIF
+132 
+133     elif 'TCP' in list(packet_dict.keys()):  //You will need to change this to CASE OF
+134         data[str(i)]["Source Port"]<-packet_dict["TCP"]['sport']
+135         data[str(i)]["Destination Port"]<-packet_dict["TCP"]['dport']
+136 
+137     ELSE
+138         data[str(i)]["Source Port"]<-"N/A"
+139         //// OUTPUT packet.show(
+140         data[str(i)]["Destination Port"]<-"N/A"
+141 
+142     // ////////////////// IP ////////////////////////
+143     // // OUTPUT "////////////"
+144     OUTPUT "PORT time taken"
+145     finish<-time.time()
+146     OUTPUT finish - start
+147     start<-time.time()
+148 
+149 
+150     try:
+151         
+152         IF IP in packet
+153                 THEN
+154                 data[str(i)]["Source IP"]<-str(packet[IP].src) // 0
+155                 data[str(i)]["Destination IP"]<-str(packet[IP].dst) // 1
+156             
+157         ELSE
+158             try:
+159                 data[str(i)]["Source IP"]<-packet_dict["802.3"]["src"] // 0
+160                 data[str(i)]["Destination IP"]<-packet_dict["802.3"]["dst"] // 1
+161         ENDIF
+162 
+163             except:
+164                 data[str(i)]["Source IP"]<-packet[Ether].src // 0
+165                 data[str(i)]["Destination IP"]<-packet[Ether].dst // 1
+166 
+167     except:
+168 
+169         try:
+170             data[str(i)]["Source IP"]<-packet_dict["802.3"]["src"] // 0
+171             data[str(i)]["Destination IP"]<-packet_dict["802.3"]["dst"] // 1
+172 
+173         except:
+174             data[str(i)]["Source IP"]<-packet[Ether].src // 0
+175             data[str(i)]["Destination IP"]<-packet[Ether].dst // 1
+176 
+177     // ////////////////// PROTOCOL ////////////////////////
+178     // // OUTPUT "////////////"
+179     OUTPUT "IP time taken"
+180     finish<-time.time()
+181     OUTPUT finish - start
+182     start<-time.time()
+183     
+184     IF IP in packet
+185         THEN
+186         data[str(i)]["Protocol"]<-proto_name_by_num(int(packet[IP].proto)) // 2
+187     ELSE
+188         //data[str(i)]["Protocol"]<-"Other" // 2
+189         flag<-0
+190         y<-packet.summary().split()
+191         FOR b in y:  //Pseudocode can't handle this
+192             IF b.isupper()
+193                 THEN
+194                 data[str(i)]["Protocol"]<-b
+195                 flag<-1
+196                 continue
+197             ENDIF
+198             elif flag = 0:   //You will need to change this to CASE OF
+199                 data[str(i)]["Protocol"]<-"Other" 
+200     ENDIF
+201     try :
+202         FOR l in protocol:  //Pseudocode can't handle this
+203             IF int(data[str(i)]["Source Port"]) in l[1] or int(data[str(i)]["Destination Port"]) in l[1]
+204                 THEN
+205                 try:
+206                     data[str(i)]["Protocol"]<-l[0]
+207                 except:
+208                     data[str(i)]["Protocol"]<-l[0]
+209             ENDIF
+210 
+211             
+212     except:
+213         pass
+214     
+215     IF data[str(i)]["Source Port"] in list(protocol.keys())
+216         THEN
+217         data[str(i)]["Protocol"]<-protocol[data[str(i)]["Source Port"]]
+218         
+219     ENDIF
+220     IF data[str(i)]["Destination Port"] in list(protocol.keys())
+221         THEN
+222         data[str(i)]["Protocol"]<-protocol[data[str(i)]["Destination Port"]]
+223     ENDIF
+224     
+225     IF str(packet_dict["Ethernet"]["type"]) in list(ethertype.keys())
+226         THEN
+227         data[str(i)]["Protocol"]<-ethertype[str(packet_dict["Ethernet"]["type"])]
+228     ENDIF
+229     
+230 
+231     // ////////////////// MAC ////////////////////////
+232     // // OUTPUT "////////////"
+233     OUTPUT "PROTOCOL time taken"
+234     finish<-time.time()
+235     OUTPUT finish - start
+236     start<-time.time()
+237 
+238     IF str(data[str(i)]["Source IP"]) = "0.0.0.0"
+239         THEN
+240         data[str(i)]["Source MAC"]<-"00:21:6a:2d:3b:8e" // 3
+241         data[str(i)]["Protocol"]<-"DHCP"
+242         
+243     ENDIF
+244     IF str(data[str(i)]["Destination IP"]) = "255.255.255.255"
+245         THEN
+246         data[str(i)]["Destination MAC"]<-"ff:ff:ff:ff:ff:ff" // 4
+247     ENDIF
+248     
+249     IF "" in str(data[str(i)]["Source IP"]) and "" in str(data[str(i)]["Destination IP"])
+250         THEN
+251         data[str(i)]["Source MAC"]<- str(packet[Ether].src) // 3
+252         data[str(i)]["Destination MAC"]<- str(packet[Ether].dst) // 4
+253     ENDIF
+254 
+255     ELSE
+256         try:
+257             data[str(i)]["Source MAC"]<- packet[Ether].src
+258         except:
+259             try:
+260                 data[str(i)]["Source MAC"]<-getmacbyip(str(data[str(i)]["Source IP"])) // 3 // 3
+261             except:
+262                 try:
+263                     data[str(i)]["Source MAC"]<- packet_dict["802.3"]["src"] // 3
+264                 except:
+265                     data[str(i)]["Source MAC"]<-"" // 3
+266 
+267         try:
+268             data[str(i)]["Destination MAC"]<-packet[Ether].dst // 4
+269         except:
+270             try:
+271                 data[str(i)]["Destination MAC"]<-getmacbyip(str(data[str(i)]["Destination IP"]))
+272             except:
+273                 try:
+274                     data[str(i)]["Destination MAC"]<-packet_dict["802.3"]["dst"]
+275                 except:
+276                     data[str(i)]["Destination MAC"]<-""
+277 
+278     // ////////////////// VENDOR ////////////////////////
+279     OUTPUT "MAC time taken"
+280     finish<-time.time()
+281     OUTPUT finish - start
+282     start<-time.time()
+283     IF data[str(i)]["Source MAC"] = 'ffffffffffff'
+284         THEN
+285         data[str(i)]["Source Vendor"]<-"Broadcast"
+286     ELSE
+287         //// OUTPUT data[str(i]["Source MAC"]
+288         try:
+289             mac_vendor_src<-OuiLookup().query(data[str(i)]["Source MAC"])
+290             data[str(i)]["Source Vendor"]<-list(mac_vendor_src[0].items())[0][1]
+291         except:
+292             data[str(i)]["Source Vendor"]<-""
+293     ENDIF
+294     
+295     IF data[str(i)]["Destination MAC"] = 'ffffffffffff'
+296         THEN
+297         data[str(i)]["Destination Vendor"]<-"Broadcast"
+298     ELSE
+299         try:
+300             mac_vendor_dst<-OuiLookup().query(data[str(i)]["Destination MAC"])
+301             data[str(i)]["Destination Vendor"]<-list(mac_vendor_src[0].items())[0][1]
+302         except:
+303             data[str(i)]["Destination Vendor"]<-""
+304     ENDIF
+305 
+306     // ////////////////// SRC IP , DST IP ////////////////////////
+307     OUTPUT "VENDOR time taken"
+308     finish<-time.time()
+309     OUTPUT finish - start
+310     start<-time.time()
+311 
+312     IF (str(data[str(i)]["Source IP"]), str(data[str(i)]["Destination IP"])) in list(ip_new.keys())
+313         THEN
+314         ip_new[(str(data[str(i)]["Source IP"]), str(data[str(i)]["Destination IP"]))]<-ip_new[(str(data[str(i)]["Source IP"]), str(data[str(i)]["Destination IP"]))] + 1
+315     ELSE
+316         ip_new[(str(data[str(i)]["Source IP"]), str(data[str(i)]["Destination IP"]))]<-1
+317     ENDIF
+318     
+319     ip_new<-dict(sorted(ip_new.items(),key=lambda item: item[1], reverse=True))
+320 
+321     // ////////////////// PROTOCOL ////////////////////////
+322     // // OUTPUT "////////////"
+323     
+324     OUTPUT "SRC+DESC time taken"
+325     finish<-time.time()
+326     OUTPUT finish - start
+327     start<-time.time()
+328 
+329     IF str(data[str(i)]["Protocol"]) in list(proto_new.keys())
+330         THEN
+331         proto_new[str(data[str(i)]["Protocol"])]<-proto_new[str(data[str(i)]["Protocol"])] + 1
+332     ELSE
+333         proto_new[str(data[str(i)]["Protocol"])]<-1
+334     ENDIF
+335     
+336     proto_new<-dict(sorted(proto_new.items(),key=lambda item: item[1], reverse=True))
+337 
+338     // ////////////////// SRC IP ////////////////////////
+339     // // OUTPUT "////////////"
+340     OUTPUT "SRC+DEST time taken"
+341     finish<-time.time()
+342     OUTPUT finish - start
+343     start<-time.time()
+344 
+345     IF str(data[str(i)]["Source IP"]) in list(src_new.keys())
+346         THEN
+347         src_new[str(data[str(i)]["Source IP"])]<-src_new[str(data[str(i)]["Source IP"])] + 1
+348     ELSE
+349         src_new[str(data[str(i)]["Source IP"])]<-1
+350     ENDIF
+351     
+352     src_new<-dict(sorted(src_new.items(),key=lambda item: item[1], reverse=True))
+353 
+354     // ////////////////// DST IP ////////////////////////
+355     // // OUTPUT "////////////"
+356     OUTPUT "SRC IP time taken"
+357     finish<-time.time()
+358     OUTPUT finish - start
+359     start<-time.time()
+360 
+361     IF str(data[str(i)]["Destination IP"]) in list(dst_new.keys())
+362         THEN
+363         dst_new[str(data[str(i)]["Destination IP"])]<-dst_new[str(data[str(i)]["Destination IP"])] + 1
+364     ELSE
+365         dst_new[str(data[str(i)]["Destination IP"])]<-1
+366     ENDIF
+367     
+368     dst_new<-dict(sorted(dst_new.items(),key=lambda item: item[1], reverse=True))
+369 
+370     // ////////////////// SRC VENDOR ////////////////////////
+371     // // OUTPUT "////////////"
+372     OUTPUT "DEST IP time taken"
+373     finish<-time.time()
+374     OUTPUT finish - start
+375     start<-time.time()
+376 
+377     IF str(data[str(i)]["Source Vendor"]) in list(vendor_new.keys())
+378         THEN
+379         vendor_new[str(data[str(i)]["Source Vendor"])]<-vendor_new[str(data[str(i)]["Source Vendor"])] + 1
+380     ELSE
+381         vendor_new[str(data[str(i)]["Source Vendor"])]<-1
+382     ENDIF
+383     
+384     vendor_new<-dict(sorted(vendor_new.items(),key=lambda item: item[1], reverse=True))
+385 
+386     // ////////////////// DST VENDOR ////////////////////////
+387     // // OUTPUT "////////////"
+388     OUTPUT "SRC VENDOR time taken"
+389     finish<-time.time()
+390     OUTPUT finish - start
+391     start<-time.time()
+392 
+393     IF str(data[str(i)]["Destination Vendor"]) in list(vendor_new.keys())
+394         THEN
+395         vendor_new[str(data[str(i)]["Destination Vendor"])]<-vendor_new[str(data[str(i)]["Destination Vendor"])] + 1
+396     ELSE
+397         vendor_new[str(data[str(i)]["Destination Vendor"])]<-1
+398     ENDIF
+399     
+400     vendor_new<-dict(sorted(vendor_new.items(),key=lambda item: item[1], reverse=True))
+401 
+402     // ////////////////// SRC PORT ////////////////////////
+403     // // OUTPUT "////////////"
+404     OUTPUT "DST VENDOR time taken"
+405     finish<-time.time()
+406     OUTPUT finish - start
+407     start<-time.time()
+408 
+409     IF str(data[str(i)]["Source Port"]) in list(sport_new.keys())
+410         THEN
+411         sport_new[str(data[str(i)]["Source Port"])]<-sport_new[str(data[str(i)]["Source Port"])] + 1
+412     ELSE
+413         sport_new[str(data[str(i)]["Source Port"])]<-1
+414     ENDIF
+415     
+416     sport_new<-dict(sorted(sport_new.items(),key=lambda item: item[1], reverse=True))
+417 
+418     // ////////////////// DST PORT ////////////////////////
+419     // // OUTPUT "////////////"
+420     OUTPUT "SRC PORT time taken"
+421     finish<-time.time()
+422     OUTPUT finish - start
+423     start<-time.time()
+424 
+425     IF str(data[str(i)]["Destination Port"]) in list(dport_new.keys())
+426         THEN
+427         dport_new[str(data[str(i)]["Destination Port"])]<-dport_new[str(data[str(i)]["Destination Port"])] + 1
+428     ELSE
+429         dport_new[str(data[str(i)]["Destination Port"])]<-1
+430     ENDIF
+431     OUTPUT "DST PORT time taken"
+432     finish<-time.time()
+433     OUTPUT finish - start
+434     start<-time.time()
+435     
+436     dport_new<-dict(sorted(dport_new.items(),key=lambda item: item[1], reverse=True))
+437 
+438     i<-i + 1
+439 
+440 // ////////////////// LIST TO GATHER ALL DATA FOR TABULATE ////////////////////////
+441 start<-time.time()
+442 
+443 i<-int(0)
+444 //// OUTPUT ip_new
+445 FOR key in ip_new.keys():  //Pseudocode can't handle this
+446     IF i<10
+447         THEN
+448         //newance<-[]
+449         //newance.append(key[0])
+450         //newance.append(key[1])
+451         //newance.append(ip_new[key])
+452         //// OUTPUT newance
+453         transfer2.append([key[0],key[1],ip_new[key]])
+454     ELSE
+455         break  //This might be better as a repeat loop
+456     ENDIF
+457     i<-i+1
+458 //// OUTPUT transfer2
+459 
+460 done<-True
+461 
+462 i<-int(0)
+463 FOR key in vendor_new.keys():  //Pseudocode can't handle this
+464     //newance<-[]
+465     //newance.append(key)
+466     //newance.append(vendor_new[key]) 
+467     transfer3.append([key,vendor_new[key]])
+468     i<-i+1
+469 
+470 i<-int(0)
+471 FOR key in dst_new.keys():  //Pseudocode can't handle this
+472     IF i<10
+473         THEN
+474         //newance<-[]
+475         //newance.append(key) 
+476         //newance.append(dst_new[key]) 
+477         //transfer4.append(newance)
+478         transfer4.append([key,dst_new[key]])
+479     ENDIF
+480     i<-i+1
+481 
+482 i<-int(0)
+483 FOR key in proto_new.keys():  //Pseudocode can't handle this
+484     //newance<-[]
+485     //newance.append(key) 
+486     //newance.append(proto_new[key]) 
+487     transfer5.append([key,proto_new[key]])
+488     i<-i+1
+489 
+490 i<-int(0)
+491 FOR key in sport_new.keys():  //Pseudocode can't handle this
+492     IF i<10
+493         THEN
+494         //newance<-[]
+495         //newance.append(key) 
+496         //newance.append(sport_new[key]) 
+497         transfer6.append([key,sport_new[key]])
+498     ENDIF
+499     i<-i+1
+500 
+501 i<-int(0)
+502 FOR key in src_new.keys():  //Pseudocode can't handle this
+503     IF i<10
+504         THEN
+505         //newance<-[]
+506         //newance.append(key) 
+507         //newance.append(src_new[key]) 
+508         transfer.append([key,src_new[key]])
+509     ENDIF
+510     i<-i+1
+511 
+512 i<-int(0)
+513 FOR key in dport_new.keys():  //Pseudocode can't handle this
+514     IF i<10
+515         THEN
+516         //newance<-[]
+517         //newance.append(key)
+518         //newance.append(dport_new[key]) 
+519         transfer7.append([key,dport_new[key]])
+520     ENDIF
+521     i<-i+1
+522 
+523 
+524 
+525 OUTPUT "NEWANCE time taken"
+526 finish<-time.time()
+527 OUTPUT finish - start
+528 
+529 // ////////////////// TABULATE ////////////////////////
+530 start<-time.time()
+531 tabling<-tabulate(transfer, headers=["Source","Number of Packets with this Source"])  //Possible array.
+532 tabling2<-tabulate(transfer2, headers=["Src IP Address", "Dst IP Address", "Number of Packets Shared"])  //Possible array.
+533 tabling3<-tabulate(transfer3, headers=["Vendor Name","Number of Packets with the Vendor"])  //Possible array.
+534 tabling4<-tabulate(transfer4, headers=["Destination","Number of Packets with this Destination"])  //Possible array.
+535 tabling5<-tabulate(transfer5, headers=["Protocol","Number of Packets with this Protocol"])  //Possible array.
+536 tabling6<-tabulate(transfer6, headers=["Source Port","Number of Packets using this Port"])  //Possible array.
+537 tabling7<-tabulate(transfer7, headers=["Destination Port","Number of Packets using this Port"])  //Possible array.
+538 OUTPUT "TABULATE time taken"
+539 finish<-time.time()
+540 OUTPUT finish - start
+541 // ////////////////// FILE WRITING ////////////////////////
+542 start<-time.time()
+543 with open('report.txt', 'w') as f:
+544     f.write("Top 10 Pair of IP Addresses which exchange most packets : \n\n")
+545     f.write(tabling2)
+546 
+547 with open('report.txt', 'a') as f:
+548     f.write("\n\n\nTop 10 Source which communicated the most : \n\n")
+549     f.write(tabling)
+550 
+551 with open('report.txt', 'a') as f:
+552     f.write("\n\n\nTop 10 Destination which communicated the most : \n\n")
+553     f.write(tabling4)
+554 
+555 with open('report.txt', 'a') as f:
+556     f.write("\n\n\nVendor Name Derived from Payload : \n\n")
+557     f.write(tabling3)
+558 
+559 with open('report.txt', 'a') as f:
+560     f.write("\n\n\nPackets using Protocol : \n\n")
+561     f.write(tabling5)
+562 
+563 with open('report.txt', 'a') as f:
+564     f.write("\n\n\nPackets using Particular Source Port : \n\n")
+565     f.write(tabling6)
+566 
+567 with open('report.txt', 'a') as f:
+568     f.write("\n\n\nPackets using Particular Destination Port : \n\n")
+569     f.write(tabling7)
+570 
+571 OUTPUT "TABLING time taken"
+572 finish<-time.time()
+573 OUTPUT finish - start
