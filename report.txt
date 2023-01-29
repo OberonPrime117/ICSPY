@@ -2,52 +2,51 @@ Top 10 Pair of IP Addresses which exchange most packets :
 
 Src IP Address    Dst IP Address      Number of Packets Shared
 ----------------  ----------------  --------------------------
-192.168.222.128   10.0.218.174                             168
-10.0.218.174      192.168.222.128                          126
-192.168.222.128   192.168.222.255                           42
+91.198.120.253    213.157.91.235                            33
+213.157.91.235    91.198.120.253                            33
 
 
 Top 10 Source which communicated the most : 
 
-Source             Number of Packets with this Source
----------------  ------------------------------------
-192.168.222.128                                   210
-10.0.218.174                                      126
+Source            Number of Packets with this Source
+--------------  ------------------------------------
+91.198.120.253                                    33
+213.157.91.235                                    33
 
 
 Top 10 Destination which communicated the most : 
 
-Destination        Number of Packets with this Destination
----------------  -----------------------------------------
-10.0.218.174                                           168
-192.168.222.128                                        126
-192.168.222.255                                         42
+Destination       Number of Packets with this Destination
+--------------  -----------------------------------------
+213.157.91.235                                         33
+91.198.120.253                                         33
 
 
 Vendor Name Derived from Payload : 
 
 Vendor Name      Number of Packets with the Vendor
 -------------  -----------------------------------
-                                               630
-Broadcast                                       42
+                                               132
 
 
 Packets using Protocol : 
 
 Protocol      Number of Packets with this Protocol
 ----------  --------------------------------------
-BACnet                                         336
+UDP                                             66
 
 
 Packets using Particular Source Port : 
 
 Source Port      Number of Packets using this Port
 -------------  -----------------------------------
-bacnet                                         336
+4243                                            63
+sns_quote                                        3
 
 
 Packets using Particular Destination Port : 
 
 Destination Port      Number of Packets using this Port
 ------------------  -----------------------------------
-bacnet                                              336
+4243                                                 63
+sns_quote                                             3

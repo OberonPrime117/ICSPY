@@ -9,20 +9,23 @@ import time
 from mac_vendor_lookup import AsyncMacLookup
 from scapy.layers.inet import IP
 import asyncio
-
+import sys
 # ////////////////// PICK THE FILE FUNCTION ////////////////////////
 
 def select_file():
-    filetypes = (
-        ('PCAP', '*.pcap'),
-        ('PCAPNG', '*.pcapng'),
-        ('All files', '*.*')
-    )
-
-    filename = fd.askopenfilename(
-        title='Open a file',
-        initialdir='/home/artorias/Documents/Github/python-pcap-parser/',
-        filetypes=filetypes)
+    #filetypes = (
+    #    ('PCAP', '*.pcap'),
+    #    ('PCAPNG', '*.pcapng'),
+    #    ('All files', '*.*')
+    #)
+    #
+    #filename = fd.askopenfilename(
+    #    title='Open a file',
+    #    initialdir='/home/artorias/Documents/Github/python-pcap-parser/',
+    #    filetypes=filetypes)
+    print(sys.argv[0])
+    print(sys.argv[1])
+    filename = sys.argv[1]
 
     return filename
 
