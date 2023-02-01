@@ -13,7 +13,7 @@ def addto_listbox(event):
     lb.insert("end", event.data)
 
 ws = TkinterDnD.Tk()
-ws.title('PythonGuides')
+ws.title('ICS PCAP Dump Parser')
 ws.geometry('300x300')
 ws.config(bg='#fcba03')
 
@@ -31,7 +31,7 @@ lframe = LabelFrame(ws, text='Instructions', bg='#fcba03')
 Label(
     lframe, 
     bg='#fcba03',
-    text='Drag and drop the folder \nof your choice in the below region.',
+    text='Drag and drop the network capture file \nof your choice in the below region.',
     height=5
     ).pack(fill=BOTH)
 lframe.pack(fill=BOTH, padx=10, pady=10)
