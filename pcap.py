@@ -37,6 +37,14 @@ def proto_name_by_num(proto_num):
             return name[8:]
     return "Protocol not found"
 
+def find_files(filename, search_path):
+    result = []
+    for root, dir, files in os.walk(search_path):
+        if filename in files:
+            result.append(os.path.join(root, filename))
+        
+    return result
+
 def animate():
     for c in itertools.cycle(['|', '/', '-', '\\']):
         if done:
@@ -64,6 +72,7 @@ async def srcmac(data,packet,packet_dict):
                     a =  packet_dict["802.3"]["src"] # 3
                 except:
                     a = "" # 3
+    print(a)
     return a
     
 async def dstmac(data,packet,packet_dict):
@@ -84,6 +93,7 @@ async def dstmac(data,packet,packet_dict):
                     a = packet_dict["802.3"]["dst"]
                 except:
                     a = ""
+    print(a)
     return a
 
 async def proto(data, packet_dict, packet):
@@ -127,16 +137,18 @@ async def proto(data, packet_dict, packet):
 async def dstvendor(data):
     mac = AsyncMacLookup()
     if data[str(i)]["Destination MAC"] == 'ff:ff:ff:ff:ff:ff':
-        data[str(i)]["Destination Vendor"] = "Broadcast"
+        a = "Broadcast"
     else:
         try:
             #mac_vendor_dst = OuiLookup().query(data[str(i)]["Destination MAC"])
-            mac_vendor_dst = await mac.lookup(str(data[str(i)]["Destination MAC"]))
+            #mac_vendor_dst = await mac.lookup(str(data[str(i)]["Destination MAC"]))
             #print(mac_vendor_dst,"/////////")
-            data[str(i)]["Destination Vendor"] = list(mac_vendor_dst[0].items())[0][1]
+            a = find_files("mac-vendors.json",str(data[str(i)]["Destination MAC"]))
+            # list(mac_vendor_dst[0].items())[0][1]
         except:
-            data[str(i)]["Destination Vendor"] = ""
-    return data[str(i)]["Destination Vendor"]
+            a = ""
+    print(a)
+    return a
 
 async def srcvendor(data):
     mac = AsyncMacLookup()
@@ -146,11 +158,14 @@ async def srcvendor(data):
         # print(data[str(i)]["Source MAC"])
         try:
             #mac_vendor_src = OuiLookup().query(data[str(i)]["Source MAC"])
-            mac_vendor_src = await mac.lookup(str(data[str(i)]["Source MAC"]))
+            #mac_vendor_src = await mac.lookup(str(data[str(i)]["Source MAC"]))
             #print(mac_vendor_src,"/////////")
-            a = list(mac_vendor_src[0].items())[0][1]
+            #a = list(mac_vendor_src[0].items())[0][1]
+            a = find_files("mac-vendors.json",str(data[str(i)]["Source MAC"]))
         except:
             a = ""
+    
+    print(a)
     return a
     
 async def srcport(packet_dict):

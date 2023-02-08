@@ -2,51 +2,46 @@ Top 10 Pair of IP Addresses which exchange most packets :
 
 Src IP Address    Dst IP Address      Number of Packets Shared
 ----------------  ----------------  --------------------------
-91.198.120.253    213.157.91.235                            33
-213.157.91.235    91.198.120.253                            33
+10.4.14.102       10.130.130.130                           245
 
 
 Top 10 Source which communicated the most : 
 
-Source            Number of Packets with this Source
---------------  ------------------------------------
-91.198.120.253                                    33
-213.157.91.235                                    33
+Source         Number of Packets with this Source
+-----------  ------------------------------------
+10.4.14.102                                   245
 
 
 Top 10 Destination which communicated the most : 
 
 Destination       Number of Packets with this Destination
 --------------  -----------------------------------------
-213.157.91.235                                         33
-91.198.120.253                                         33
+10.130.130.130                                        245
 
 
 Vendor Name Derived from Payload : 
 
 Vendor Name      Number of Packets with the Vendor
 -------------  -----------------------------------
-                                               132
+                                               490
 
 
 Packets using Protocol : 
 
 Protocol      Number of Packets with this Protocol
 ----------  --------------------------------------
-UDP                                             66
+UDP                                            245
 
 
 Packets using Particular Source Port : 
 
-Source Port      Number of Packets using this Port
+  Source Port    Number of Packets using this Port
 -------------  -----------------------------------
-4243                                            63
-sns_quote                                        3
+        58722                                  245
 
 
 Packets using Particular Destination Port : 
 
 Destination Port      Number of Packets using this Port
 ------------------  -----------------------------------
-4243                                                 63
-sns_quote                                             3
+micromuse_ncpw                                      245
