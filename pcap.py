@@ -9,24 +9,25 @@ import time
 from mac_vendor_lookup import AsyncMacLookup
 from scapy.layers.inet import IP
 import asyncio
+import pandas as pd
 import sys
+import dpkt
 # ////////////////// PICK THE FILE FUNCTION ////////////////////////
 
 def select_file():
-    #filetypes = (
-    #    ('PCAP', '*.pcap'),
-    #    ('PCAPNG', '*.pcapng'),
-    #    ('All files', '*.*')
-    #)
-    #
-    #filename = fd.askopenfilename(
-    #    title='Open a file',
-    #    initialdir='/home/artorias/Documents/Github/python-pcap-parser/',
-    #    filetypes=filetypes)
-    print(sys.argv[0])
-    print(sys.argv[1])
-    filename = sys.argv[1]
-
+    filetypes = (
+        ('PCAP', '*.pcap'),
+        ('PCAPNG', '*.pcapng'),
+        ('All files', '*.*')
+    )
+    
+    filename = fd.askopenfilename(
+        title='Open a file',
+        initialdir='/home/artorias/Documents/Github/python-pcap-parser/',
+        filetypes=filetypes)
+        
+    data = pd.read_csv(str(filename), encoding= 'unicode_escape')
+    print(data)
     return filename
 
 # ////////////////// GET PROTOCOL NAME FROM ITS NUMBER ////////////////////////

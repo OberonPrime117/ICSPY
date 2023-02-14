@@ -2,46 +2,46 @@ Top 10 Pair of IP Addresses which exchange most packets :
 
 Src IP Address    Dst IP Address      Number of Packets Shared
 ----------------  ----------------  --------------------------
-10.4.14.102       10.130.130.130                           245
+192.168.42.29     192.168.42.207                             2
 
 
 Top 10 Source which communicated the most : 
 
-Source         Number of Packets with this Source
------------  ------------------------------------
-10.4.14.102                                   245
+Source           Number of Packets with this Source
+-------------  ------------------------------------
+192.168.42.29                                     2
 
 
 Top 10 Destination which communicated the most : 
 
 Destination       Number of Packets with this Destination
 --------------  -----------------------------------------
-10.130.130.130                                        245
+192.168.42.207                                          2
 
 
 Vendor Name Derived from Payload : 
 
 Vendor Name      Number of Packets with the Vendor
 -------------  -----------------------------------
-                                               490
+[]                                               4
 
 
 Packets using Protocol : 
 
 Protocol      Number of Packets with this Protocol
 ----------  --------------------------------------
-UDP                                            245
+BACnet                                           2
 
 
 Packets using Particular Source Port : 
 
-  Source Port    Number of Packets using this Port
+Source Port      Number of Packets using this Port
 -------------  -----------------------------------
-        58722                                  245
+bacnet                                           2
 
 
 Packets using Particular Destination Port : 
 
 Destination Port      Number of Packets using this Port
 ------------------  -----------------------------------
-micromuse_ncpw                                      245
+bacnet                                                2
