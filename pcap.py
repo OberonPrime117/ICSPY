@@ -25,9 +25,6 @@ def select_file():
         title='Open a file',
         initialdir='/home/artorias/Documents/Github/python-pcap-parser/',
         filetypes=filetypes)
-        
-    data = pd.read_csv(str(filename), encoding= 'unicode_escape')
-    print(data)
     return filename
 
 # ////////////////// GET PROTOCOL NAME FROM ITS NUMBER ////////////////////////
