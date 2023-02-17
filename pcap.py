@@ -1,6 +1,7 @@
 # ////////////////// ALL IMPORTS ////////////////////////
 from elasticsearch import Elasticsearch
 import requests
+from OuiLookup import OuiLookup
 from datetime import datetime
 import json
 import requests
@@ -67,12 +68,9 @@ async def srcmac(data,packet,packet_dict):
             a = packet[Ether].src
         except:
             try:
-                a = getmacbyip(str(data[str(i)]["Source IP"])) # 3 # 3
+                a =  packet_dict["802.3"]["src"] # 3
             except:
-                try:
-                    a =  packet_dict["802.3"]["src"] # 3
-                except:
-                    a = "" # 3
+                a = "" # 3
     #print(a)
     return a
     
@@ -88,12 +86,9 @@ async def dstmac(data,packet,packet_dict):
             a = packet[Ether].dst # 4
         except:
             try:
-                a = getmacbyip(str(data[str(i)]["Destination IP"]))
+                a = packet_dict["802.3"]["dst"]
             except:
-                try:
-                    a = packet_dict["802.3"]["dst"]
-                except:
-                    a = ""
+                a = ""
     #print(a)
     return a
 
@@ -154,7 +149,7 @@ async def dstvendor(data):
                 }
             }
             resp = es.search(index="mac-vendors", body=searchp)
-            print(resp)
+            #print(resp)
             #mac_vendor_dst = OuiLookup().query(data[str(i)]["Destination MAC"])
             #mac_vendor_dst = await mac.lookup(str(data[str(i)]["Destination MAC"]))
             #print(mac_vendor_dst,"/////////")
@@ -162,8 +157,10 @@ async def dstvendor(data):
             # list(mac_vendor_dst[0].items())[0][1]
             a = resp["hits"]["hits"][0]["_source"]["Vendor Name"]
         except:
-            a = ""
-    print(a)
+            #a = ""
+            a = OuiLookup().query(str(data[str(i)]["Destination MAC"]))
+            return list(a[0].values())[0]
+    #print(a)
     return a
 
 async def srcvendor(data):
@@ -178,7 +175,7 @@ async def srcvendor(data):
             es.indices.refresh(index="mac-vendors")
             searchp = {
                 "query": {
-                    "match_all": {
+                    "match": {
                         "Mac Prefix":{
                             "query": "00-D0-EF"
                         }
@@ -189,14 +186,10 @@ async def srcvendor(data):
             resp = es.search(index="mac-vendors", body=searchp)
             #print(resp)
             a = resp["hits"]["hits"][0]["_source"]["Vendor Name"]
-            print(a)
-            a = a.strip()
-            if a=="":
-                print("HEY")
-            
-        except Exception as e:
-            print(e)
-            a = ""
+            #print(a)
+        except:
+            a = OuiLookup().query(str(data[str(i)]["Source MAC"]))
+            return list(a[0].values())[0]
     #print(a)
     return a
     
@@ -295,7 +288,7 @@ async def dash(packet,data,packet_dict):
     data[str(i)]["Source Vendor"] = await srcvendor(data)
     finish = time.time()
     # print("SRC VENDOR",finish - start)
-    
+    # print(data)
     # data[str(i)]["Source Port"],data[str(i)]["Destination Port"],data[str(i)]["Source IP"],data[str(i)]["Destination IP"], data[str(i)]["Protocol"],data[str(i)]["Destination MAC"], data[str(i)]["Source MAC"] , data[str(i)]["Destination Vendor"] , data[str(i)]["Source Vendor"] = await asyncio.gather(srcport(packet_dict), dstport(packet_dict), srcip(packet, packet_dict), dstip(packet, packet_dict), proto(data, packet_dict, packet), dstmac(data,packet,packet_dict), srcmac(data,packet,packet_dict), dstvendor(data), srcvendor(data))
     return data
 

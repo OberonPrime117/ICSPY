@@ -1,48 +1,98 @@
 Top 10 Pair of IP Addresses which exchange most packets : 
 
-Src IP Address    Dst IP Address      Number of Packets Shared
-----------------  ----------------  --------------------------
-192.168.42.29     192.168.42.207                             2
+Src IP Address     Dst IP Address       Number of Packets Shared
+-----------------  -----------------  --------------------------
+192.168.0.46       192.168.0.101                             120
+192.168.0.101      192.168.0.46                              120
+00:00:81:e1:79:5c  01:80:c2:00:00:00                          42
+192.168.0.46       193.40.240.200                              8
+00:00:81:e1:79:5c  01:00:81:00:01:00                           6
+00:00:81:e1:79:5c  01:00:81:00:01:01                           6
+193.40.240.1       239.255.255.250                             5
+193.40.240.200     192.168.0.46                                4
+193.40.240.224     239.255.255.250                             3
+0.0.0.0            255.255.255.255                             2
 
 
 Top 10 Source which communicated the most : 
 
-Source           Number of Packets with this Source
--------------  ------------------------------------
-192.168.42.29                                     2
+Source               Number of Packets with this Source
+-----------------  ------------------------------------
+192.168.0.46                                        128
+192.168.0.101                                       120
+00:00:81:e1:79:5c                                    54
+193.40.240.1                                          5
+193.40.240.200                                        4
+193.40.240.224                                        3
+0.0.0.0                                               2
+192.168.0.71                                          1
+192.168.0.90                                          1
+192.168.0.52                                          1
 
 
 Top 10 Destination which communicated the most : 
 
-Destination       Number of Packets with this Destination
---------------  -----------------------------------------
-192.168.42.207                                          2
+Destination          Number of Packets with this Destination
+-----------------  -----------------------------------------
+192.168.0.46                                             124
+192.168.0.101                                            120
+01:80:c2:00:00:00                                         42
+193.40.240.200                                             8
+239.255.255.250                                            8
+01:00:81:00:01:00                                          6
+01:00:81:00:01:01                                          6
+192.168.0.255                                              3
+255.255.255.255                                            2
 
 
 Vendor Name Derived from Payload : 
 
-Vendor Name      Number of Packets with the Vendor
--------------  -----------------------------------
-IGT                                              2
-                                                 2
+Vendor Name             Number of Packets with the Vendor
+--------------------  -----------------------------------
+IGT                                                   319
+CNet Technology Inc.                                  124
+Rockwell Automation                                   120
+None                                                   54
+Broadcast                                              13
+Intel Corporation                                       8
 
 
 Packets using Protocol : 
 
 Protocol      Number of Packets with this Protocol
 ----------  --------------------------------------
-BACnet                                           2
+TCP                                            252
+STP                                             30
+UDP                                             15
+SNAP                                            12
+ARP                                              8
+DHCP                                             2
 
 
 Packets using Particular Source Port : 
 
 Source Port      Number of Packets using this Port
 -------------  -----------------------------------
-bacnet                                           2
+netbios_ns                                     140
+ssdp                                            71
+netbios_dgm                                     58
+dhcpv6_client                                   22
+ontobroker                                      12
+bootpc                                          10
+sflm                                             3
+N/A                                              2
+microsoft_ds                                     1
 
 
 Packets using Particular Destination Port : 
 
 Destination Port      Number of Packets using this Port
 ------------------  -----------------------------------
-bacnet                                                2
+netbios_ns                                          140
+ssdp                                                 83
+netbios_dgm                                          58
+dhcpv6_server                                        22
+bootps                                               10
+microsoft_ds                                          3
+N/A                                                   2
+sflm                                                  1
