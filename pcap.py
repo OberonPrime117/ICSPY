@@ -1,7 +1,10 @@
 # ////////////////// ALL IMPORTS ////////////////////////
-
+from elasticsearch import Elasticsearch
+import requests
+from datetime import datetime
+import json
+import requests
 from tabulate import tabulate
-from OuiLookup import OuiLookup
 from scapy.all import *
 from scapy.layers.l2 import getmacbyip, Ether
 from tkinter import filedialog as fd
@@ -70,7 +73,7 @@ async def srcmac(data,packet,packet_dict):
                     a =  packet_dict["802.3"]["src"] # 3
                 except:
                     a = "" # 3
-    print(a)
+    #print(a)
     return a
     
 async def dstmac(data,packet,packet_dict):
@@ -91,7 +94,7 @@ async def dstmac(data,packet,packet_dict):
                     a = packet_dict["802.3"]["dst"]
                 except:
                     a = ""
-    print(a)
+    #print(a)
     return a
 
 async def proto(data, packet_dict, packet):
@@ -138,11 +141,26 @@ async def dstvendor(data):
         a = "Broadcast"
     else:
         try:
+            ELASTIC_PASSWORD = "jUjRG50hi-co+9_c=bE9"
+            es = Elasticsearch("http://localhost:9200",basic_auth=("elastic", ELASTIC_PASSWORD))
+            es.indices.refresh(index="mac-vendors")
+            searchp = {
+                "query": {
+                    "match_all": {
+                        "Mac Prefix":{
+                            "query": "00-D0-EF"
+                        }
+                    }
+                }
+            }
+            resp = es.search(index="mac-vendors", body=searchp)
+            print(resp)
             #mac_vendor_dst = OuiLookup().query(data[str(i)]["Destination MAC"])
             #mac_vendor_dst = await mac.lookup(str(data[str(i)]["Destination MAC"]))
             #print(mac_vendor_dst,"/////////")
-            a = find_files("mac-vendors.json",str(data[str(i)]["Destination MAC"]))
+            #a = find_files("mac-vendors.json",str(data[str(i)]["Destination MAC"]))
             # list(mac_vendor_dst[0].items())[0][1]
+            a = resp["hits"]["hits"][0]["_source"]["Vendor Name"]
         except:
             a = ""
     print(a)
@@ -155,15 +173,31 @@ async def srcvendor(data):
     else:
         # print(data[str(i)]["Source MAC"])
         try:
-            #mac_vendor_src = OuiLookup().query(data[str(i)]["Source MAC"])
-            #mac_vendor_src = await mac.lookup(str(data[str(i)]["Source MAC"]))
-            #print(mac_vendor_src,"/////////")
-            #a = list(mac_vendor_src[0].items())[0][1]
-            a = find_files("mac-vendors.json",str(data[str(i)]["Source MAC"]))
-        except:
+            ELASTIC_PASSWORD = "jUjRG50hi-co+9_c=bE9"
+            es = Elasticsearch("http://localhost:9200",basic_auth=("elastic", ELASTIC_PASSWORD))
+            es.indices.refresh(index="mac-vendors")
+            searchp = {
+                "query": {
+                    "match_all": {
+                        "Mac Prefix":{
+                            "query": "00-D0-EF"
+                        }
+                    }
+                }
+            }
+            
+            resp = es.search(index="mac-vendors", body=searchp)
+            #print(resp)
+            a = resp["hits"]["hits"][0]["_source"]["Vendor Name"]
+            print(a)
+            a = a.strip()
+            if a=="":
+                print("HEY")
+            
+        except Exception as e:
+            print(e)
             a = ""
-    
-    print(a)
+    #print(a)
     return a
     
 async def srcport(packet_dict):

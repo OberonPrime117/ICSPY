@@ -23,7 +23,8 @@ Vendor Name Derived from Payload :
 
 Vendor Name      Number of Packets with the Vendor
 -------------  -----------------------------------
-[]                                               4
+IGT                                              2
+                                                 2
 
 
 Packets using Protocol : 
