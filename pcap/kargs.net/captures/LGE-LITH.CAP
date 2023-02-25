@@ -1,0 +1,4736 @@
+ARCNET:
+    Destination: 00            Size: 0021  Number:      1
+    Source:      01            Type: CD    Time:    4.541
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'00'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               Unconfirmed-Private-Transfer
+BACnet APDU VARIABLE PART:
+vendorID                      24
+serviceNumber                 3
+serviceParameters {
+                               OCTET-STRING
+65 12 00 01  00 00 00 00 - 00 00 02 3F  FF FF 42 9C
+3C 8B 00 07
+}
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 000B  Number:      2
+    Source:      85            Type: CD    Time:    6.191
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               Who-Is
+BACnet APDU VARIABLE PART:
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:      3
+    Source:      0A            Type: CD    Time:    6.199
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 10
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:      4
+    Source:      0C            Type: CD    Time:    6.203
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 12
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:      5
+    Source:      12            Type: CD    Time:    6.207
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 18
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:      6
+    Source:      14            Type: CD    Time:    6.210
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 20
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:      7
+    Source:      17            Type: CD    Time:    6.214
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 23
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:      8
+    Source:      6C            Type: CD    Time:    6.220
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 108
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:      9
+    Source:      85            Type: CD    Time:    6.223
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 133
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     10
+    Source:      8E            Type: CD    Time:    6.226
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 142
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0013  Number:     11
+    Source:      01            Type: CD    Time:    6.273
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'00'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 4194303
+maxAPDULengthAccepted         480
+segmentationSupported         no-segmentation
+vendorID                      24
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     12
+    Source:      04            Type: CD    Time:    6.276
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 4
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     13
+    Source:      05            Type: CD    Time:    6.280
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 5
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     14
+    Source:      06            Type: CD    Time:    6.282
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 6
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     15
+    Source:      07            Type: CD    Time:    6.285
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 7
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     16
+    Source:      08            Type: CD    Time:    6.288
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 8
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     17
+    Source:      09            Type: CD    Time:    6.291
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 9
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     18
+    Source:      0B            Type: CD    Time:    6.294
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 11
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     19
+    Source:      0D            Type: CD    Time:    6.298
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 13
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     20
+    Source:      0E            Type: CD    Time:    6.301
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 14
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     21
+    Source:      10            Type: CD    Time:    6.304
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 16
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     22
+    Source:      11            Type: CD    Time:    6.307
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 17
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     23
+    Source:      15            Type: CD    Time:    6.311
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 21
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     24
+    Source:      16            Type: CD    Time:    6.314
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 22
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     25
+    Source:      18            Type: CD    Time:    6.317
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 24
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     26
+    Source:      19            Type: CD    Time:    6.320
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 25
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     27
+    Source:      1A            Type: CD    Time:    6.323
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 26
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     28
+    Source:      1B            Type: CD    Time:    6.326
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 27
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     29
+    Source:      1C            Type: CD    Time:    6.330
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 28
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     30
+    Source:      1D            Type: CD    Time:    6.332
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 29
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     31
+    Source:      03            Type: CD    Time:    6.368
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 3
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     32
+    Source:      0F            Type: CD    Time:    6.403
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 15
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001F  Number:     33
+    Source:      01            Type: CD    Time:    6.560
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0001'  SLEN = 6  SADR = X'C0A80072BAC0'
+   Hop Count = X'FE'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 111
+maxAPDULengthAccepted         50
+segmentationSupported         no-segmentation
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 000F  Number:     34
+    Source:      01            Type: CD    Time:    6.577
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'85'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               Who-Is
+BACnet APDU VARIABLE PART:
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     35
+    Source:      0A            Type: CD    Time:    6.582
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 10
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     36
+    Source:      0C            Type: CD    Time:    6.586
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 12
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     37
+    Source:      12            Type: CD    Time:    6.591
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 18
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     38
+    Source:      14            Type: CD    Time:    6.594
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 20
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     39
+    Source:      17            Type: CD    Time:    6.597
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 23
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     40
+    Source:      6C            Type: CD    Time:    6.603
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 108
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     41
+    Source:      85            Type: CD    Time:    6.607
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 133
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     42
+    Source:      8E            Type: CD    Time:    6.609
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 142
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     43
+    Source:      01            Type: CD    Time:    6.613
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'0A'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 10
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0020  Number:     44
+    Source:      01            Type: CD    Time:    6.631
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0001'  SLEN = 6  SADR = X'C0A80032BAC0'
+   Hop Count = X'FE'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 126
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0013  Number:     45
+    Source:      01            Type: CD    Time:    6.647
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'00'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 4194303
+maxAPDULengthAccepted         480
+segmentationSupported         no-segmentation
+vendorID                      24
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     46
+    Source:      01            Type: CD    Time:    6.665
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'0C'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 12
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     47
+    Source:      01            Type: CD    Time:    6.683
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'12'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 18
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     48
+    Source:      01            Type: CD    Time:    6.699
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'14'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 20
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     49
+    Source:      01            Type: CD    Time:    6.716
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'17'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 23
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     50
+    Source:      01            Type: CD    Time:    6.733
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'6C'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 108
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     51
+    Source:      01            Type: CD    Time:    6.751
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'85'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 133
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     52
+    Source:      01            Type: CD    Time:    6.769
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'8E'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 142
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     53
+    Source:      01            Type: CD    Time:    6.785
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'04'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 4
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     54
+    Source:      01            Type: CD    Time:    6.803
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'05'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 5
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     55
+    Source:      01            Type: CD    Time:    6.820
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'06'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 6
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     56
+    Source:      01            Type: CD    Time:    6.837
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'07'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 7
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     57
+    Source:      01            Type: CD    Time:    6.856
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'08'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 8
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     58
+    Source:      01            Type: CD    Time:    6.871
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'09'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 9
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     59
+    Source:      01            Type: CD    Time:    6.889
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'0B'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 11
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     60
+    Source:      01            Type: CD    Time:    6.906
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'0D'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 13
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     61
+    Source:      01            Type: CD    Time:    6.923
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'0E'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 14
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     62
+    Source:      01            Type: CD    Time:    6.940
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'10'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 16
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     63
+    Source:      01            Type: CD    Time:    6.958
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'11'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 17
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     64
+    Source:      01            Type: CD    Time:    6.975
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'15'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 21
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     65
+    Source:      01            Type: CD    Time:    6.992
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'16'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 22
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     66
+    Source:      01            Type: CD    Time:    7.009
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'18'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 24
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     67
+    Source:      01            Type: CD    Time:    7.027
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'19'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 25
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     68
+    Source:      09            Type: CD    Time:    7.032
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 9
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     69
+    Source:      01            Type: CD    Time:    7.046
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'1A'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 26
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     70
+    Source:      1A            Type: CD    Time:    7.059
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 26
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     71
+    Source:      1D            Type: CD    Time:    7.063
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 29
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     72
+    Source:      01            Type: CD    Time:    7.069
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'1B'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 27
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     73
+    Source:      06            Type: CD    Time:    7.073
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 6
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     74
+    Source:      07            Type: CD    Time:    7.076
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 7
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     75
+    Source:      08            Type: CD    Time:    7.079
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 8
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     76
+    Source:      0D            Type: CD    Time:    7.083
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 13
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     77
+    Source:      18            Type: CD    Time:    7.090
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 24
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     78
+    Source:      01            Type: CD    Time:    7.098
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'1C'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 28
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     79
+    Source:      01            Type: CD    Time:    7.116
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'1D'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 29
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     80
+    Source:      01            Type: CD    Time:    7.133
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'03'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 3
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     81
+    Source:      01            Type: CD    Time:    7.150
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'0F'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 15
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     82
+    Source:      01            Type: CD    Time:    7.167
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'0A'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 10
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     83
+    Source:      01            Type: CD    Time:    7.184
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'0C'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 12
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 000B  Number:     84
+    Source:      85            Type: CD    Time:    7.199
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               Who-Is
+BACnet APDU VARIABLE PART:
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     85
+    Source:      01            Type: CD    Time:    7.203
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'12'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 18
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     86
+    Source:      0A            Type: CD    Time:    7.210
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 10
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     87
+    Source:      0C            Type: CD    Time:    7.213
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 12
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     88
+    Source:      12            Type: CD    Time:    7.218
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 18
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     89
+    Source:      14            Type: CD    Time:    7.221
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 20
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     90
+    Source:      17            Type: CD    Time:    7.225
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 23
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     91
+    Source:      6C            Type: CD    Time:    7.231
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 108
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     92
+    Source:      85            Type: CD    Time:    7.234
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 133
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:     93
+    Source:      8E            Type: CD    Time:    7.237
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 142
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     94
+    Source:      01            Type: CD    Time:    7.240
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'14'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 20
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     95
+    Source:      01            Type: CD    Time:    7.258
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'17'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 23
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     96
+    Source:      01            Type: CD    Time:    7.275
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'6C'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 108
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     97
+    Source:      01            Type: CD    Time:    7.292
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'85'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 133
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:     98
+    Source:      01            Type: CD    Time:    7.310
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'8E'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 142
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0013  Number:     99
+    Source:      01            Type: CD    Time:    7.428
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'00'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 4194303
+maxAPDULengthAccepted         480
+segmentationSupported         no-segmentation
+vendorID                      24
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    100
+    Source:      01            Type: CD    Time:    7.488
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'09'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 9
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    101
+    Source:      01            Type: CD    Time:    7.505
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'1A'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 26
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    102
+    Source:      01            Type: CD    Time:    7.523
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'1D'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 29
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    103
+    Source:      01            Type: CD    Time:    7.540
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'06'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 6
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    104
+    Source:      01            Type: CD    Time:    7.557
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'07'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 7
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    105
+    Source:      01            Type: CD    Time:    7.574
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'08'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 8
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    106
+    Source:      01            Type: CD    Time:    7.592
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'0D'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 13
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    107
+    Source:      01            Type: CD    Time:    7.609
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'18'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 24
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001F  Number:    108
+    Source:      01            Type: CD    Time:    7.626
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0001'  SLEN = 6  SADR = X'C0A80072BAC0'
+   Hop Count = X'FE'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 111
+maxAPDULengthAccepted         50
+segmentationSupported         no-segmentation
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 000F  Number:    109
+    Source:      01            Type: CD    Time:    7.643
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'85'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               Who-Is
+BACnet APDU VARIABLE PART:
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:    110
+    Source:      0A            Type: CD    Time:    7.649
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 10
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:    111
+    Source:      0C            Type: CD    Time:    7.652
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 12
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:    112
+    Source:      12            Type: CD    Time:    7.657
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 18
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:    113
+    Source:      14            Type: CD    Time:    7.660
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 20
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:    114
+    Source:      17            Type: CD    Time:    7.664
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 23
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:    115
+    Source:      6C            Type: CD    Time:    7.670
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 108
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:    116
+    Source:      85            Type: CD    Time:    7.673
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 133
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:    117
+    Source:      8E            Type: CD    Time:    7.676
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 142
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    118
+    Source:      01            Type: CD    Time:    7.680
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'0A'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 10
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    119
+    Source:      01            Type: CD    Time:    7.697
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'0C'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 12
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0020  Number:    120
+    Source:      01            Type: CD    Time:    7.715
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0001'  SLEN = 6  SADR = X'C0A80032BAC0'
+   Hop Count = X'FE'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 126
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    121
+    Source:      01            Type: CD    Time:    7.732
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'12'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 18
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    122
+    Source:      01            Type: CD    Time:    7.749
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'14'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 20
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    123
+    Source:      01            Type: CD    Time:    7.767
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'17'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 23
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    124
+    Source:      01            Type: CD    Time:    7.784
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'6C'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 108
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    125
+    Source:      01            Type: CD    Time:    7.801
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'85'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 133
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    126
+    Source:      01            Type: CD    Time:    7.818
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'8E'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 142
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0013  Number:    127
+    Source:      01            Type: CD    Time:    7.864
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'00'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 4194303
+maxAPDULengthAccepted         480
+segmentationSupported         no-segmentation
+vendorID                      24
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    128
+    Source:      01            Type: CD    Time:    7.912
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'0A'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 10
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    129
+    Source:      01            Type: CD    Time:    7.927
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'0C'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 12
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    130
+    Source:      01            Type: CD    Time:    7.944
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'12'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 18
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    131
+    Source:      01            Type: CD    Time:    7.962
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'14'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 20
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    132
+    Source:      01            Type: CD    Time:    7.979
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'17'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 23
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    133
+    Source:      01            Type: CD    Time:    7.996
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'6C'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 108
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    134
+    Source:      01            Type: CD    Time:    8.013
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'85'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 133
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    135
+    Source:      01            Type: CD    Time:    8.032
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'8E'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 142
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:    136
+    Source:      1D            Type: CD    Time:    8.045
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 29
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:    137
+    Source:      0D            Type: CD    Time:    8.055
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 13
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:    138
+    Source:      0E            Type: CD    Time:    8.058
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 14
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:    139
+    Source:      18            Type: CD    Time:    8.065
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 24
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:    140
+    Source:      07            Type: CD    Time:    8.074
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 7
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:    141
+    Source:      08            Type: CD    Time:    8.077
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 8
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:    142
+    Source:      0B            Type: CD    Time:    8.082
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 11
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:    143
+    Source:      11            Type: CD    Time:    8.086
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 17
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:    144
+    Source:      15            Type: CD    Time:    8.090
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 21
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:    145
+    Source:      19            Type: CD    Time:    8.095
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 25
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:    146
+    Source:      06            Type: CD    Time:    8.103
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 6
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    147
+    Source:      01            Type: CD    Time:    8.162
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'1D'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 29
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    148
+    Source:      01            Type: CD    Time:    8.194
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'0D'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 13
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    149
+    Source:      01            Type: CD    Time:    8.211
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'0E'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 14
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    150
+    Source:      01            Type: CD    Time:    8.228
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'18'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 24
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    151
+    Source:      01            Type: CD    Time:    8.246
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'07'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 7
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    152
+    Source:      01            Type: CD    Time:    8.263
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'08'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 8
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    153
+    Source:      01            Type: CD    Time:    8.281
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'0B'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 11
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    154
+    Source:      01            Type: CD    Time:    8.297
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'11'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 17
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    155
+    Source:      01            Type: CD    Time:    8.314
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'15'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 21
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    156
+    Source:      01            Type: CD    Time:    8.332
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'19'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 25
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    157
+    Source:      01            Type: CD    Time:    8.350
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'06'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 6
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:    158
+    Source:      0E            Type: CD    Time:    8.545
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 14
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:    159
+    Source:      18            Type: CD    Time:    8.567
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 24
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    160
+    Source:      01            Type: CD    Time:    8.574
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'0E'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 14
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    161
+    Source:      01            Type: CD    Time:    8.591
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'18'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 24
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:    162
+    Source:      10            Type: CD    Time:    8.600
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 16
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:    163
+    Source:      16            Type: CD    Time:    8.605
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 22
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    164
+    Source:      01            Type: CD    Time:    8.642
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'10'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 16
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    165
+    Source:      01            Type: CD    Time:    8.659
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'16'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 22
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 0017  Number:    166
+    Source:      05            Type: CD    Time:    8.663
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'20'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   Hop Count = X'FF'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 5
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+
+ARCNET:
+    Destination: 00            Size: 001B  Number:    167
+    Source:      01            Type: CD    Time:    8.694
+
+ISO 8802-2 HEADER:
+   DSAP = X'82'  SSAP = X'82'  Control = X'03'(UI)
+BACnet NETWORK HEADER:
+   BACnet Protocol Version = 1  Control = X'28'
+   Priority = Normal   Data_Expecting_Reply = FALSE
+   DNET = X'FFFF'  DLEN = 0  (global broadcast)
+   SNET = X'0003'  SLEN = 1  SADR = X'05'
+   Hop Count = X'FD'
+   APDU follows
+BACnet APDU FIXED PART:
+Unconfirmed-Service-Request-PDU
+Service Choice:               I-Am
+BACnet APDU VARIABLE PART:
+iAmDeviceIdentifier           device object, instance number 5
+maxAPDULengthAccepted         480
+segmentationSupported         segmented-both
+vendorID                      42
+
+BACnet decoder v1.10 copyright 1995-98 by Cimetrics Inc.
+All rights reserved.
+BACnet is a trademark of the American Society of Heating, Refrigerating
+and Air-Conditioning Engineers.
+
+------------------------------------------------------------------------
+

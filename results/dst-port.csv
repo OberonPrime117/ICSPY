@@ -1,0 +1,9 @@
+Destination Port,Number of Packets
+N/A,2
+sflm,1
+microsoft_ds,3
+netbios_dgm,58
+netbios_ns,140
+ssdp,83
+dhcpv6_server,22
+bootps,10

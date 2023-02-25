@@ -1,22 +1,30 @@
 # ////////////////// ALL IMPORTS ////////////////////////
-from elasticsearch import Elasticsearch
-import requests
-from OuiLookup import OuiLookup
-from datetime import datetime
-import json
-import requests
-from tabulate import tabulate
-from scapy.all import *
-from scapy.layers.l2 import getmacbyip, Ether
-from tkinter import filedialog as fd
-import time
-from mac_vendor_lookup import AsyncMacLookup
-from scapy.layers.inet import IP
-import asyncio
-import pandas as pd
-import sys
-import dpkt
-# ////////////////// PICK THE FILE FUNCTION ////////////////////////
+from elasticsearch import Elasticsearch # SEARCHING
+import requests # HTTP REQUEST
+from OuiLookup import OuiLookup # ONLINE LOOKUP TO ADD TO OUR DB
+from datetime import datetime # DATETIME
+import json # JSON EXPORTS
+
+import time # TIME FOR FUNCTIONS 
+import asyncio # ASYNC CODE
+from mac_vendor_lookup import MacLookup # ONLINE LOOKUP TO ADD TO OUR DB
+import argparse # ARGUMENT FOR COMMAND
+
+import sys # EXIT PROGRAM
+import csv # CSV EXPORTS
+
+# SCAPY PCAP INTERPRETER
+from scapy.all import * # PCAP DATA
+from scapy.layers.l2 import getmacbyip, Ether # PCAP DATA
+from scapy.layers.inet import IP # PCAP DATA
+
+# ///// VISUAL
+import random
+from matplotlib import pyplot as plt 
+import numpy as np 
+from matplotlib.animation import FuncAnimation 
+
+# ////////////////// ELASTICSEARCH  ////////////////////////
 
 def select_file():
     filetypes = (
@@ -32,6 +40,7 @@ def select_file():
     return filename
 
 # ////////////////// GET PROTOCOL NAME FROM ITS NUMBER ////////////////////////
+    
 
 def proto_name_by_num(proto_num):
     for name,num in vars(socket).items():
@@ -47,6 +56,14 @@ def find_files(filename, search_path):
         
     return result
 
+def animate(i):
+    new_sizes = []
+    new_sizes = random.sample(sizes, len(sizes))
+    print(new_sizes)
+    ax.clear()
+    ax.axis('equal')
+    ax.pie(new_sizes, labels=labels, autopct='%1.1f%%', shadow=True, startangle=140) 
+
 def animate():
     for c in itertools.cycle(['|', '/', '-', '\\']):
         if done:
@@ -56,7 +73,7 @@ def animate():
         time.sleep(0.1)
     sys.stdout.write('\nDone!\t')
 
-async def srcmac(data,packet,packet_dict):
+def srcmac(data,packet,packet_dict,i):
     if str(data[str(i)]["Source IP"]) == "0.0.0.0":
         a = "00:21:6a:2d:3b:8e" # 3
 
@@ -74,7 +91,7 @@ async def srcmac(data,packet,packet_dict):
     #print(a)
     return a
     
-async def dstmac(data,packet,packet_dict):
+def dstmac(data,packet,packet_dict,i):
     if str(data[str(i)]["Destination IP"]) == "255.255.255.255":
         a = "ff:ff:ff:ff:ff:ff" # 4
     
@@ -92,7 +109,7 @@ async def dstmac(data,packet,packet_dict):
     #print(a)
     return a
 
-async def proto(data, packet_dict, packet):
+def proto(data, packet_dict, packet,i):
     if IP in packet:
         a = proto_name_by_num(int(packet[IP].proto)) # 2
     else:
@@ -117,7 +134,7 @@ async def proto(data, packet_dict, packet):
         pass
     
     if str(data[str(i)]["Source Port"]) in list(protocol.keys()):
-        a = protocol[str(data[str(i)]["Destination Port"])]
+        a = protocol[str(data[str(i)]["Source Port"])]
         
     if str(data[str(i)]["Destination Port"]) in list(protocol.keys()):
         a = protocol[str(data[str(i)]["Destination Port"])]
@@ -130,70 +147,103 @@ async def proto(data, packet_dict, packet):
     
     return a
 
-async def dstvendor(data):
-    mac = AsyncMacLookup()
+def oui(macaddr,num):
+    #a = OuiLookup().query(macaddr)
+    #print(macaddr)
+    try:
+        a = MacLookup().lookup(macaddr)
+    except:
+        with open("unknown-mac-address.txt", 'a', encoding='utf-8-sig') as f:
+            f.write(macaddr+"\n")
+        return "None"
+    dicta = { "Mac Prefix": macaddr, "Vendor Name": a }
+    with open("mac-vendors.json", 'r', encoding='utf-8-sig') as f:
+        hello = json.load(f)
+        hello = hello["value"]
+    #print(hello)
+    hello.append(dicta)
+    abc = {"value" : dicta}
+    filename = "runtime-exports/mac-vendors"+str(num)+".json"
+    with open(filename, 'a', encoding='utf-8-sig') as f:
+        json.dump(abc,f)
+    return dicta["Vendor Name"]
+
+def dstvendor(data,es,i):
     if data[str(i)]["Destination MAC"] == 'ff:ff:ff:ff:ff:ff':
         a = "Broadcast"
     else:
         try:
-            ELASTIC_PASSWORD = "jUjRG50hi-co+9_c=bE9"
-            es = Elasticsearch("http://localhost:9200",basic_auth=("elastic", ELASTIC_PASSWORD))
+            ELASTIC_PASSWORD = "1Q_OlVC5SGUTpoY-kD=O"
+            es = Elasticsearch("https://localhost:9200",http_auth=("elastic", ELASTIC_PASSWORD), verify_certs=False)
             es.indices.refresh(index="mac-vendors")
+            val = str(data[str(i)]["Destination MAC"])[0:8].upper()
+
             searchp = {
                 "query": {
-                    "match_all": {
-                        "Mac Prefix":{
-                            "query": "00-D0-EF"
-                        }
+                    "match": {
+                        "Mac Prefix": val
                     }
                 }
             }
             resp = es.search(index="mac-vendors", body=searchp)
-            #print(resp)
-            #mac_vendor_dst = OuiLookup().query(data[str(i)]["Destination MAC"])
-            #mac_vendor_dst = await mac.lookup(str(data[str(i)]["Destination MAC"]))
-            #print(mac_vendor_dst,"/////////")
-            #a = find_files("mac-vendors.json",str(data[str(i)]["Destination MAC"]))
-            # list(mac_vendor_dst[0].items())[0][1]
-            a = resp["hits"]["hits"][0]["_source"]["Vendor Name"]
-        except:
-            #a = ""
-            a = OuiLookup().query(str(data[str(i)]["Destination MAC"]))
-            return list(a[0].values())[0]
-    #print(a)
-    return a
 
-async def srcvendor(data):
-    mac = AsyncMacLookup()
-    if data[str(i)]["Source MAC"] == 'ff:ff:ff:ff:ff:ff':
+            resp = resp["hits"]["hits"]
+            for value in resp:
+                ab = value["_source"]["Mac Prefix"]
+                if ab in val or val in ab:
+
+                    b = value["_source"]["Mac Prefix"]
+                    a = value["_source"]["Vendor Name"]
+                    return a
+
+            a = oui(str(data[str(i)]["Destination MAC"]),1)
+            return a
+        except Exception as e:
+            print(e)
+            a = oui(str(data[str(i)]["Destination MAC"]),2)
+            return a
+
+def srcvendor(data,es,i):
+    if str(data[str(i)]["Source MAC"]) == 'ff:ff:ff:ff:ff:ff':
         a = "Broadcast"
     else:
-        # print(data[str(i)]["Source MAC"])
         try:
-            ELASTIC_PASSWORD = "jUjRG50hi-co+9_c=bE9"
-            es = Elasticsearch("http://localhost:9200",basic_auth=("elastic", ELASTIC_PASSWORD))
+            ELASTIC_PASSWORD = "1Q_OlVC5SGUTpoY-kD=O"
+            es = Elasticsearch("https://localhost:9200",http_auth=("elastic", ELASTIC_PASSWORD), verify_certs=False)
             es.indices.refresh(index="mac-vendors")
+            val = str(data[str(i)]["Source MAC"])[0:8].upper()
+
             searchp = {
                 "query": {
                     "match": {
-                        "Mac Prefix":{
-                            "query": "00-D0-EF"
-                        }
+                        "Mac Prefix": val
                     }
                 }
             }
             
             resp = es.search(index="mac-vendors", body=searchp)
+
+            resp2 = resp["hits"]["hits"]
+
+            for value in resp2:
+                ab = value["_source"]["Mac Prefix"]
+                if ab in val or val in ab:
+                    b = value["_source"]["Mac Prefix"]
+                    a = value["_source"]["Vendor Name"]
+                    return a
+        
+            a = oui(str(data[str(i)]["Source MAC"]),3)
+            return a
+        except Exception as e:
+            print(e)
+            a = oui(str(data[str(i)]["Source MAC"]),4)
             #print(resp)
-            a = resp["hits"]["hits"][0]["_source"]["Vendor Name"]
-            #print(a)
-        except:
-            a = OuiLookup().query(str(data[str(i)]["Source MAC"]))
-            return list(a[0].values())[0]
+            return a
+
     #print(a)
     return a
     
-async def srcport(packet_dict):
+def srcport(packet_dict):
     if 'UDP' in list(packet_dict.keys()):
         a = packet_dict["UDP"]['sport']  
 
@@ -204,7 +254,7 @@ async def srcport(packet_dict):
         a = "N/A"
     return a
 
-async def dstport(packet_dict):
+def dstport(packet_dict):
     if 'UDP' in list(packet_dict.keys()):
         a = packet_dict["UDP"]['dport']
         
@@ -216,7 +266,7 @@ async def dstport(packet_dict):
         a = "N/A"
     return a
 
-async def srcip(packet, packet_dict):
+def srcip(packet, packet_dict):
     try:
         
         if IP in packet:
@@ -234,7 +284,7 @@ async def srcip(packet, packet_dict):
     
     return a
 
-async def dstip(packet, packet_dict):
+def dstip(packet, packet_dict):
     try:
         if IP in packet:
                 a = str(packet[IP].dst) # 1
@@ -250,50 +300,126 @@ async def dstip(packet, packet_dict):
             a = packet[Ether].dst # 1
     return a
 
-async def dash(packet,data,packet_dict):
+def animatepi(i):
+    new_sizes = []
+    new_sizes = random.sample(sizes, len(sizes))
+    print(new_sizes)
+    ax.clear()
+    ax.axis('equal')
+    ax.pie(new_sizes, labels=labels, autopct='%1.1f%%', shadow=True, startangle=140) 
+
+def export_data(csvfile,headerval,test,secondheaderval=None):
+    if secondheaderval == None:
+        header = [headerval,'Number of Packets']
+    else:
+        header = [headerval,secondheaderval,'Number of Packets']
+    with open(csvfile, 'w', encoding='UTF8', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(header)
+
+    # SEARCH AND POPULATE THE CSV
+
+    searchp = { 
+        "query" : { 
+            "match_all" : {}
+        },
+        "stored_fields": []
+    }
+
+    resp = es.search(index=test, body=searchp)
+    for i in resp["hits"]["hits"]:
+        impact = es.get(index=test,id=i["_id"])
+        b = []
+        b.append(impact["_id"])
+        if secondheaderval == None:
+            pass
+        else:
+            b.append(impact["_source"]["Destination IP"])
+        b.append(impact["_source"]["Number of Packets"])
+        with open(csvfile, 'a', encoding='UTF8', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(b)
+
+    # DELETE DOCUMENT
+    id_list = resp["hits"]["hits"]
+    for i in id_list:
+        es.delete(index=test,id=i["_id"])
+
+def dash(packet,data,packet_dict,i):
+    ELASTIC_PASSWORD = "1Q_OlVC5SGUTpoY-kD=O"
+    es = Elasticsearch("https://localhost:9200",http_auth=("elastic", ELASTIC_PASSWORD), verify_certs=False)
     start = time.time()
+    #print(i)
+
+    data[str(i)]["Source Port"] = srcport(packet_dict)
+    finish = time.time()
+    #print("SRC PORT",finish - start)
+
+    start = time.time()
+    data[str(i)]["Destination Port"] = dstport(packet_dict)
+    finish = time.time()
+    #print("DST PORT",finish - start)
     
-    data[str(i)]["Source Port"] = await srcport(packet_dict)
-    finish = time.time()
-    # print("SRC PORT",finish - start)
     start = time.time()
-    data[str(i)]["Destination Port"] = await dstport(packet_dict)
+    data[str(i)]["Source IP"] = srcip(packet, packet_dict)
     finish = time.time()
-    # print("DST PORT",finish - start)
+    #print("SRC IP",finish - start)
+    
     start = time.time()
-    data[str(i)]["Source IP"] = await srcip(packet, packet_dict)
+    data[str(i)]["Destination IP"] = dstip(packet, packet_dict)
     finish = time.time()
-    # print("SRC IP",finish - start)
+    #await asyncio.wait([data[str(i)]["Source Port"], data[str(i)]["Destination Port"],data[str(i)]["Source IP"],data[str(i)]["Destination IP"] ])
+    #print("DST IP",finish - start)
+
     start = time.time()
-    data[str(i)]["Destination IP"] = await dstip(packet, packet_dict)
+    data[str(i)]["Destination MAC"] = dstmac(data,packet,packet_dict,i)
     finish = time.time()
-    # print("DST IP",finish - start)
+    #print("DST MAC",finish - start)
+    
     start = time.time()
-    data[str(i)]["Protocol"] = await proto(data, packet_dict, packet)
+    data[str(i)]["Source MAC"] = srcmac(data,packet,packet_dict,i)
     finish = time.time()
-    # print("PROTOCOL",finish - start)
+    #print("SRC MAC",finish - start)
+    #await asyncio.wait([data[str(i)]["Destination MAC"],data[str(i)]["Source MAC"]])
+    
     start = time.time()
-    data[str(i)]["Destination MAC"] = await dstmac(data,packet,packet_dict)
+    data[str(i)]["Destination Vendor"] = dstvendor(data,es,i)
+    #print(data[str(i)]["Destination Vendor"])
     finish = time.time()
-    # print("DST MAC",finish - start)
+    #print("DST VENDOR",finish - start)
+    
     start = time.time()
-    data[str(i)]["Source MAC"] = await srcmac(data,packet,packet_dict)
+    data[str(i)]["Source Vendor"] = srcvendor(data,es,i)
+    #print(data[str(i)]["Source Vendor"])
     finish = time.time()
-    # print("SRC MAC",finish - start)
+    #print("SRC VENDOR",finish - start)
+
+    #print(data)
+    
     start = time.time()
-    data[str(i)]["Destination Vendor"] = await dstvendor(data)
+    data[str(i)]["Protocol"] = proto(data, packet_dict, packet,i)
     finish = time.time()
-    # print("DST VENDOR",finish - start)
-    start = time.time()
-    data[str(i)]["Source Vendor"] = await srcvendor(data)
-    finish = time.time()
-    # print("SRC VENDOR",finish - start)
-    # print(data)
-    # data[str(i)]["Source Port"],data[str(i)]["Destination Port"],data[str(i)]["Source IP"],data[str(i)]["Destination IP"], data[str(i)]["Protocol"],data[str(i)]["Destination MAC"], data[str(i)]["Source MAC"] , data[str(i)]["Destination Vendor"] , data[str(i)]["Source Vendor"] = await asyncio.gather(srcport(packet_dict), dstport(packet_dict), srcip(packet, packet_dict), dstip(packet, packet_dict), proto(data, packet_dict, packet), dstmac(data,packet,packet_dict), srcmac(data,packet,packet_dict), dstvendor(data), srcvendor(data))
+    #print("PROTOCOL",finish - start)
+    #await asyncio.wait([data[str(i)]["Destination Vendor"],data[str(i)]["Protocol"],data[str(i)]["Source Vendor"]])
+
     return data
 
-filep = select_file()
-packets = rdpcap(filep)
+#def index_doc(es,dicta,:
+#    resp = es.index(index="mac-vendors",id=j,document=dicta)
+ 
+
+# ////////////////// VARIABLE DECLARE ////////////////////////
+
+#filep = select_file()
+#print(filep)
+
+parser = argparse.ArgumentParser()
+parser.add_argument("-p", "--pcap", help = "Enter your pcap file")
+args = parser.parse_args()
+if args.pcap:
+    packets = rdpcap(args.pcap)
+else:
+    sys.exit()
 
 # ////////////////// VARIABLE DECLARE ////////////////////////
 
@@ -308,7 +434,7 @@ dst_new = {}
 src_new = {}
 sport_new = {}
 dport_new = {}
-transfer = []
+transfer1 = []
 transfer2 = []
 transfer3 = []
 transfer4 = []
@@ -317,7 +443,9 @@ transfer6 = []
 transfer7 = []
 done = False
 data = {}
-
+#plt.show()
+ELASTIC_PASSWORD = "1Q_OlVC5SGUTpoY-kD=O"
+es = Elasticsearch("https://localhost:9200",http_auth=("elastic", ELASTIC_PASSWORD), verify_certs=False)
 
 # ////////////////// LOADING ANIMATION ////////////////////////
 
@@ -325,6 +453,7 @@ t = threading.Thread(target=animate)
 t.start()
 start = time.time()
 i = 0
+j = 81291
 for packet in packets:
     i = i+1
     # print(i)
@@ -340,7 +469,6 @@ for packet in packets:
             packet_dict[layer][key.strip()] = val.strip()
     
     # ////////////////// RESET VALUES ////////////////////////
-    # print("////////////")
     
     start = time.time()
     
@@ -352,265 +480,152 @@ for packet in packets:
     mac_vendor_src = []
     mac_vendor_dst = []
 
-    # ////////////////// PORT ////////////////////////
-    # print("////////////")
-    # print("RESET time taken")
-    finish = time.time()
-    # print(finish - start)
-    start = time.time()
+    # ////////////////// MAIN FUNCTION ////////////////////////
 
-    data = asyncio.run(dash(packet,data,packet_dict))
-    
+    data = dash(packet,data,packet_dict,i)
 
-    
+    # ////////////////// RANKING PROTOCOL ////////////////////////
 
-    # ////////////////// IP ////////////////////////
-    # print("////////////")
-    # print("PORT time taken")
-    finish = time.time()
-    #print(finish - start)
-    start = time.time()
-    
-    
+    try:
+        resp = es.get(index="protocol",id=str(data[str(i)]["Protocol"]))
+        a = resp["_source"]
+        a["Number of Packets"] = int(a["Number of Packets"]) + 1
+        resp = es.index(index="protocol", id=str(data[str(i)]["Protocol"]), document=a)
+    except:
+        dbody = {"Number of Packets" : 1}
+        resp = es.index(index="protocol", id=str(data[str(i)]["Protocol"]), document=dbody)
         
+    # ////////////////// RANKING SRC IP , DST IP ////////////////////////
+
+    try:
+        resp = es.get(index="srcdst",id=str(data[str(i)]["Source IP"]))
+        a = resp["_source"]
+        a["Number of Packets"] = int(a["Number of Packets"]) + 1
+        resp = es.index(index="srcdst", id=str(data[str(i)]["Source IP"]), document=a)
+    except:
+        dbody = {"Number of Packets" : 1, "Destination IP": str(data[str(i)]["Destination IP"])}
+        resp = es.index(index="srcdst", id=str(data[str(i)]["Source IP"]), document=dbody)
+
+    # ////////////////// RANKING SRC IP ////////////////////////
+
+    try:
+        resp = es.get(index="srcip",id=str(data[str(i)]["Source IP"]))
+        a = resp["_source"]
+        a["Number of Packets"] = int(a["Number of Packets"]) + 1
+        resp = es.index(index="srcip", id=str(data[str(i)]["Source IP"]), document=a)
+    except:
+        dbody = {"Number of Packets" : 1}
+        resp = es.index(index="srcip", id=str(data[str(i)]["Source IP"]), document=dbody)
+
+    # ////////////////// RANKING DST IP ////////////////////////
+
+    try:
+        resp = es.get(index="dstip",id=str(data[str(i)]["Destination IP"]))
+        a = resp["_source"]
+        a["Number of Packets"] = int(a["Number of Packets"]) + 1
+        resp = es.index(index="dstip", id=str(data[str(i)]["Destination IP"]), document=a)
+    except:
+        dbody = {"Number of Packets" : 1}
+        resp = es.index(index="dstip", id=str(data[str(i)]["Destination IP"]), document=dbody)
+
+    # ////////////////// RANKING SRC VENDOR ////////////////////////
+
+    try:
+        resp = es.get(index="vendors",id=str(data[str(i)]["Source Vendor"]))
+        a = resp["_source"]
+        a["Number of Packets"] = int(a["Number of Packets"]) + 1
+        resp = es.index(index="vendors", id=str(data[str(i)]["Source Vendor"]), document=a)
+    except:
+        dbody = {"Number of Packets" : 1}
+        resp = es.index(index="vendors", id=str(data[str(i)]["Source Vendor"]), document=dbody)
+
+    # ////////////////// RANKING DST VENDOR ////////////////////////
+
+    try:
+        resp = es.get(index="vendors",id=str(data[str(i)]["Destination Vendor"]))
+        a = resp["_source"]
+        a["Number of Packets"] = int(a["Number of Packets"]) + 1
+        resp = es.index(index="vendors", id=str(data[str(i)]["Destination Vendor"]), document=a)
+    except:
+        dbody = {"Number of Packets" : 1}
+        resp = es.index(index="vendors", id=str(data[str(i)]["Destination Vendor"]), document=dbody)
+
+    # ////////////////// RANKING SRC PORT ////////////////////////
+
+    try:
+        resp = es.get(index="srcport",id=str(data[str(i)]["Source Port"]))
+        a = resp["_source"]
+        a["Number of Packets"] = int(a["Number of Packets"]) + 1
+        resp = es.index(index="srcport", id=str(data[str(i)]["Source Port"]), document=a)
+    except:
+        dbody = {"Number of Packets" : 1}
+        resp = es.index(index="srcport", id=str(data[str(i)]["Source Port"]), document=dbody)
+
+    # ////////////////// RANKING DST PORT ////////////////////////
+
+    try:
+        resp = es.get(index="dstport",id=str(data[str(i)]["Destination Port"]))
+        a = resp["_source"]
+        a["Number of Packets"] = int(a["Number of Packets"]) + 1
+        resp = es.index(index="dstport", id=str(data[str(i)]["Destination Port"]), document=a)
+    except:
+        dbody = {"Number of Packets" : 1}
+        resp = es.index(index="dstport", id=str(data[str(i)]["Destination Port"]), document=dbody)
+
+    # ////////////////// VISUALISATION CODE ////////////////////////
+
+    #fig,ax = plt.subplots()
+    #anim = FuncAnimation(fig, animatepi , frames=100, repeat=False) 
     
-    # ////////////////// PROTOCOL ////////////////////////
-    # print("////////////")
-    # print("IP time taken")
-    finish = time.time()
-    # print(finish - start)
-    start = time.time()
-
-    
-    #print(proto_new)
-
-    # ////////////////// MAC ////////////////////////
-    # print("////////////")
-    # print("PROTOCOL time taken")
-    finish = time.time()
-    # print(finish - start)
-    start = time.time()
-
-    
-    
-
-    # ////////////////// VENDOR ////////////////////////
-    # print("MAC time taken")
-    finish = time.time()
-    # print(finish - start)
-    start = time.time()
-
-    
-    # print(data[str(i)]["Destination Vendor"])
-    # print(data[str(i)]["Source Vendor"])
-
-    if str(data[str(i)]["Protocol"]) in list(proto_new.keys()):
-        proto_new[str(data[str(i)]["Protocol"])] = proto_new[str(data[str(i)]["Protocol"])] + 1
-    else:
-        proto_new[str(data[str(i)]["Protocol"])] = 1
-    
-    proto_new = dict(sorted(proto_new.items(),key=lambda item: item[1], reverse=True))
-
-    # ////////////////// SRC IP , DST IP ////////////////////////
-    # print("VENDOR time taken")
-    finish = time.time()
-    # print(finish - start)
-    start = time.time()
-
-    if (str(data[str(i)]["Source IP"]), str(data[str(i)]["Destination IP"])) in list(ip_new.keys()):
-        ip_new[(str(data[str(i)]["Source IP"]), str(data[str(i)]["Destination IP"]))] = ip_new[(str(data[str(i)]["Source IP"]), str(data[str(i)]["Destination IP"]))] + 1
-    else:
-        ip_new[(str(data[str(i)]["Source IP"]), str(data[str(i)]["Destination IP"]))] = 1
-    
-    ip_new = dict(sorted(ip_new.items(),key=lambda item: item[1], reverse=True))
-
-    # ////////////////// SRC IP ////////////////////////
-    # print("////////////")
-    # print("SRC+DEST time taken")
-    finish = time.time()
-    # print(finish - start)
-    start = time.time()
-
-    if str(data[str(i)]["Source IP"]) in list(src_new.keys()):
-        src_new[str(data[str(i)]["Source IP"])] = src_new[str(data[str(i)]["Source IP"])] + 1
-    else:
-        src_new[str(data[str(i)]["Source IP"])] = 1
-    
-    src_new = dict(sorted(src_new.items(),key=lambda item: item[1], reverse=True))
-
-    # ////////////////// DST IP ////////////////////////
-    # print("////////////")
-    # print("SRC IP time taken")
-    finish = time.time()
-    # print(finish - start)
-    start = time.time()
-
-    if str(data[str(i)]["Destination IP"]) in list(dst_new.keys()):
-        dst_new[str(data[str(i)]["Destination IP"])] = dst_new[str(data[str(i)]["Destination IP"])] + 1
-    else:
-        dst_new[str(data[str(i)]["Destination IP"])] = 1
-    
-    dst_new = dict(sorted(dst_new.items(),key=lambda item: item[1], reverse=True))
-
-    # ////////////////// SRC VENDOR ////////////////////////
-    # print("////////////")
-    # print("DEST IP time taken")
-    finish = time.time()
-    # print(finish - start)
-    start = time.time()
-
-    if str(data[str(i)]["Source Vendor"]) in list(vendor_new.keys()):
-        vendor_new[str(data[str(i)]["Source Vendor"])] = vendor_new[str(data[str(i)]["Source Vendor"])] + 1
-    else:
-        vendor_new[str(data[str(i)]["Source Vendor"])] = 1
-    
-    vendor_new = dict(sorted(vendor_new.items(),key=lambda item: item[1], reverse=True))
-
-    # ////////////////// DST VENDOR ////////////////////////
-    # print("////////////")
-    # print("SRC VENDOR time taken")
-    finish = time.time()
-    # print(finish - start)
-    start = time.time()
-
-    if str(data[str(i)]["Destination Vendor"]) in list(vendor_new.keys()):
-        vendor_new[str(data[str(i)]["Destination Vendor"])] = vendor_new[str(data[str(i)]["Destination Vendor"])] + 1
-    else:
-        vendor_new[str(data[str(i)]["Destination Vendor"])] = 1
-    
-    vendor_new = dict(sorted(vendor_new.items(),key=lambda item: item[1], reverse=True))
-
-    # ////////////////// SRC PORT ////////////////////////
-    # print("////////////")
-    # print("DST VENDOR time taken")
-    finish = time.time()
-    # print(finish - start)
-    start = time.time()
-
-    if str(data[str(i)]["Source Port"]) in list(sport_new.keys()):
-        sport_new[str(data[str(i)]["Source Port"])] = sport_new[str(data[str(i)]["Source Port"])] + 1
-    else:
-        sport_new[str(data[str(i)]["Source Port"])] = 1
-    
-    sport_new = dict(sorted(sport_new.items(),key=lambda item: item[1], reverse=True))
-
-    # ////////////////// DST PORT ////////////////////////
-    # print("////////////")
-    # print("SRC PORT time taken")
-    finish = time.time()
-    # print(finish - start)
-    start = time.time()
-
-    if str(data[str(i)]["Destination Port"]) in list(dport_new.keys()):
-        dport_new[str(data[str(i)]["Destination Port"])] = dport_new[str(data[str(i)]["Destination Port"])] + 1
-    else:
-        dport_new[str(data[str(i)]["Destination Port"])] = 1
-    # print("DST PORT time taken")
-    finish = time.time()
-    # print(finish - start)
-    start = time.time()
-    
-    dport_new = dict(sorted(dport_new.items(),key=lambda item: item[1], reverse=True))
-
     i = i + 1
 
-# ////////////////// LIST TO GATHER ALL DATA FOR TABULATE ////////////////////////
-start = time.time()
 
-i=int(0)
+# ////////////////// EXPORT DATA ////////////////////////
 
-for key in ip_new.keys():
-    if i<10:
-        transfer2.append([key[0],key[1],ip_new[key]])
-    else:
-        break
-    i = i+1
+# 1. SRC DST PAIR
+# 2. SRC IP
+# 3. DST IP
+# 4. VENDOR
+# 5. PROTOCOL
+# 6. SRC PORT
+# 7. DST PORT
+# 8. SRC MAC
+# 9. DST MAC
+
+# ////////////////// PAIR SRC-DST CSV //////////////////
+
+export_data("results/pair-of-ip.csv","Source IP","srcdst","Destination IP")
+
+# ////////////////// SOURCE CSV //////////////////
+
+export_data("results/src-ip.csv","Source IP","srcip")
+        
+# ////////////////// DESTINATION CSV //////////////////
+
+export_data("results/dst-ip.csv","Destination IP","dstip")
+
+# ////////////////// VENDOR CSV //////////////////
+
+export_data("results/vendor.csv","Vendor Name","vendors")
+
+# ////////////////// PROTOCOL CSV //////////////////
+
+export_data("results/protocol.csv","Protocols","protocol")
+
+# ////////////////// SOURCE PORT CSV //////////////////
+
+export_data("results/src-port.csv","Source Port","srcport")
+
+# ////////////////// DESTINATION PORT CSV //////////////////
+
+export_data("results/dst-port.csv","Destination Port","dstport")
+
+es.options(ignore_status=[400,404]).indices.delete(index='srcdst')
+es.options(ignore_status=[400,404]).indices.delete(index='srcip')
+es.options(ignore_status=[400,404]).indices.delete(index='dstip')
+es.options(ignore_status=[400,404]).indices.delete(index='vendors')
+es.options(ignore_status=[400,404]).indices.delete(index='protocol')
+es.options(ignore_status=[400,404]).indices.delete(index='srcport')
+es.options(ignore_status=[400,404]).indices.delete(index='dstport')
 
 done = True
-
-i = int(0)
-for key in vendor_new.keys():
-    transfer3.append([key,vendor_new[key]])
-    i = i+1
-
-i=int(0)
-for key in dst_new.keys():
-    if i<10:
-        transfer4.append([key,dst_new[key]])
-    i = i+1
-
-i=int(0)
-for key in proto_new.keys():
-    transfer5.append([key,proto_new[key]])
-    i = i+1
-
-i=int(0)
-for key in sport_new.keys():
-    if i<10:
-        transfer6.append([key,sport_new[key]])
-    i = i+1
-
-i=int(0)
-for key in src_new.keys():
-    if i<10:
-        transfer.append([key,src_new[key]])
-    i = i+1
-
-i=int(0)
-for key in dport_new.keys():
-    if i<10: 
-        transfer7.append([key,dport_new[key]])
-    i = i+1
-
-
-
-# print("NEWANCE time taken")
-finish = time.time()
-# print(finish - start)
-
-# ////////////////// TABULATE ////////////////////////
-start = time.time()
-tabling = tabulate(transfer, headers=["Source","Number of Packets with this Source"])
-tabling2 = tabulate(transfer2, headers=["Src IP Address", "Dst IP Address", "Number of Packets Shared"])
-tabling3 = tabulate(transfer3, headers=["Vendor Name","Number of Packets with the Vendor"])
-tabling4 = tabulate(transfer4, headers=["Destination","Number of Packets with this Destination"])
-tabling5 = tabulate(transfer5, headers=["Protocol","Number of Packets with this Protocol"])
-tabling6 = tabulate(transfer6, headers=["Source Port","Number of Packets using this Port"])
-tabling7 = tabulate(transfer7, headers=["Destination Port","Number of Packets using this Port"])
-# print("TABULATE time taken")
-finish = time.time()
-# print(finish - start)
-
-# ////////////////// FILE WRITING ////////////////////////
-start = time.time()
-with open('report.txt', 'w') as f:
-    f.write("Top 10 Pair of IP Addresses which exchange most packets : \n\n")
-    f.write(tabling2)
-
-with open('report.txt', 'a') as f:
-    f.write("\n\n\nTop 10 Source which communicated the most : \n\n")
-    f.write(tabling)
-
-with open('report.txt', 'a') as f:
-    f.write("\n\n\nTop 10 Destination which communicated the most : \n\n")
-    f.write(tabling4)
-
-with open('report.txt', 'a') as f:
-    f.write("\n\n\nVendor Name Derived from Payload : \n\n")
-    f.write(tabling3)
-
-with open('report.txt', 'a') as f:
-    f.write("\n\n\nPackets using Protocol : \n\n")
-    f.write(tabling5)
-
-with open('report.txt', 'a') as f:
-    f.write("\n\n\nPackets using Particular Source Port : \n\n")
-    f.write(tabling6)
-
-with open('report.txt', 'a') as f:
-    f.write("\n\n\nPackets using Particular Destination Port : \n\n")
-    f.write(tabling7)
-
-# print("TABLING time taken")
-finish = time.time()
-# print(finish - start)

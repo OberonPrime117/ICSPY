@@ -1,0 +1,7 @@
+Protocols,Number of Packets
+SNAP,12
+UDP,15
+TCP,252
+DHCP,2
+ARP,8
+STP,30
