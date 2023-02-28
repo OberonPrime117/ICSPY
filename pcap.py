@@ -172,76 +172,32 @@ def dstvendor(data,es,i):
     if data[str(i)]["Destination MAC"] == 'ff:ff:ff:ff:ff:ff':
         a = "Broadcast"
     else:
+        ELASTIC_PASSWORD = "Lkz-NWGt+ZRlhqmwG0De"
+        es = Elasticsearch("https://localhost:9200",http_auth=("elastic", ELASTIC_PASSWORD), verify_certs=False)
+        es.indices.refresh(index="mac-vendors")
+        val = str(data[str(i)]["Destination MAC"])[0:8].upper()
         try:
-            ELASTIC_PASSWORD = "1Q_OlVC5SGUTpoY-kD=O"
-            es = Elasticsearch("https://localhost:9200",http_auth=("elastic", ELASTIC_PASSWORD), verify_certs=False)
-            es.indices.refresh(index="mac-vendors")
-            val = str(data[str(i)]["Destination MAC"])[0:8].upper()
-
-            searchp = {
-                "query": {
-                    "match": {
-                        "Mac Prefix": val
-                    }
-                }
-            }
-            resp = es.search(index="mac-vendors", body=searchp)
-
-            resp = resp["hits"]["hits"]
-            for value in resp:
-                ab = value["_source"]["Mac Prefix"]
-                if ab in val or val in ab:
-
-                    b = value["_source"]["Mac Prefix"]
-                    a = value["_source"]["Vendor Name"]
-                    return a
-
+            resp = es.get(index="mac-vendors",id=val)
+            return resp['_source']["Vendor Name"]
+        except:
             a = oui(str(data[str(i)]["Destination MAC"]),1)
-            return a
-        except Exception as e:
-            print(e)
-            a = oui(str(data[str(i)]["Destination MAC"]),2)
             return a
 
 def srcvendor(data,es,i):
     if str(data[str(i)]["Source MAC"]) == 'ff:ff:ff:ff:ff:ff':
         a = "Broadcast"
     else:
+        ELASTIC_PASSWORD = "Lkz-NWGt+ZRlhqmwG0De"
+        es = Elasticsearch("https://localhost:9200",http_auth=("elastic", ELASTIC_PASSWORD), verify_certs=False)
+        es.indices.refresh(index="mac-vendors")
+        val = str(data[str(i)]["Source MAC"])[0:8].upper()
         try:
-            ELASTIC_PASSWORD = "1Q_OlVC5SGUTpoY-kD=O"
-            es = Elasticsearch("https://localhost:9200",http_auth=("elastic", ELASTIC_PASSWORD), verify_certs=False)
-            es.indices.refresh(index="mac-vendors")
-            val = str(data[str(i)]["Source MAC"])[0:8].upper()
-
-            searchp = {
-                "query": {
-                    "match": {
-                        "Mac Prefix": val
-                    }
-                }
-            }
-            
-            resp = es.search(index="mac-vendors", body=searchp)
-
-            resp2 = resp["hits"]["hits"]
-
-            for value in resp2:
-                ab = value["_source"]["Mac Prefix"]
-                if ab in val or val in ab:
-                    b = value["_source"]["Mac Prefix"]
-                    a = value["_source"]["Vendor Name"]
-                    return a
-        
-            a = oui(str(data[str(i)]["Source MAC"]),3)
-            return a
-        except Exception as e:
-            print(e)
-            a = oui(str(data[str(i)]["Source MAC"]),4)
-            #print(resp)
+            resp = es.get(index="mac-vendors",id=val)
+            return resp['_source']["Vendor Name"]
+        except:
+            a = oui(str(data[str(i)]["Source MAC"]),2)
             return a
 
-    #print(a)
-    return a
     
 def srcport(packet_dict):
     if 'UDP' in list(packet_dict.keys()):
@@ -313,9 +269,9 @@ def export_data(csvfile,headerval,test,secondheaderval=None):
         header = [headerval,'Number of Packets']
     else:
         header = [headerval,secondheaderval,'Number of Packets']
-    with open(csvfile, 'w', encoding='UTF8', newline='') as f:
-        writer = csv.writer(f)
-        writer.writerow(header)
+    #with open(csvfile, 'w', encoding='UTF8', newline='') as f:
+    #    writer = csv.writer(f)
+    #    writer.writerow(header)
 
     # SEARCH AND POPULATE THE CSV
 
@@ -346,7 +302,7 @@ def export_data(csvfile,headerval,test,secondheaderval=None):
         es.delete(index=test,id=i["_id"])
 
 def dash(packet,data,packet_dict,i):
-    ELASTIC_PASSWORD = "1Q_OlVC5SGUTpoY-kD=O"
+    ELASTIC_PASSWORD = "Lkz-NWGt+ZRlhqmwG0De"
     es = Elasticsearch("https://localhost:9200",http_auth=("elastic", ELASTIC_PASSWORD), verify_certs=False)
     start = time.time()
     #print(i)
@@ -444,7 +400,7 @@ transfer7 = []
 done = False
 data = {}
 #plt.show()
-ELASTIC_PASSWORD = "1Q_OlVC5SGUTpoY-kD=O"
+ELASTIC_PASSWORD = "Lkz-NWGt+ZRlhqmwG0De"
 es = Elasticsearch("https://localhost:9200",http_auth=("elastic", ELASTIC_PASSWORD), verify_certs=False)
 
 # ////////////////// LOADING ANIMATION ////////////////////////
@@ -629,3 +585,14 @@ es.options(ignore_status=[400,404]).indices.delete(index='srcport')
 es.options(ignore_status=[400,404]).indices.delete(index='dstport')
 
 done = True
+Subjects = []
+Scores = []
+with open('results/dst-ip.csv', 'r') as csvfile:
+    lines = csv.reader(csvfile, delimiter = ',')
+    for row in lines:
+        Subjects.append(row[0])
+        Scores.append(int(row[1]))
+  
+plt.pie(Scores,labels = Subjects,autopct = '%.2f%%')
+plt.title('Marks of a Student', fontsize = 20)
+plt.show()

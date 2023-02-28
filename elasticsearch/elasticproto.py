@@ -12,7 +12,7 @@ def index_doc(es):
   return i
 
 def search():
-  ELASTIC_PASSWORD = "1Q_OlVC5SGUTpoY-kD=O"
+  ELASTIC_PASSWORD = "Lkz-NWGt+ZRlhqmwG0De"
   es = Elasticsearch("https://localhost:9200",http_auth=("elastic", ELASTIC_PASSWORD),verify_certs=False)
   #value = str(input("Enter mac address to search : "))
   #searchtime = value
@@ -48,7 +48,7 @@ def get_doc(es,i = 81291):
 
 # DELETE ALL INDICES
 # es.indices.delete(index='macvendors')
-ELASTIC_PASSWORD = "1Q_OlVC5SGUTpoY-kD=O"
+ELASTIC_PASSWORD = "Lkz-NWGt+ZRlhqmwG0De"
 es = Elasticsearch("https://localhost:9200",http_auth=("elastic", ELASTIC_PASSWORD),verify_certs=False)
 i = index_doc(es)
 refresh_index(es)
