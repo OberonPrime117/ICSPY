@@ -1,10 +1,4 @@
-Source Port,Number of Packets
-N/A,2
 microsoft_ds,1
 sflm,3
-ssdp,71
-netbios_dgm,58
-netbios_ns,140
-ontobroker,12
-dhcpv6_client,22
-bootpc,10
+N/A,2
+ssdp,36

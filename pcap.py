@@ -17,12 +17,17 @@ import csv # CSV EXPORTS
 from scapy.all import * # PCAP DATA
 from scapy.layers.l2 import getmacbyip, Ether # PCAP DATA
 from scapy.layers.inet import IP # PCAP DATA
-
+from reloading import reloading
 # ///// VISUAL
 import random
 from matplotlib import pyplot as plt 
 import numpy as np 
 from matplotlib.animation import FuncAnimation 
+import plotly.graph_objects as go
+import numpy as np 
+import pandas as pd 
+import plotly.express as px
+import networkx as nx
 
 # ////////////////// ELASTICSEARCH  ////////////////////////
 
@@ -55,23 +60,6 @@ def find_files(filename, search_path):
             result.append(os.path.join(root, filename))
         
     return result
-
-def animate(i):
-    new_sizes = []
-    new_sizes = random.sample(sizes, len(sizes))
-    print(new_sizes)
-    ax.clear()
-    ax.axis('equal')
-    ax.pie(new_sizes, labels=labels, autopct='%1.1f%%', shadow=True, startangle=140) 
-
-def animate():
-    for c in itertools.cycle(['|', '/', '-', '\\']):
-        if done:
-            break
-        sys.stdout.write('\rloading ' + str(c))
-        sys.stdout.flush()
-        time.sleep(0.1)
-    sys.stdout.write('\nDone!\t')
 
 def srcmac(data,packet,packet_dict,i):
     if str(data[str(i)]["Source IP"]) == "0.0.0.0":
@@ -172,7 +160,7 @@ def dstvendor(data,es,i):
     if data[str(i)]["Destination MAC"] == 'ff:ff:ff:ff:ff:ff':
         a = "Broadcast"
     else:
-        ELASTIC_PASSWORD = "Lkz-NWGt+ZRlhqmwG0De"
+        ELASTIC_PASSWORD = "M_R*tu-=C_98N2GZDoT_"
         es = Elasticsearch("https://localhost:9200",http_auth=("elastic", ELASTIC_PASSWORD), verify_certs=False)
         es.indices.refresh(index="mac-vendors")
         val = str(data[str(i)]["Destination MAC"])[0:8].upper()
@@ -187,7 +175,7 @@ def srcvendor(data,es,i):
     if str(data[str(i)]["Source MAC"]) == 'ff:ff:ff:ff:ff:ff':
         a = "Broadcast"
     else:
-        ELASTIC_PASSWORD = "Lkz-NWGt+ZRlhqmwG0De"
+        ELASTIC_PASSWORD = "M_R*tu-=C_98N2GZDoT_"
         es = Elasticsearch("https://localhost:9200",http_auth=("elastic", ELASTIC_PASSWORD), verify_certs=False)
         es.indices.refresh(index="mac-vendors")
         val = str(data[str(i)]["Source MAC"])[0:8].upper()
@@ -264,7 +252,7 @@ def animatepi(i):
     ax.axis('equal')
     ax.pie(new_sizes, labels=labels, autopct='%1.1f%%', shadow=True, startangle=140) 
 
-def export_data(csvfile,headerval,test,secondheaderval=None):
+def export_data(i,img_static,csvfile,headerval,test,secondheaderval=None):
     if secondheaderval == None:
         header = [headerval,'Number of Packets']
     else:
@@ -278,31 +266,64 @@ def export_data(csvfile,headerval,test,secondheaderval=None):
     searchp = { 
         "query" : { 
             "match_all" : {}
-        },
-        "stored_fields": []
+        }
     }
 
     resp = es.search(index=test, body=searchp)
-    for i in resp["hits"]["hits"]:
-        impact = es.get(index=test,id=i["_id"])
+
+    value = []
+
+    if os.path.exists(csvfile):
+        os.remove(csvfile)
+
+    for j in resp["hits"]["hits"]:
+        impact = es.get(index=test,id=j["_id"])
+
         b = []
         b.append(impact["_id"])
+
         if secondheaderval == None:
             pass
         else:
             b.append(impact["_source"]["Destination IP"])
-        b.append(impact["_source"]["Number of Packets"])
-        with open(csvfile, 'a', encoding='UTF8', newline='') as f:
-            writer = csv.writer(f)
-            writer.writerow(b)
 
-    # DELETE DOCUMENT
-    id_list = resp["hits"]["hits"]
-    for i in id_list:
-        es.delete(index=test,id=i["_id"])
+        b.append(impact["_source"]["Number of Packets"])
+
+        if os.path.isfile(csvfile):
+            with open(csvfile, mode='a', newline='') as f:
+                writer = csv.writer(f)
+                writer.writerow(b)
+        else:
+            with open(csvfile, mode='w', newline='') as f:
+                writer = csv.writer(f)
+                writer.writerow(b)
+
+    labels = []
+    values = []
+    print(i)
+    if i>1:
+        if secondheaderval == None:
+            with open(csvfile, 'r') as csvf:
+                lines = csv.reader(csvf, delimiter = ',')
+                for row in lines:
+                    labels.append(row[0])
+                    values.append(int(row[1]))
+
+            fig = go.Figure(data=[go.Pie(labels=labels, values=values, pull=[0.1, 0.1, 0.2, 0.1])])
+            print(img_static)
+            if i==1:
+                fig.write_image(img_static)
+            else:
+                fig.write_image(img_static)
+
+def delete(filename):
+    try:
+        os.remove(filename)
+    except:
+        pass
 
 def dash(packet,data,packet_dict,i):
-    ELASTIC_PASSWORD = "Lkz-NWGt+ZRlhqmwG0De"
+    ELASTIC_PASSWORD = "M_R*tu-=C_98N2GZDoT_"
     es = Elasticsearch("https://localhost:9200",http_auth=("elastic", ELASTIC_PASSWORD), verify_certs=False)
     start = time.time()
     #print(i)
@@ -366,6 +387,30 @@ def dash(packet,data,packet_dict,i):
 
 # ////////////////// VARIABLE DECLARE ////////////////////////
 
+
+ELASTIC_PASSWORD = "M_R*tu-=C_98N2GZDoT_"
+es = Elasticsearch("https://localhost:9200",http_auth=("elastic", ELASTIC_PASSWORD), verify_certs=False)
+es.options(ignore_status=[400,404]).indices.delete(index='srcdst')
+es.options(ignore_status=[400,404]).indices.delete(index='srcip')
+es.options(ignore_status=[400,404]).indices.delete(index='dstip')
+es.options(ignore_status=[400,404]).indices.delete(index='vendors')
+es.options(ignore_status=[400,404]).indices.delete(index='protocol')
+es.options(ignore_status=[400,404]).indices.delete(index='srcport')
+es.options(ignore_status=[400,404]).indices.delete(index='dstport')
+
+delete("static/dst-ip.png")
+delete("static/dst-port.png")
+delete("static/protocol.png")
+delete("static/src-ip.png")
+delete("static/src-port.png")
+delete("static/vendor.png")
+delete("results/pair-of-ip.csv")
+delete("results/dst-ip.csv")
+delete("results/dst-port.csv")
+delete("results/protocol.csv")
+delete("results/src-ip.csv")
+delete("results/src-port.csv")
+delete("results/vendor.csv")
 #filep = select_file()
 #print(filep)
 
@@ -400,19 +445,17 @@ transfer7 = []
 done = False
 data = {}
 #plt.show()
-ELASTIC_PASSWORD = "Lkz-NWGt+ZRlhqmwG0De"
-es = Elasticsearch("https://localhost:9200",http_auth=("elastic", ELASTIC_PASSWORD), verify_certs=False)
+
 
 # ////////////////// LOADING ANIMATION ////////////////////////
 
-t = threading.Thread(target=animate)
-t.start()
+
 start = time.time()
 i = 0
 j = 81291
 for packet in packets:
-    i = i+1
     # print(i)
+    print("COUNT - "+str(i))
     # ////////////////// INFO GATHER USING SCAPY ////////////////////////
     length = len(packet)
     for line in packet.show2(dump=True).split('\n'):
@@ -437,6 +480,8 @@ for packet in packets:
     mac_vendor_dst = []
 
     # ////////////////// MAIN FUNCTION ////////////////////////
+
+    
 
     data = dash(packet,data,packet_dict,i)
 
@@ -530,9 +575,36 @@ for packet in packets:
 
     # ////////////////// VISUALISATION CODE ////////////////////////
 
-    #fig,ax = plt.subplots()
-    #anim = FuncAnimation(fig, animatepi , frames=100, repeat=False) 
-    
+    details = {"protocol": str(data[str(i)]["Protocol"]),"srcdst": str(data[str(i)]["Source IP"]), "srcip": str(data[str(i)]["Source IP"]), "dstip": str(data[str(i)]["Destination IP"]), "vendors": [str(data[str(i)]["Destination Vendor"]),str(data[str(i)]["Source Vendor"])], "srcport": str(data[str(i)]["Source Port"]), "dstport": str(data[str(i)]["Destination Port"]) }
+
+    #es.index(index="pcap", id=i, document=details)
+
+    # ////////////////// PAIR SRC-DST CSV //////////////////
+
+    # ////////////////// SOURCE CSV //////////////////
+
+    export_data(i,"static/src-ip.png","results/src-ip.csv","Source IP","srcip")
+            
+    # ////////////////// DESTINATION CSV //////////////////
+
+    export_data(i,"static/dst-ip.png","results/dst-ip.csv","Destination IP","dstip")
+
+    # ////////////////// VENDOR CSV //////////////////
+
+    export_data(i,"static/vendor.png","results/vendor.csv","Vendor Name","vendors")
+
+    # ////////////////// PROTOCOL CSV //////////////////
+
+    export_data(i,"static/protocol.png","results/protocol.csv","Protocols","protocol")
+
+    # ////////////////// SOURCE PORT CSV //////////////////
+
+    export_data(i,"static/src-port.png","results/src-port.csv","Source Port","srcport")
+
+    # ////////////////// DESTINATION PORT CSV //////////////////
+
+    export_data(i,"static/dst-port.png","results/dst-port.csv","Destination Port","dstport")
+
     i = i + 1
 
 
@@ -548,51 +620,8 @@ for packet in packets:
 # 8. SRC MAC
 # 9. DST MAC
 
-# ////////////////// PAIR SRC-DST CSV //////////////////
 
-export_data("results/pair-of-ip.csv","Source IP","srcdst","Destination IP")
 
-# ////////////////// SOURCE CSV //////////////////
 
-export_data("results/src-ip.csv","Source IP","srcip")
-        
-# ////////////////// DESTINATION CSV //////////////////
-
-export_data("results/dst-ip.csv","Destination IP","dstip")
-
-# ////////////////// VENDOR CSV //////////////////
-
-export_data("results/vendor.csv","Vendor Name","vendors")
-
-# ////////////////// PROTOCOL CSV //////////////////
-
-export_data("results/protocol.csv","Protocols","protocol")
-
-# ////////////////// SOURCE PORT CSV //////////////////
-
-export_data("results/src-port.csv","Source Port","srcport")
-
-# ////////////////// DESTINATION PORT CSV //////////////////
-
-export_data("results/dst-port.csv","Destination Port","dstport")
-
-es.options(ignore_status=[400,404]).indices.delete(index='srcdst')
-es.options(ignore_status=[400,404]).indices.delete(index='srcip')
-es.options(ignore_status=[400,404]).indices.delete(index='dstip')
-es.options(ignore_status=[400,404]).indices.delete(index='vendors')
-es.options(ignore_status=[400,404]).indices.delete(index='protocol')
-es.options(ignore_status=[400,404]).indices.delete(index='srcport')
-es.options(ignore_status=[400,404]).indices.delete(index='dstport')
 
 done = True
-Subjects = []
-Scores = []
-with open('results/dst-ip.csv', 'r') as csvfile:
-    lines = csv.reader(csvfile, delimiter = ',')
-    for row in lines:
-        Subjects.append(row[0])
-        Scores.append(int(row[1]))
-  
-plt.pie(Scores,labels = Subjects,autopct = '%.2f%%')
-plt.title('Marks of a Student', fontsize = 20)
-plt.show()

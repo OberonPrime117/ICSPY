@@ -1,24 +1,14 @@
-# load data
-import pandas as pd
 import networkx as nx
-import matplotlib.pyplot as plt
-df = pd.read_csv("data/book1.csv")
-# pick only important weights (hard threshold)
-df = df.loc[df['weight']>10, :]
-# import
-import networkx as nx
-# load pandas df as networkx graph
-G = nx.from_pandas_edgelist(df, 
-                            source='Source', 
-                            target='Target', 
-                            edge_attr='weight')
-print("No of unique characters:", len(G.nodes))
-print("No of connections:", len(G.edges))
-# import pyvis
-from pyvis.network import Network
-# create vis network
-net = Network(notebook=True, width=1000, height=600)
-# load the networkx graph
-net.from_nx(G)
-# show
-net.show("example.html")
+import igviz as ig
+
+G = nx.random_geometric_graph(200, 0.125)
+nx.set_node_attributes(G, 3, "prop")
+nx.set_edge_attributes(G, 5, "edge_prop")
+
+ig.plot(
+    G,
+    title="My Graph",
+    size_method="prop", # Makes node sizes the size of the "prop" property
+    color_method="prop", # Colors the nodes based off the "prop" property and a color scale,
+    node_text=["prop"], # Adds the 'prop' property to the hover text of the node
+)
