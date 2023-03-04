@@ -8,3 +8,7 @@ IMP Files -
 1. elasticsearch/elasticworks.py - for pushing mac - vendors data to elasticsearch
 2. Edit ELASTIC_PASSWORD with your password for 'elastic' user
 3. Comment functions according
+
+Commands To Run ->
+1. python pcap.py --pcap pcapfilehere.pcap
+2. python app.py

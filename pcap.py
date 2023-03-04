@@ -316,103 +316,36 @@ def export_data(i,img_static,csvfile,headerval,test,secondheaderval=None):
             else:
                 fig.write_image(img_static)
 
-def delete(filename):
-    try:
-        os.remove(filename)
-    except:
-        pass
-
 def dash(packet,data,packet_dict,i):
     ELASTIC_PASSWORD = "M_R*tu-=C_98N2GZDoT_"
     es = Elasticsearch("https://localhost:9200",http_auth=("elastic", ELASTIC_PASSWORD), verify_certs=False)
-    start = time.time()
-    #print(i)
 
     data[str(i)]["Source Port"] = srcport(packet_dict)
-    finish = time.time()
-    #print("SRC PORT",finish - start)
 
-    start = time.time()
     data[str(i)]["Destination Port"] = dstport(packet_dict)
-    finish = time.time()
-    #print("DST PORT",finish - start)
-    
-    start = time.time()
+
     data[str(i)]["Source IP"] = srcip(packet, packet_dict)
-    finish = time.time()
-    #print("SRC IP",finish - start)
-    
-    start = time.time()
+
     data[str(i)]["Destination IP"] = dstip(packet, packet_dict)
-    finish = time.time()
-    #await asyncio.wait([data[str(i)]["Source Port"], data[str(i)]["Destination Port"],data[str(i)]["Source IP"],data[str(i)]["Destination IP"] ])
-    #print("DST IP",finish - start)
 
-    start = time.time()
     data[str(i)]["Destination MAC"] = dstmac(data,packet,packet_dict,i)
-    finish = time.time()
-    #print("DST MAC",finish - start)
-    
-    start = time.time()
-    data[str(i)]["Source MAC"] = srcmac(data,packet,packet_dict,i)
-    finish = time.time()
-    #print("SRC MAC",finish - start)
-    #await asyncio.wait([data[str(i)]["Destination MAC"],data[str(i)]["Source MAC"]])
-    
-    start = time.time()
-    data[str(i)]["Destination Vendor"] = dstvendor(data,es,i)
-    #print(data[str(i)]["Destination Vendor"])
-    finish = time.time()
-    #print("DST VENDOR",finish - start)
-    
-    start = time.time()
-    data[str(i)]["Source Vendor"] = srcvendor(data,es,i)
-    #print(data[str(i)]["Source Vendor"])
-    finish = time.time()
-    #print("SRC VENDOR",finish - start)
 
-    #print(data)
-    
-    start = time.time()
+    data[str(i)]["Source MAC"] = srcmac(data,packet,packet_dict,i)
+
+    data[str(i)]["Destination Vendor"] = dstvendor(data,es,i)
+
+    data[str(i)]["Source Vendor"] = srcvendor(data,es,i)
+
     data[str(i)]["Protocol"] = proto(data, packet_dict, packet,i)
-    finish = time.time()
-    #print("PROTOCOL",finish - start)
-    #await asyncio.wait([data[str(i)]["Destination Vendor"],data[str(i)]["Protocol"],data[str(i)]["Source Vendor"]])
 
     return data
 
-#def index_doc(es,dicta,:
-#    resp = es.index(index="mac-vendors",id=j,document=dicta)
- 
-
 # ////////////////// VARIABLE DECLARE ////////////////////////
 
+os.system("python3 delete-files.py")
 
 ELASTIC_PASSWORD = "M_R*tu-=C_98N2GZDoT_"
 es = Elasticsearch("https://localhost:9200",http_auth=("elastic", ELASTIC_PASSWORD), verify_certs=False)
-es.options(ignore_status=[400,404]).indices.delete(index='srcdst')
-es.options(ignore_status=[400,404]).indices.delete(index='srcip')
-es.options(ignore_status=[400,404]).indices.delete(index='dstip')
-es.options(ignore_status=[400,404]).indices.delete(index='vendors')
-es.options(ignore_status=[400,404]).indices.delete(index='protocol')
-es.options(ignore_status=[400,404]).indices.delete(index='srcport')
-es.options(ignore_status=[400,404]).indices.delete(index='dstport')
-
-delete("static/dst-ip.png")
-delete("static/dst-port.png")
-delete("static/protocol.png")
-delete("static/src-ip.png")
-delete("static/src-port.png")
-delete("static/vendor.png")
-delete("results/pair-of-ip.csv")
-delete("results/dst-ip.csv")
-delete("results/dst-port.csv")
-delete("results/protocol.csv")
-delete("results/src-ip.csv")
-delete("results/src-port.csv")
-delete("results/vendor.csv")
-#filep = select_file()
-#print(filep)
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-p", "--pcap", help = "Enter your pcap file")
@@ -449,7 +382,6 @@ data = {}
 
 # ////////////////// LOADING ANIMATION ////////////////////////
 
-
 start = time.time()
 i = 0
 j = 81291
@@ -480,8 +412,6 @@ for packet in packets:
     mac_vendor_dst = []
 
     # ////////////////// MAIN FUNCTION ////////////////////////
-
-    
 
     data = dash(packet,data,packet_dict,i)
 
@@ -574,10 +504,6 @@ for packet in packets:
         resp = es.index(index="dstport", id=str(data[str(i)]["Destination Port"]), document=dbody)
 
     # ////////////////// VISUALISATION CODE ////////////////////////
-
-    details = {"protocol": str(data[str(i)]["Protocol"]),"srcdst": str(data[str(i)]["Source IP"]), "srcip": str(data[str(i)]["Source IP"]), "dstip": str(data[str(i)]["Destination IP"]), "vendors": [str(data[str(i)]["Destination Vendor"]),str(data[str(i)]["Source Vendor"])], "srcport": str(data[str(i)]["Source Port"]), "dstport": str(data[str(i)]["Destination Port"]) }
-
-    #es.index(index="pcap", id=i, document=details)
 
     # ////////////////// PAIR SRC-DST CSV //////////////////
 
