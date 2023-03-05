@@ -23,7 +23,7 @@ def index_doc(es):
 
 def search():
   ELASTIC_PASSWORD = "M_R*tu-=C_98N2GZDoT_"
-  es = Elasticsearch("https://localhost:9200",http_auth=("elastic", ELASTIC_PASSWORD),verify_certs=False)
+  es = Elasticsearch("https://localhost:9200",basic_auth=("elastic", ELASTIC_PASSWORD),verify_certs=True ,ca_certs="../http_ca.crt")
   #value = str(input("Enter mac address to search : "))
   #searchtime = value
   #searchp = {"Mac Prefix" : ""}
@@ -58,7 +58,7 @@ def get_doc(es):
 # DELETE ALL INDICES
 # es.indices.delete(index='macvendors')
 ELASTIC_PASSWORD = "M_R*tu-=C_98N2GZDoT_"
-es = Elasticsearch("https://localhost:9200",http_auth=("elastic", ELASTIC_PASSWORD), verify_certs=False)
+es =  Elasticsearch(["https://localhost:9200"],basic_auth=("elastic", ELASTIC_PASSWORD),verify_certs=True ,ca_certs="../http_ca.crt")
 es.options(ignore_status=[400,404]).indices.delete(index='mac-vendors')
 i = index_doc(es)
 refresh_index(es)

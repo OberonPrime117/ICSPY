@@ -161,7 +161,7 @@ def dstvendor(data,es,i):
         a = "Broadcast"
     else:
         ELASTIC_PASSWORD = "M_R*tu-=C_98N2GZDoT_"
-        es = Elasticsearch("https://localhost:9200",http_auth=("elastic", ELASTIC_PASSWORD), verify_certs=False)
+        es =  Elasticsearch(["https://localhost:9200"],basic_auth=("elastic", ELASTIC_PASSWORD),verify_certs=True ,ca_certs="http_ca.crt")
         es.indices.refresh(index="mac-vendors")
         val = str(data[str(i)]["Destination MAC"])[0:8].upper()
         try:
@@ -176,7 +176,7 @@ def srcvendor(data,es,i):
         a = "Broadcast"
     else:
         ELASTIC_PASSWORD = "M_R*tu-=C_98N2GZDoT_"
-        es = Elasticsearch("https://localhost:9200",http_auth=("elastic", ELASTIC_PASSWORD), verify_certs=False)
+        es =  Elasticsearch(["https://localhost:9200"],basic_auth=("elastic", ELASTIC_PASSWORD),verify_certs=True ,ca_certs="http_ca.crt")
         es.indices.refresh(index="mac-vendors")
         val = str(data[str(i)]["Source MAC"])[0:8].upper()
         try:
@@ -264,12 +264,10 @@ def export_data(i,img_static,csvfile,headerval,test,secondheaderval=None):
     # SEARCH AND POPULATE THE CSV
 
     searchp = { 
-        "query" : { 
-            "match_all" : {}
-        }
+        "match_all" : {}
     }
 
-    resp = es.search(index=test, body=searchp)
+    resp = es.search(index=test, query=searchp)
 
     value = []
 
@@ -300,7 +298,7 @@ def export_data(i,img_static,csvfile,headerval,test,secondheaderval=None):
 
     labels = []
     values = []
-    print(i)
+    #print(i)
     if i>1:
         if secondheaderval == None:
             with open(csvfile, 'r') as csvf:
@@ -310,7 +308,7 @@ def export_data(i,img_static,csvfile,headerval,test,secondheaderval=None):
                     values.append(int(row[1]))
 
             fig = go.Figure(data=[go.Pie(labels=labels, values=values, pull=[0.1, 0.1, 0.2, 0.1])])
-            print(img_static)
+            #print(img_static)
             if i==1:
                 fig.write_image(img_static)
             else:
@@ -318,7 +316,7 @@ def export_data(i,img_static,csvfile,headerval,test,secondheaderval=None):
 
 def dash(packet,data,packet_dict,i):
     ELASTIC_PASSWORD = "M_R*tu-=C_98N2GZDoT_"
-    es = Elasticsearch("https://localhost:9200",http_auth=("elastic", ELASTIC_PASSWORD), verify_certs=False)
+    es =  Elasticsearch(["https://localhost:9200"],basic_auth=("elastic", ELASTIC_PASSWORD),verify_certs=True ,ca_certs="http_ca.crt")
 
     data[str(i)]["Source Port"] = srcport(packet_dict)
 
@@ -345,7 +343,7 @@ def dash(packet,data,packet_dict,i):
 os.system("python3 delete-files.py")
 
 ELASTIC_PASSWORD = "M_R*tu-=C_98N2GZDoT_"
-es = Elasticsearch("https://localhost:9200",http_auth=("elastic", ELASTIC_PASSWORD), verify_certs=False)
+es = Elasticsearch(["https://localhost:9200"],basic_auth=("elastic", ELASTIC_PASSWORD),verify_certs=True ,ca_certs="http_ca.crt")
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-p", "--pcap", help = "Enter your pcap file")
@@ -400,7 +398,8 @@ for packet in packets:
             packet_dict[layer][key.strip()] = val.strip()
     
     # ////////////////// RESET VALUES ////////////////////////
-    
+    #print(packet)
+    #print(packet.summary())
     start = time.time()
     
     ip_mac_src_dst = [] 
