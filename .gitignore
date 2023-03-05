@@ -10,3 +10,4 @@ static/protocol.png
 static/src-ip.png
 static/src-port.png
 static/vendor.png
+**/__pycache__
