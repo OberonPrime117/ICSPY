@@ -9,6 +9,15 @@ IMP Files -
 2. Edit ELASTIC_PASSWORD with your password for 'elastic' user
 3. Comment functions according
 
+Create a virtual environment !! Steps are as follows ->
+1. python3 -m venv pcap-python
+2. source pcap-python/bin/activate
+3. python3 -m pip install -r requirements.txt
+
+And exit virtual env when no longer needed by running "deactivate"
+
+Create results and static folders
+
 Commands To Run ->
 1. python pcap.py --pcap pcapfilehere.pcap
 2. python app.py
