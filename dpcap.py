@@ -1,7 +1,7 @@
 import dpkt
 import datetime
 from dp import *
-f = open('../pcap/OG/geek.pcap','rb')
+f = open('pcap/OG/file2.pcap','rb')
 pcap = dpkt.pcap.Reader(f)
 for timestamp,buf in pcap:
     # Print out the timestamp in UTC

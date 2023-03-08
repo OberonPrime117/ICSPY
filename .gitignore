@@ -11,5 +11,5 @@ static/src-ip.png
 static/src-port.png
 static/vendor.png
 **/__pycache__
-pcap-python/
+virtualpcap/
 .env
