@@ -12,7 +12,7 @@ def delete(filename):
     except:
         pass
 
-def resetelk():
+def iterate_deletecsv():
     config = dotenv_values(".env")
     ELASTIC_PASSWORD = config['ELASTIC_PASSWORD']
     es =  Elasticsearch("http://localhost:9200",basic_auth=("elastic", ELASTIC_PASSWORD))
@@ -23,8 +23,6 @@ def resetelk():
     es.options(ignore_status=[400,404]).indices.delete(index='protocol')
     es.options(ignore_status=[400,404]).indices.delete(index='srcport')
     es.options(ignore_status=[400,404]).indices.delete(index='dstport')
-
-def iterate_deletecsv():
     p1 = multiprocessing.Process(target=delete,args=("static/dst-ip.png",))
     p1.start()
     p2 = multiprocessing.Process(target=delete,args=("static/dst-port.png",))

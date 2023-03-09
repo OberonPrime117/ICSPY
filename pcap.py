@@ -1,29 +1,26 @@
 # ////////////////// ALL IMPORTS ////////////////////////
 from elasticsearch import Elasticsearch # SEARCHING
 import requests # HTTP REQUEST
-from dp import *
+
 from datetime import datetime # DATETIME
 import json # JSON EXPORTS
 import os
 import time # TIME FOR FUNCTIONS 
 import argparse # ARGUMENT FOR COMMAND
-from collections import defaultdict
 import multiprocessing
+from functions.rank import *
+from functions.delete import *
+from functions.export import *
 import sys # EXIT PROGRAM
 import csv # CSV EXPORTS
-import dpkt
+import kaleido
 # SCAPY PCAP INTERPRETER
 from scapy.all import * # PCAP DATA
 from scapy.layers.l2 import getmacbyip, Ether # PCAP DATA
 from scapy.layers.inet import IP # PCAP DATA
 from reloading import reloading
 from dotenv import dotenv_values
-from functions.rank import *
-from functions.delete import *
-from functions.export import *
-from dpkt.ip import IP, IP_PROTO_UDP
-from dpkt.udp import UDP
-from dpkt.tcp import TCP
+from functions.export import export_data
 # ///// VISUAL
 import random
 from matplotlib import pyplot as plt 
@@ -53,22 +50,19 @@ def select_file():
 # ////////////////// GET PROTOCOL NAME FROM ITS NUMBER ////////////////////////
     
 def work():
-    start = time.process_time()
-    config = dotenv_values(".env")
-    ELASTIC_PASSWORD = config['ELASTIC_PASSWORD']
-    es =  Elasticsearch("http://localhost:9200",basic_auth=("elastic", ELASTIC_PASSWORD))
-    
+    #os.system("python3 delete-files.py")
     parser = argparse.ArgumentParser()
     parser.add_argument("-p", "--pcap", help = "Enter your pcap file")
     args = parser.parse_args()
     if args.pcap:
-        f = open(args.pcap,'rb')
-        packets = dpkt.pcap.Reader(f)
+        packets = PcapReader(args.pcap)
     else:
         sys.exit()
-    packet_dict = defaultdict(int)
+    packet_dict = {}
     i=1
     
+
+    done = False
     data = {}
     #plt.show()
 
@@ -77,42 +71,54 @@ def work():
 
     #start = time.time()
     i = 0
+    j = 81291
 
-    for ts,buf in packets:
-        #print(ts)
-        #print(buf)
+    for packet in packets:
         # print(i)
-        #start = time.process_time()
+        start = time.process_time()
         #print(start)
         #start = time.process_time()
         print("COUNT - "+str(i))
-
-
+        # ////////////////// INFO GATHER USING SCAPY ////////////////////////
+        length = len(packet)
+        for line in packet.show2(dump=True).split('\n'):
+            # print(line)
+            if '###' in line:
+                layer = line.strip('#[] ')
+                packet_dict[layer] = {}
+            elif '=' in line:
+                key, val = line.split('=', 1)
+                packet_dict[layer][key.strip()] = val.strip()
+        
         # ////////////////// RESET VALUES ////////////////////////
-
-        dbody = {"Frame Number":str(i)}
-        es.index(index="pcap", id="pcap", document=dbody)
-
-        #data["Frame Number"] = str(i)
-        #print("Hello")
+        #print(packet)
+        #print(packet.summary())
+        #start = time.time()#start = time.time()
+        
+        ip_mac_src_dst = [] 
+        route = ""
+        data = {}
+        data = {}
+        data["Frame Number"] = str(i)
+        mac_vendor_src = []
+        mac_vendor_dst = []
 
         # ////////////////// MAIN FUNCTION ////////////////////////
 
-        dash(buf)
-
-        es.indices.refresh(index="pcap")
-        resp = es.get(index="pcap",id="pcap")
-        dmac = resp["_source"]["Destination MAC"]
-        smac = resp["_source"]["Source MAC"]
-        dip = resp["_source"]["Destination IP"]
-        sip = resp["_source"]["Source IP"]
-        dport = resp["_source"]["Destination Port"]
-        sport = resp["_source"]["Source Port"]
-        proto_val = resp["_source"]["Protocol"]
-        dvendor = resp["_source"]["Destination Vendor"]
-        svendor = resp["_source"]["Source Vendor"]
+        data = dash(packet,data,packet_dict,i)
+        #print(data)
+        dmac = data["Destination MAC"]
+        smac = data["Source MAC"]
+        dip = data["Destination IP"]
+        sip = data["Source IP"]
+        dport = data["Destination Port"]
+        sport = data["Source Port"]
+        proto_val = data["Protocol"]
+        dvendor = data["Destination Vendor"]
+        svendor = data["Source Vendor"]
 
         # ////////////////// RANKING PROTOCOL ////////////////////////
+
         start = time.process_time()
         r1 = multiprocessing.Process(target=ranking , args=("protocol",proto_val))
         r1.start()
@@ -122,12 +128,12 @@ def work():
         r3.start()
         r4 = multiprocessing.Process(target=ranking , args=("dstip",dip))
         r4.start()
-        if str(data["Source Vendor"]) == None:
+        if svendor == None:
             pass
         else:
             r5 = multiprocessing.Process(target=ranking , args=("vendors",svendor))
             r5.start()
-        if str(data["Destination Vendor"]) == None:
+        if dvendor == None:
             pass
         else:
             r6 = multiprocessing.Process(target=ranking , args=("vendors",dvendor))
@@ -153,7 +159,7 @@ def work():
         r8.join()
         #print(time.process_time() - start)
         #start = time.process_time()
-        if i%200==0:
+        if i > 200 and i%200==0 and i != 0:
             p1 = multiprocessing.Process(target=export_data , args=("static/src-ip.png","results/src-ip.csv","srcip"))
             p1.start()
             p2 = multiprocessing.Process(target=export_data , args=("static/dst-ip.png","results/dst-ip.csv","dstip"))
@@ -179,279 +185,261 @@ def work():
         i = i + 1
     done = True
 
-def dstvendor():
-    config = dotenv_values(".env")
-    ELASTIC_PASSWORD = config['ELASTIC_PASSWORD']
-    es =  Elasticsearch("http://localhost:9200",basic_auth=("elastic", ELASTIC_PASSWORD))
+def proto_name_by_num(proto_num):
+    for name,num in vars(socket).items():
+        if name.startswith("IPPROTO") and proto_num == num:
+            return name[8:]
+    return "N/A"
 
-    es.indices.refresh(index="pcap")
-    resp = es.get(index="pcap",id="pcap")
-    dbody = resp["_source"]
-    data = resp["_source"]["Destination MAC"]
+def srcmac(data,packet,packet_dict,i):
+    if str(data["Source IP"]) == "0.0.0.0":
+        a = "00:21:6a:2d:3b:8e" # 3
+
+    if "::" in str(data["Source IP"]) and "::" in str(data["Destination IP"]):
+        a = str(packet[Ether].src) # 3
     
-    start = time.process_time()
+    else:
+        try:
+            a = packet[Ether].src
+        except:
+            try:
+                a =  packet_dict["802.3"]["src"] # 3
+            except:
+                a = "" # 3
+    #print(a)
+    return a
     
-    if str(data) == 'ff:ff:ff:ff:ff:ff':
-        dbody["Destination Vendor"] = "Broadcast"
-        resp = es.index(index="pcap", id="pcap", document=dbody)
+def dstmac(data,packet,packet_dict,i):
+    if str(data["Destination IP"]) == "255.255.255.255":
+        a = "ff:ff:ff:ff:ff:ff" # 4
+    
+    if "::" in str(data["Source IP"]) and "::" in str(data["Destination IP"]):
+        a = str(packet[Ether].dst) # 4
+    
+    else:
+        try:
+            a = packet[Ether].dst # 4
+        except:
+            try:
+                a = packet_dict["802.3"]["dst"]
+            except:
+                a = ""
+    #print(a)
+    return a
+
+def proto(data, packet_dict, packet,i):
+    if IP in packet:
+        a = proto_name_by_num(int(packet[IP].proto)) # 2
+    else:
+        #data["Protocol"] = "Other" # 2
+        flag = 0
+        y = packet.summary().split()
+        for b in y:
+            if b.isupper():
+                a = b
+                flag = 1
+                continue
+            elif flag == 0: 
+                a = "Other" 
+    try :
+        for l in protocol:
+            if int(data["Source Port"]) in l[1] or int(data["Destination Port"]) in l[1]:
+                try:
+                    a = l[0]
+                except:
+                    a = l[0]     
+    except:
+        pass
+    
+    if str(data["Source Port"]) in list(protocol.keys()):
+        a = protocol[str(data["Source Port"])]
         
+    if str(data["Destination Port"]) in list(protocol.keys()):
+        a = protocol[str(data["Destination Port"])]
+
+    if "Ethernet" in list(packet_dict.keys()) and str(packet_dict["Ethernet"]["type"]) in list(ethertype.keys()):
+        a = ethertype[str(packet_dict["Ethernet"]["type"])]
+    
+    if str(data["Source IP"]) == "0.0.0.0":
+        a = "DHCP"
+    
+    return a
+
+def oui(macaddr,num):
+    with open("config/myfile.json", 'r', encoding='utf-8-sig') as f:
+        hello = json.load(f)
+        hello = hello["value"]
+    #print(hello)
+    hello.append(dicta)
+    abc = {"value" : dicta}
+    filename = "runtime/mac-vendors"+str(num)+".json"
+    with open(filename, 'a', encoding='utf-8-sig') as f:
+        json.dump(abc,f)
+    return dicta["Vendor Name"]
+
+def dstvendor(data):
+    config = dotenv_values(".env")
+    ELASTIC_PASSWORD = config['ELASTIC_PASSWORD']
+    es =  Elasticsearch("http://localhost:9200",basic_auth=("elastic", ELASTIC_PASSWORD))
+
+    if data["Destination MAC"] == 'ff:ff:ff:ff:ff:ff':
+        return "Broadcast"
     else:
-        #with open("config/ignore.json", 'r', encoding='utf-8-sig') as f:
-        #    hello = json.load(f)
-        #    for h in hello:
-        #        h = h["Mac Address"]
-        #        if h == str(data):
-        #            dbody["Destination Vendor"] = "None"
-        #            resp = es.index(index="pcap", id="pcap", document=dbody)
-
+        config = dotenv_values(".env")
+        ELASTIC_PASSWORD = config['ELASTIC_PASSWORD']
+        es =  Elasticsearch("http://localhost:9200",basic_auth=("elastic", ELASTIC_PASSWORD))
+        #es.indices.refresh(index="mac-vendors")
+        #val = str(data["Destination MAC"])[0:8].upper()
         try:
-            val = str(data).upper()
+            val = str(data["Destination MAC"]).upper()
             resp = es.get(index="mac-vendors",id=val)
-
-            dbody["Destination Vendor"] = resp['_source']["Vendor Name"]
-            resp = es.index(index="pcap", id="pcap", document=dbody)
+            return resp['_source']["Vendor Name"]
         except:
             try:
-                val = str(data)[0:8].upper()
+                val = str(data["Destination MAC"])[0:8].upper()
                 resp = es.get(index="mac-vendors",id=val)
-                
-                dbody["Destination Vendor"] = resp['_source']["Vendor Name"]
-                resp = es.index(index="pcap", id="pcap", document=dbody)
+                return resp['_source']["Vendor Name"]
             except:
-                abc = str(data) + "\n"
-
+                abc = str(data["Destination MAC"]) + "\n"
                 filename = "runtime/data.json"
                 with open(filename, 'a', encoding='utf-8-sig') as f:
                     json.dump(abc,f)
-                
-                dbody["Destination Vendor"] = "N/A"
-                resp = es.index(index="pcap", id="pcap", document=dbody)
+                return abc
 
-def srcvendor():
+def srcvendor(data):
     config = dotenv_values(".env")
     ELASTIC_PASSWORD = config['ELASTIC_PASSWORD']
     es =  Elasticsearch("http://localhost:9200",basic_auth=("elastic", ELASTIC_PASSWORD))
 
-    es.indices.refresh(index="pcap")
-    resp = es.get(index="pcap",id="pcap")
-    dbody = resp["_source"]
-    data = resp["_source"]["Source MAC"]
-
-    start = time.process_time()
-    if str(data) == 'ff:ff:ff:ff:ff:ff':
-        dbody["Source Vendor"] = "Broadcast"
-        resp = es.index(index="pcap", id="pcap", document=dbody)
+    if str(data["Source MAC"]) == 'ff:ff:ff:ff:ff:ff':
+        return "Broadcast"
     else:
-
-        #with open("config/ignore.json", 'r', encoding='utf-8-sig') as f:
-        #    hello = json.load(f)
-        #    for h in hello:
-        #        h = h["Mac Address"]
-        #        if h == str(data):
-        #            dbody["Source Vendor"] = "None"
-        #            resp = es.index(index="pcap", id="pcap", document=dbody)
-
+        config = dotenv_values(".env")
+        ELASTIC_PASSWORD = config['ELASTIC_PASSWORD']
+        es =  Elasticsearch("http://localhost:9200",basic_auth=("elastic", ELASTIC_PASSWORD))
+        #es.indices.refresh(index="mac-vendors")
+        #val = str(data["Source MAC"])[0:8].upper()
         try:
-            val = str(data).upper()
+            val = str(data["Source MAC"]).upper()
             resp = es.get(index="mac-vendors",id=val)
-
-            dbody["Source Vendor"] = resp['_source']["Vendor Name"]
-            resp = es.index(index="pcap", id="pcap", document=dbody)
-
+            return resp['_source']["Vendor Name"]
         except:
             try:
-                val = str(data)[0:8].upper()
+                val = str(data["Source MAC"])[0:8].upper()
                 resp = es.get(index="mac-vendors",id=val)
-
-                dbody["Source Vendor"] = resp['_source']["Vendor Name"]
-                resp = es.index(index="pcap", id="pcap", document=dbody)
+                return resp['_source']["Vendor Name"]
             except:
-                abc = str(data) + "\n"
-
+                abc = str(data["Source MAC"]) + "\n"
                 filename = "runtime/data.json"
                 with open(filename, 'a', encoding='utf-8-sig') as f:
                     json.dump(abc,f)
-                
-                dbody["Source Vendor"] = "N/A"
-                resp = es.index(index="pcap", id="pcap", document=dbody)
+                return abc
+
     
-def srcmac(buf):
-    config = dotenv_values(".env")
-    ELASTIC_PASSWORD = config['ELASTIC_PASSWORD']
-    es =  Elasticsearch("http://localhost:9200",basic_auth=("elastic", ELASTIC_PASSWORD))
+def srcport(packet_dict):
+    if 'UDP' in list(packet_dict.keys()):
+        a = packet_dict["UDP"]['sport']  
 
-    eth = dpkt.ethernet.Ethernet(buf)
-
-    resp = es.get(index="pcap",id="pcap")
-    dbody = resp["_source"]
-    dbody["Source MAC"] = mac_addr(eth.src)
-    resp = es.index(index="pcap", id="pcap", document=dbody)
-    
-def dstmac(buf):
-    config = dotenv_values(".env")
-    ELASTIC_PASSWORD = config['ELASTIC_PASSWORD']
-    es =  Elasticsearch("http://localhost:9200",basic_auth=("elastic", ELASTIC_PASSWORD))
-
-    eth = dpkt.ethernet.Ethernet(buf)
-
-    resp = es.get(index="pcap",id="pcap")
-    dbody = resp["_source"]
-    dbody["Destination MAC"] = mac_addr(eth.dst)
-    resp = es.index(index="pcap", id="pcap", document=dbody)
-
-def proto(buf):
-    config = dotenv_values(".env")
-    ELASTIC_PASSWORD = config['ELASTIC_PASSWORD']
-    es =  Elasticsearch("http://localhost:9200",basic_auth=("elastic", ELASTIC_PASSWORD))
-
-    eth = dpkt.ethernet.Ethernet(buf)
-
-    if not isinstance(eth.data, dpkt.ip.IP):
-        resp = es.get(index="pcap",id="pcap")
-        dbody = resp["_source"]
-        dbody["Protocol"] = eth.data.__class__.__name__
-        resp = es.index(index="pcap", id="pcap", document=dbody)
+    elif 'TCP' in list(packet_dict.keys()):
+        a = packet_dict["TCP"]['sport']
 
     else:
-        ip = eth.data
-        proto = ip.get_proto(ip.p).__name__
-        resp = es.get(index="pcap",id="pcap")
-        dbody = resp["_source"]
-        dbody["Protocol"] = proto
-        resp = es.index(index="pcap", id="pcap", document=dbody)
-    
-def srcport(buf):
-    config = dotenv_values(".env")
-    ELASTIC_PASSWORD = config['ELASTIC_PASSWORD']
-    es =  Elasticsearch("http://localhost:9200",basic_auth=("elastic", ELASTIC_PASSWORD))
+        a = "N/A"
+    return a
 
-    eth = dpkt.ethernet.Ethernet(buf)
-    ip = eth.data
+def dstport(packet_dict):
+    if 'UDP' in list(packet_dict.keys()):
+        a = packet_dict["UDP"]['dport']
+        
 
-    if type(ip.data) == TCP:
-        tcp = ip.data
-        resp = es.get(index="pcap",id="pcap")
-        dbody = resp["_source"]
-        dbody["Source Port"] = tcp.sport
-        resp = es.index(index="pcap", id="pcap", document=dbody)
+    elif 'TCP' in list(packet_dict.keys()):
+        a = packet_dict["TCP"]['dport']
 
-    if type(ip.data) == UDP:
-        udp = ip.data
-        resp = es.get(index="pcap",id="pcap")
-        dbody = resp["_source"]
-        dbody["Source Port"] = udp.sport
-        resp = es.index(index="pcap", id="pcap", document=dbody)
-
-
-def dstport(buf):
-    config = dotenv_values(".env")
-    ELASTIC_PASSWORD = config['ELASTIC_PASSWORD']
-    es =  Elasticsearch("http://localhost:9200",basic_auth=("elastic", ELASTIC_PASSWORD))
-
-    eth = dpkt.ethernet.Ethernet(buf)
-    ip = eth.data
-
-    if type(ip.data) == TCP:
-        tcp = ip.data
-        resp = es.get(index="pcap",id="pcap")
-        dbody = resp["_source"]
-        dbody["Destination Port"] = tcp.dport
-        resp = es.index(index="pcap", id="pcap", document=dbody)
-    
-    if type(ip.data) == UDP:
-        udp = ip.data
-        resp = es.get(index="pcap",id="pcap")
-        dbody = resp["_source"]
-        dbody["Destination Port"] = udp.dport
-        resp = es.index(index="pcap", id="pcap", document=dbody)
-
-
-def srcip(buf):
-    config = dotenv_values(".env")
-    ELASTIC_PASSWORD = config['ELASTIC_PASSWORD']
-    es =  Elasticsearch("http://localhost:9200",basic_auth=("elastic", ELASTIC_PASSWORD))
-
-    eth = dpkt.ethernet.Ethernet(buf)
-    ip = eth.data
-
-    if not isinstance(eth.data, dpkt.ip.IP):
-        resp = es.get(index="pcap",id="pcap")
-        dbody = resp["_source"]
-        dbody["Source IP"] = mac_addr(eth.src)
-        resp = es.index(index="pcap", id="pcap", document=dbody)
     else:
-        resp = es.get(index="pcap",id="pcap")
-        dbody = resp["_source"]
-        dbody["Source IP"] = inet_to_str(ip.src)
-        resp = es.index(index="pcap", id="pcap", document=dbody)
+        a = "N/A"
+    return a
 
-def dstip(buf):
-    config = dotenv_values(".env")
-    ELASTIC_PASSWORD = config['ELASTIC_PASSWORD']
-    es =  Elasticsearch("http://localhost:9200",basic_auth=("elastic", ELASTIC_PASSWORD))
+def srcip(packet, packet_dict):
+    try:
+        
+        if IP in packet:
+                a = str(packet[IP].src) # 0
+        else:
+            try:
+                a = packet_dict["802.3"]["src"] # 0
+            except:
+                a = packet[Ether].src # 0
+    except:
+        try:
+            a = packet_dict["802.3"]["src"] # 0
+        except:
+            a = packet[Ether].src # 0
+    
+    return a
 
-    eth = dpkt.ethernet.Ethernet(buf)
-    ip = eth.data
+def dstip(packet, packet_dict):
+    try:
+        if IP in packet:
+                a = str(packet[IP].dst) # 1
+        else:
+            try:
+                a = packet_dict["802.3"]["dst"] # 1
+            except:
+                a = packet[Ether].dst # 1
+    except:
+        try:
+            a = packet_dict["802.3"]["dst"] # 1
+        except:
+            a = packet[Ether].dst # 1
+    return a
 
-    if not isinstance(eth.data, dpkt.ip.IP):
-        resp = es.get(index="pcap",id="pcap")
-        dbody = resp["_source"]
-        dbody["Destination IP"] = mac_addr(eth.dst)
-        resp = es.index(index="pcap", id="pcap", document=dbody)
-    else:
-        resp = es.get(index="pcap",id="pcap")
-        dbody = resp["_source"]
-        dbody["Destination IP"] = inet_to_str(ip.dst)
-        resp = es.index(index="pcap", id="pcap", document=dbody)
+def animatepi(i):
+    new_sizes = []
+    new_sizes = random.sample(sizes, len(sizes))
+    print(new_sizes)
+    ax.clear()
+    ax.axis('equal')
+    ax.pie(new_sizes, labels=labels, autopct='%1.1f%%', shadow=True, startangle=140) 
 
-# buf, data, i
-def dash(buf):
-    config = dotenv_values(".env")
-    ELASTIC_PASSWORD = config['ELASTIC_PASSWORD']
-    es =  Elasticsearch("http://localhost:9200",basic_auth=("elastic", ELASTIC_PASSWORD))
-
-    #print("PQRS")
+def dash(packet,data,packet_dict,i):
+    
     #start = time.process_time()
+    data["Source Port"] = srcport(packet_dict)
+    #print(time.process_time() - start)
 
-    p6 = multiprocessing.Process(target=srcmac,args=(buf,))
-    p6.start()
-    p5 = multiprocessing.Process(target=dstmac,args=(buf,))
-    p5.start()
+    #start = time.process_time()
+    data["Destination Port"] = dstport(packet_dict)
+    #print(time.process_time() - start)
 
-    p1 = multiprocessing.Process(target=srcport,args=(buf,))
-    p1.start()
+    #start = time.process_time()
+    data["Source IP"] = srcip(packet, packet_dict)
+    #print(time.process_time() - start)
 
-    p2 = multiprocessing.Process(target=dstport,args=(buf,))
-    p2.start()
+    #start = time.process_time()
+    data["Destination IP"] = dstip(packet, packet_dict)
+    #print(time.process_time() - start)
 
-    p3 = multiprocessing.Process(target=srcip,args=(buf,))
-    p3.start()
+    #start = time.process_time()
+    data["Destination MAC"] = dstmac(data,packet,packet_dict,i)
+    #print(time.process_time() - start)
 
-    p4 = multiprocessing.Process(target=dstip,args=(buf,))
-    p4.start()
+    #start = time.process_time()
+    data["Source MAC"] = srcmac(data,packet,packet_dict,i)
+    #print(time.process_time() - start)
 
-    p7 = multiprocessing.Process(target=proto,args=(buf,))
-    p7.start()
+    #start = time.process_time()
+    data["Destination Vendor"] = dstvendor(data)
+    #print(time.process_time() - start)
 
-    p6.join()
-    p5.join()
-    
-    p1.join()
-    p2.join()
-    p3.join()
-    p4.join()
-    p5.join()
-    p7.join()
-    
-    resp = es.get(index="pcap",id="pcap")
-    dbody = resp["_source"]
-    dbody["Source Vendor"] = srcvendor()
-    resp = es.index(index="pcap", id="pcap", document=dbody)
+    #start = time.process_time()
+    data["Source Vendor"] = srcvendor(data)
+    #print(time.process_time() - start)
 
-    resp = es.get(index="pcap",id="pcap")
-    dbody = resp["_source"]
-    dbody["Destination Vendor"] = dstvendor()
-    resp = es.index(index="pcap", id="pcap", document=dbody)
+    #start = time.process_time()
+    data["Protocol"] = proto(data, packet_dict, packet,i)
+    #print(time.process_time() - start)
+
+    return data
 
 # ////////////////// VARIABLE DECLARE ////////////////////////
 
@@ -459,8 +447,6 @@ def dash(buf):
 
 # ////////////////// VARIABLE DECLARE ////////////////////////
 
-#print(multiprocessing.cpu_count())
-#os.system("python3 delete-files.py")
 protocol = {"bacnet" : "BACnet" , "dnp": "DNP3" ,  "mbap" : "Modbus TCP" }
 ethertype = {"0x88a4" : "EtherCat", "0x8892" : "PROFINET"}
 
@@ -471,8 +457,9 @@ if __name__ == "__main__":
     p3 = multiprocessing.Process(target=resetelk)
      # iterate export
     p3.start() # start deleting elasticsearch index
+    p3.join()
     p1.start() # delete csv
-    p3.join() # elasticsearch should finish deleting
+     # elasticsearch should finish deleting
     p1.join()
     p2.start() # start reading pcap
     

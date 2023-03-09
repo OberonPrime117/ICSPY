@@ -31,15 +31,21 @@ def search(csvfile,test):
     searchp = { 
         "match_all" : {}
     }
-
+    #print(test)
+    
     resp = es.search(index=test, query=searchp)
+    print(resp)
+    #print(resp)
     
     #start = time.process_time()
 
     for j in resp["hits"]["hits"]:
+        print(j)
         impact = es.get(index=test,id=j["_id"])
 
         b = []
+        #print(impact["_id"])
+        #print(csvfile)
         b.append(impact["_id"])
         b.append(impact["_source"]["Number of Packets"])
 
@@ -53,10 +59,11 @@ def search(csvfile,test):
                 writer.writerow(b)
 
 def export_data(img_static,csvfile,test):
-    p5 = multiprocessing.Process(target=visualise , args=(img_static,csvfile))
-    p5.start()
     p1 = multiprocessing.Process(target=search , args=(csvfile,test))
     p1.start()
+    p5 = multiprocessing.Process(target=visualise , args=(img_static,csvfile))
+    p5.start()
+    
     p1.join()
     p5.join()
     #print(time.process_time() - start)
