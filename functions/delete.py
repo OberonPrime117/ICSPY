@@ -6,16 +6,13 @@ import plotly.graph_objects as go
 import time
 import multiprocessing
 
-def delete(filename):
+def iterate_deletecsv(filename):
     try:
         os.remove(filename)
     except:
         pass
 
-def iterate_deletecsv():
-    config = dotenv_values(".env")
-    ELASTIC_PASSWORD = config['ELASTIC_PASSWORD']
-    es =  Elasticsearch("http://localhost:9200",basic_auth=("elastic", ELASTIC_PASSWORD))
+def delete(es):
     es.options(ignore_status=[400,404]).indices.delete(index='srcdst')
     es.options(ignore_status=[400,404]).indices.delete(index='srcip')
     es.options(ignore_status=[400,404]).indices.delete(index='dstip')

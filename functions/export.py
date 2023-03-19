@@ -1,32 +1,12 @@
 import os
 from elasticsearch import Elasticsearch 
 import csv
-import plotly.graph_objects as go
+from functions.visualise import visualise
 from dotenv import dotenv_values
 import time
 import multiprocessing
 
-def visualise(img_static, csvfile):
-    labels = []
-    values = []
-
-    if os.path.isfile(csvfile):
-
-        with open(csvfile, 'r') as csvf:
-
-            lines = csv.reader(csvf, delimiter = ',')
-
-            for row in lines:
-                labels.append(row[0])
-                values.append(int(row[1]))
-
-        fig = go.Figure(data=[go.Pie(labels=labels, values=values, pull=[0.1, 0.1, 0.2, 0.1])])
-        fig.write_image(img_static)
-
-def search(csvfile,test):
-    config = dotenv_values(".env")
-    ELASTIC_PASSWORD = config['ELASTIC_PASSWORD']
-    es =  Elasticsearch("http://localhost:9200",basic_auth=("elastic", ELASTIC_PASSWORD))
+def search(csvfile,test,es):
 
     searchp = { 
         "match_all" : {}
@@ -58,8 +38,8 @@ def search(csvfile,test):
                 writer = csv.writer(f)
                 writer.writerow(b)
 
-def export_data(img_static,csvfile,test):
-    p1 = multiprocessing.Process(target=search , args=(csvfile,test))
+def export_data(img_static,csvfile,test,es):
+    p1 = multiprocessing.Process(target=search , args=(csvfile,test,es))
     p1.start()
     p5 = multiprocessing.Process(target=visualise , args=(img_static,csvfile))
     p5.start()
@@ -67,3 +47,24 @@ def export_data(img_static,csvfile,test):
     p1.join()
     p5.join()
     #print(time.process_time() - start)
+
+def export(es):
+    p1 = multiprocessing.Process(target=export_data , args=("static/src-ip.png","results/src-ip.csv","srcip",es))
+    p1.start()
+    p2 = multiprocessing.Process(target=export_data , args=("static/dst-ip.png","results/dst-ip.csv","dstip",es))
+    p2.start()
+    p3 = multiprocessing.Process(target=export_data , args=("static/vendor.png","results/vendor.csv","vendors",es))
+    p3.start()
+    p4 = multiprocessing.Process(target=export_data , args=("static/protocol.png","results/protocol.csv","protocol",es))
+    p4.start()
+    p5 = multiprocessing.Process(target=export_data , args=("static/src-port.png","results/src-port.csv","srcport",es))
+    p5.start()
+    p6 = multiprocessing.Process(target=export_data , args=("static/dst-port.png","results/dst-port.csv","dstport",es))
+    p6.start()
+
+    p1.join()
+    p2.join()
+    p3.join()
+    p4.join()
+    p5.join()
+    p6.join()
