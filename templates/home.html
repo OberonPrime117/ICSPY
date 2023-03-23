@@ -10,11 +10,20 @@
 	</script>
 </head>
 <body onload="reloadImage()">
-    <img id="image" src="{{ sip }}" alt="Image" />
-    <img id="image" src="{{ dip }}" alt="Image" />
-    <img id="image" src="{{ vendor }}" alt="Image" />
-    <img id="image" src="{{ protocol }}" alt="Image" />
-    <img id="image" src="{{ sport }}" alt="Image" />
-	<img id="image" src="{{ dport }}" alt="Image" />
+	<h3>NETWORK GRAPH</h3>
+	<a href="network-graph"><button>Network Graph</button></a>
+    <h3>IP ADDRESS</h3>
+    <a href="{{ sip }}" ><button>Source IP</button></a>
+    <a href="{{ dip }}"  ><button>Destination IP</button></a>
+	<h3>MAC ADDRESS</h3>
+	<a href="{{ smac }}"  ><button>Source MAC</button></a>
+	<a href="{{ dmac }}"  ><button>Destination MAC</button></a>
+	<h3>VENDOR</h3>
+    <a href="{{ vendor }}"  ><button>Vendor</button></a>
+	<h3>PROTOCOL</h3>
+    <a href="{{ protocol }}"  ><button>Protocol</button></a>
+	<h3>PORT NUMBER</h3>
+    <a href="{{ sport }}"  ><button>Source Port</button></a>
+	<a href="{{ dport }}"  ><button>Destination Port</button></a>
 </body>
 </html>

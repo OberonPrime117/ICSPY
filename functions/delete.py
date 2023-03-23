@@ -12,7 +12,11 @@ def iterate_deletecsv(filename):
     except:
         pass
 
-def delete(es):
+def delete():
+    config = dotenv_values(".env")
+    ELASTIC_PASSWORD = config['ELASTIC_PASSWORD']
+    es =  Elasticsearch("http://localhost:9200",basic_auth=("elastic", ELASTIC_PASSWORD))
+
     es.options(ignore_status=[400,404]).indices.delete(index='srcdst')
     es.options(ignore_status=[400,404]).indices.delete(index='srcip')
     es.options(ignore_status=[400,404]).indices.delete(index='dstip')
@@ -20,6 +24,23 @@ def delete(es):
     es.options(ignore_status=[400,404]).indices.delete(index='protocol')
     es.options(ignore_status=[400,404]).indices.delete(index='srcport')
     es.options(ignore_status=[400,404]).indices.delete(index='dstport')
+
+    iterate_deletecsv("static/dst-ip.png")
+    iterate_deletecsv("static/dst-port.png")
+    iterate_deletecsv("static/protocol.png")
+    iterate_deletecsv("static/src-ip.png",)
+    iterate_deletecsv("static/src-port.png",)
+    iterate_deletecsv("static/vendor.png",)
+    iterate_deletecsv("static/pair-of-ip.png",)
+    iterate_deletecsv("results/dst-ip.csv",)
+    iterate_deletecsv("results/dst-port.csv",)
+    iterate_deletecsv("results/protocol.csv",)
+    iterate_deletecsv("results/src-ip.csv",)
+    iterate_deletecsv("results/src-port.csv",)
+    iterate_deletecsv("results/vendor.csv",)
+    iterate_deletecsv("results/pair-of-ip.csv",)
+
+    '''
     p1 = multiprocessing.Process(target=delete,args=("static/dst-ip.png",))
     p1.start()
     p2 = multiprocessing.Process(target=delete,args=("static/dst-port.png",))
@@ -64,6 +85,7 @@ def delete(es):
     c5.join()
     c6.join()
     c7.join()
+    '''
 
 
 

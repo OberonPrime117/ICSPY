@@ -4,9 +4,26 @@ import multiprocessing
 from dash import dash
 from functions.rank import *
 from functions.export import export
+import argparse
+from scapy.all import PcapReader
+import os
 
-def work(es,packets,i=1):
+def work(filename=None, i=1):
+    config = dotenv_values(".env")
+    ELASTIC_PASSWORD = config['ELASTIC_PASSWORD']
+    es =  Elasticsearch("http://localhost:9200",basic_auth=("elastic", ELASTIC_PASSWORD))
+
+    #parser = argparse.ArgumentParser()
+    #parser.add_argument("-p", "--pcap", help = "Enter your pcap file")
+    #args = parser.parse_args()
+
+    if filename != None:
+        packets = PcapReader(filename)
+        print(packets)
+    else:
+        sys.exit()
     for packet in packets:
+        #print(i)
 
         packet_dict = {}
         data = {}
@@ -25,12 +42,25 @@ def work(es,packets,i=1):
                 packet_dict[layer][key.strip()] = val.strip()
 
         # ////////////////// MAIN FUNCTION ////////////////////////
-        print(packet_dict)
+        #print(list(packet_dict.keys()))
 
-        data = dash(packet,data,packet_dict,i,es)
-        rankme(es,data)
+        dash(packet,packet_dict,i,es)
+        #rankme(es,data)
 
-        if i > 200 and i%200==0 and i != 0:
-            export(es)
+        if len(str(i)) <= 3 and i!=5:
+            val = 10**int(len(str(i)))
+            val = val/2
+            if i%val==0:
+                export(es)
+                os.system("python networkgraph.py")
+
+            # 3 digits - 100 , 400 45455
+        else:
+            # 5000 , 10,000
+            val = 10**int(len(str(i)))
+            val = val/5
+            if i%val==0:
+                export(es)
+                os.system("python networkgraph.py")
 
         i = i + 1

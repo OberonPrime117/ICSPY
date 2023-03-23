@@ -2,6 +2,7 @@ from scapy.all import Ether, IP, TCP, UDP, ICMP, Raw, rdpcap, PcapReader
 from dotenv import dotenv_values
 import json 
 import socket 
+from functions.rank import ranking
 
 def proto_name_by_num(proto_num):
     for name,num in vars(socket).items():
@@ -9,44 +10,31 @@ def proto_name_by_num(proto_num):
             return name[8:]
     return "N/A"
 
-def srcmac(data,packet,packet_dict,i):
-    if str(data["Source IP"]) == "0.0.0.0":
-        a = "00:21:6a:2d:3b:8e" # 3
+def srcmac(packet_dict,i,es):
 
-    if "::" in str(data["Source IP"]) and "::" in str(data["Destination IP"]):
-        a = str(packet[Ether].src) # 3
+    h = list(packet_dict.keys())[0]
     
-    else:
-        try:
-            a = packet[Ether].src
-        except:
-            try:
-                a =  packet_dict["802.3"]["src"] # 3
-            except:
-                a = "" # 3
-    #print(a)
-    return a
-    
-def dstmac(data,packet,packet_dict,i):
-    if str(data["Destination IP"]) == "255.255.255.255":
-        a = "ff:ff:ff:ff:ff:ff" # 4
-    
-    if "::" in str(data["Source IP"]) and "::" in str(data["Destination IP"]):
-        a = str(packet[Ether].dst) # 4
-    
-    else:
-        try:
-            a = packet[Ether].dst # 4
-        except:
-            try:
-                a = packet_dict["802.3"]["dst"]
-            except:
-                a = ""
-    #print(a)
-    return a
+    try:
+        a = packet_dict[h]["src"]
+    except:
+        a = ""
 
-def proto(data, packet_dict, packet,i):
-    if IP in packet:
+    ranking("srcmac",a,es)
+    
+def dstmac(packet_dict,i,es):
+    
+    h = list(packet_dict.keys())[0]
+    
+    try:
+        a = packet_dict[h]["dst"]
+    except:
+        a = ""
+
+    ranking("dstmac",a,es)
+
+def proto(packet_dict, packet, i, es):
+
+    if IP in packet_dict:
         a = proto_name_by_num(int(packet[IP].proto)) # 2
     else:
         #data["Protocol"] = "Other" # 2
@@ -60,59 +48,70 @@ def proto(data, packet_dict, packet,i):
             elif flag == 0: 
                 a = "Other" 
     
-    if str(data["Source IP"]) == "0.0.0.0":
-        a = "DHCP"
+    if "(" in str(a) or ")" in str(a):
+        a = a[1:]
+        a = a[:-1]
     
-    return a
+    ranking("protocol",a,es)
 
-def dstvendor(data,es):
-
-    if data["Destination MAC"] == 'ff:ff:ff:ff:ff:ff':
-        return "Broadcast"
+def dstvendor(packet_dict,es):
+    h = list(packet_dict.keys())[0]
+    if "dst" in packet_dict[h] and packet_dict[h]["dst"] == 'ff:ff:ff:ff:ff:ff':
+        a = "Broadcast"
     else:
         
         #es.indices.refresh(index="mac-vendors")
         #val = str(data["Destination MAC"])[0:8].upper()
         try:
-            val = str(data["Destination MAC"]).upper()
+            ab = packet_dict[h]["dst"]
+            val = str(ab).upper()
             resp = es.get(index="mac-vendors",id=val)
-            return resp['_source']["Vendor Name"]
+            a = resp['_source']["Vendor Name"]
         except:
             try:
-                val = str(data["Destination MAC"])[0:8].upper()
+                ab = packet_dict[h]["dst"]
+                val = str(ab)[0:8].upper()
                 resp = es.get(index="mac-vendors",id=val)
-                return resp['_source']["Vendor Name"]
+                a = resp['_source']["Vendor Name"]
             except:
-                abc = str(data["Destination MAC"]) + "\n"
+                abc = packet_dict
                 filename = "runtime/data.json"
                 with open(filename, 'a', encoding='utf-8-sig') as f:
                     json.dump(abc,f)
-                return abc
-
-def srcvendor(data,es):
-
-    if str(data["Source MAC"]) == 'ff:ff:ff:ff:ff:ff':
-        return "Broadcast"
-    else:
-
-        try:
-            val = str(data["Source MAC"]).upper()
-            resp = es.get(index="mac-vendors",id=val)
-            return resp['_source']["Vendor Name"]
-        except:
-            try:
-                val = str(data["Source MAC"])[0:8].upper()
-                resp = es.get(index="mac-vendors",id=val)
-                return resp['_source']["Vendor Name"]
-            except:
-                abc = str(data["Source MAC"]) + "\n"
-                filename = "runtime/data.json"
-                with open(filename, 'a', encoding='utf-8-sig') as f:
-                    json.dump(abc,f)
-                return abc
-
+                a = "N/A"
     
-def srcport(packet_dict):
+    ranking("vendors",a,es)
+
+def srcvendor(packet_dict,es):
+
+    h = list(packet_dict.keys())[0]
+    if "src" in packet_dict[h] and packet_dict[h]["src"] == 'ff:ff:ff:ff:ff:ff':
+        a = "Broadcast"
+    else:
+        
+        #es.indices.refresh(index="mac-vendors")
+        #val = str(data["Destination MAC"])[0:8].upper()
+        try:
+            ab = packet_dict[h]["src"]
+            val = str(ab).upper()
+            resp = es.get(index="mac-vendors",id=val)
+            a = resp['_source']["Vendor Name"]
+        except:
+            try:
+                ab = packet_dict[h]["src"]
+                val = str(ab)[0:8].upper()
+                resp = es.get(index="mac-vendors",id=val)
+                a = resp['_source']["Vendor Name"]
+            except:
+                abc = packet_dict
+                filename = "runtime/data.json"
+                with open(filename, 'a', encoding='utf-8-sig') as f:
+                    json.dump(abc,f)
+                a = "N/A"
+    
+    ranking("vendors",a,es)
+    
+def srcport(packet_dict, es):
     if 'UDP' in list(packet_dict.keys()):
         a = packet_dict["UDP"]['sport']  
 
@@ -121,9 +120,10 @@ def srcport(packet_dict):
 
     else:
         a = "N/A"
-    return a
+    
+    ranking("srcport",a,es)
 
-def dstport(packet_dict):
+def dstport(packet_dict, es):
     if 'UDP' in list(packet_dict.keys()):
         a = packet_dict["UDP"]['dport']
         
@@ -133,9 +133,10 @@ def dstport(packet_dict):
 
     else:
         a = "N/A"
-    return a
+    
+    ranking("dstport",a,es)
 
-def srcip(packet, packet_dict):
+def ip(packet, packet_dict, es):
     try:
         
         if IP in packet:
@@ -151,20 +152,21 @@ def srcip(packet, packet_dict):
         except:
             a = packet[Ether].src # 0
     
-    return a
+    ranking("srcip",a,es)
 
-def dstip(packet, packet_dict):
     try:
         if IP in packet:
-                a = str(packet[IP].dst) # 1
+                b = str(packet[IP].dst) # 1
         else:
             try:
-                a = packet_dict["802.3"]["dst"] # 1
+                b = packet_dict["802.3"]["dst"] # 1
             except:
-                a = packet[Ether].dst # 1
+                b = packet[Ether].dst # 1
     except:
         try:
-            a = packet_dict["802.3"]["dst"] # 1
+            b = packet_dict["802.3"]["dst"] # 1
         except:
-            a = packet[Ether].dst # 1
-    return a
+            b = packet[Ether].dst # 1
+    
+    ranking("dstip",b,es)
+    ranking("srcdst",a,es,b)
