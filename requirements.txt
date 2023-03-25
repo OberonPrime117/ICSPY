@@ -13,3 +13,4 @@ python-dotenv==1.0.0
 reloading==1.1.2
 requests==2.28.2
 scapy==2.4.5
+pyvis==0.3.2

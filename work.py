@@ -8,20 +8,11 @@ import argparse
 from scapy.all import PcapReader
 import os
 
-def work(filename=None, i=1):
+def work(packets, i=1):
     config = dotenv_values(".env")
     ELASTIC_PASSWORD = config['ELASTIC_PASSWORD']
     es =  Elasticsearch("http://localhost:9200",basic_auth=("elastic", ELASTIC_PASSWORD))
 
-    #parser = argparse.ArgumentParser()
-    #parser.add_argument("-p", "--pcap", help = "Enter your pcap file")
-    #args = parser.parse_args()
-
-    if filename != None:
-        packets = PcapReader(filename)
-        print(packets)
-    else:
-        sys.exit()
     for packet in packets:
         #print(i)
 
@@ -47,7 +38,7 @@ def work(filename=None, i=1):
         dash(packet,packet_dict,i,es)
         #rankme(es,data)
 
-        if len(str(i)) <= 3 and i!=5:
+        if len(str(i)) <= 3:
             val = 10**int(len(str(i)))
             val = val/2
             if i%val==0:
