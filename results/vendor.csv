@@ -1,42 +1,20 @@
-Broadcast,4
-"LEXMARK INTERNATIONAL, INC.",4
-IPv4 Multicast,1
-N/A,1
-"LEXMARK INTERNATIONAL, INC.",4
-Broadcast,8
-IPv4 Multicast,8
-N/A,80
-Broadcast,8
-"LEXMARK INTERNATIONAL, INC.",4
-IPv4 Multicast,104
-N/A,884
-"LEXMARK INTERNATIONAL, INC.",4
-IPv4 Multicast,290
-"VMware, Inc.",31
-XEROX CORPORATION,74
-Broadcast,23
-Intel Corporate,52
-Sercomm Corporation.,54
-"Fortinet, Inc.",69
-Palo Alto Networks,82
-N/A,2957
-"LEXMARK INTERNATIONAL, INC.",4
-Juniper Networks,376
-IPv4 Multicast,290
-"VMware, Inc.",31
-XEROX CORPORATION,74
-Intel Corporate,52
-Sercomm Corporation.,54
-"Fortinet, Inc.",69
-Palo Alto Networks,82
-Broadcast,27
-IPv4 Multicast,290
-"VMware, Inc.",31
-XEROX CORPORATION,74
-Intel Corporate,52
-Sercomm Corporation.,54
-"Fortinet, Inc.",69
-Palo Alto Networks,82
-"LEXMARK INTERNATIONAL, INC.",4
-Juniper Networks,376
-Dell Inc.,203
+PEGATRON CORPORATION,522
+RuggedCom Inc.,522
+"Cisco Systems, Inc",332
+"MOXA TECHNOLOGIES CORP., LTD.",1777
+Westermo Network Technologies AB,1788
+"Siemens Numerical Control Ltd., Nanjing",3562
+Siemens AG,7650
+"Wistron InfoComm(Kunshan)Co.,Ltd.",4089
+"Apple, Inc.",12
+Intel Corporate,43
+PEGATRON CORPORATION,522
+RuggedCom Inc.,522
+"Cisco Systems, Inc",332
+"MOXA TECHNOLOGIES CORP., LTD.",1777
+Westermo Network Technologies AB,1788
+"Siemens Numerical Control Ltd., Nanjing",3562
+Siemens AG,7650
+"Wistron InfoComm(Kunshan)Co.,Ltd.",4089
+"Apple, Inc.",12
+Intel Corporate,43

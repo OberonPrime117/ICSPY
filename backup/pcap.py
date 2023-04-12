@@ -111,10 +111,10 @@ def work():
             resp = es.get(index="protocol",id=str(data[str(i)]["Protocol"]))
             a = resp["_source"]
             a["Number of Packets"] = int(a["Number of Packets"]) + 1
-            resp = es.index(index="protocol", id=str(data[str(i)]["Protocol"]), document=a)
+            resp = es.index(index="protocol", id=str(data[str(i)]["Protocol"]), body=a)
         except:
             dbody = {"Number of Packets" : 1}
-            resp = es.index(index="protocol", id=str(data[str(i)]["Protocol"]), document=dbody)
+            resp = es.index(index="protocol", id=str(data[str(i)]["Protocol"]), body=dbody)
             
         # ////////////////// RANKING SRC IP , DST IP ////////////////////////
 
@@ -122,10 +122,10 @@ def work():
             resp = es.get(index="srcdst",id=str(data[str(i)]["Source IP"]))
             a = resp["_source"]
             a["Number of Packets"] = int(a["Number of Packets"]) + 1
-            resp = es.index(index="srcdst", id=str(data[str(i)]["Source IP"]), document=a)
+            resp = es.index(index="srcdst", id=str(data[str(i)]["Source IP"]), body=a)
         except:
             dbody = {"Number of Packets" : 1, "Destination IP": str(data[str(i)]["Destination IP"])}
-            resp = es.index(index="srcdst", id=str(data[str(i)]["Source IP"]), document=dbody)
+            resp = es.index(index="srcdst", id=str(data[str(i)]["Source IP"]), body=dbody)
 
         # ////////////////// RANKING SRC IP ////////////////////////
 
@@ -133,10 +133,10 @@ def work():
             resp = es.get(index="srcip",id=str(data[str(i)]["Source IP"]))
             a = resp["_source"]
             a["Number of Packets"] = int(a["Number of Packets"]) + 1
-            resp = es.index(index="srcip", id=str(data[str(i)]["Source IP"]), document=a)
+            resp = es.index(index="srcip", id=str(data[str(i)]["Source IP"]), body=a)
         except:
             dbody = {"Number of Packets" : 1}
-            resp = es.index(index="srcip", id=str(data[str(i)]["Source IP"]), document=dbody)
+            resp = es.index(index="srcip", id=str(data[str(i)]["Source IP"]), body=dbody)
 
         # ////////////////// RANKING DST IP ////////////////////////
 
@@ -144,10 +144,10 @@ def work():
             resp = es.get(index="dstip",id=str(data[str(i)]["Destination IP"]))
             a = resp["_source"]
             a["Number of Packets"] = int(a["Number of Packets"]) + 1
-            resp = es.index(index="dstip", id=str(data[str(i)]["Destination IP"]), document=a)
+            resp = es.index(index="dstip", id=str(data[str(i)]["Destination IP"]), body=a)
         except:
             dbody = {"Number of Packets" : 1}
-            resp = es.index(index="dstip", id=str(data[str(i)]["Destination IP"]), document=dbody)
+            resp = es.index(index="dstip", id=str(data[str(i)]["Destination IP"]), body=dbody)
 
         # ////////////////// RANKING SRC VENDOR ////////////////////////
 
@@ -155,10 +155,10 @@ def work():
             resp = es.get(index="vendors",id=str(data[str(i)]["Source Vendor"]))
             a = resp["_source"]
             a["Number of Packets"] = int(a["Number of Packets"]) + 1
-            resp = es.index(index="vendors", id=str(data[str(i)]["Source Vendor"]), document=a)
+            resp = es.index(index="vendors", id=str(data[str(i)]["Source Vendor"]), body=a)
         except:
             dbody = {"Number of Packets" : 1}
-            resp = es.index(index="vendors", id=str(data[str(i)]["Source Vendor"]), document=dbody)
+            resp = es.index(index="vendors", id=str(data[str(i)]["Source Vendor"]), body=dbody)
 
         # ////////////////// RANKING DST VENDOR ////////////////////////
 
@@ -166,10 +166,10 @@ def work():
             resp = es.get(index="vendors",id=str(data[str(i)]["Destination Vendor"]))
             a = resp["_source"]
             a["Number of Packets"] = int(a["Number of Packets"]) + 1
-            resp = es.index(index="vendors", id=str(data[str(i)]["Destination Vendor"]), document=a)
+            resp = es.index(index="vendors", id=str(data[str(i)]["Destination Vendor"]), body=a)
         except:
             dbody = {"Number of Packets" : 1}
-            resp = es.index(index="vendors", id=str(data[str(i)]["Destination Vendor"]), document=dbody)
+            resp = es.index(index="vendors", id=str(data[str(i)]["Destination Vendor"]), body=dbody)
 
         # ////////////////// RANKING SRC PORT ////////////////////////
 
@@ -177,10 +177,10 @@ def work():
             resp = es.get(index="srcport",id=str(data[str(i)]["Source Port"]))
             a = resp["_source"]
             a["Number of Packets"] = int(a["Number of Packets"]) + 1
-            resp = es.index(index="srcport", id=str(data[str(i)]["Source Port"]), document=a)
+            resp = es.index(index="srcport", id=str(data[str(i)]["Source Port"]), body=a)
         except:
             dbody = {"Number of Packets" : 1}
-            resp = es.index(index="srcport", id=str(data[str(i)]["Source Port"]), document=dbody)
+            resp = es.index(index="srcport", id=str(data[str(i)]["Source Port"]), body=dbody)
 
         # ////////////////// RANKING DST PORT ////////////////////////
 
@@ -188,10 +188,10 @@ def work():
             resp = es.get(index="dstport",id=str(data[str(i)]["Destination Port"]))
             a = resp["_source"]
             a["Number of Packets"] = int(a["Number of Packets"]) + 1
-            resp = es.index(index="dstport", id=str(data[str(i)]["Destination Port"]), document=a)
+            resp = es.index(index="dstport", id=str(data[str(i)]["Destination Port"]), body=a)
         except:
             dbody = {"Number of Packets" : 1}
-            resp = es.index(index="dstport", id=str(data[str(i)]["Destination Port"]), document=dbody)
+            resp = es.index(index="dstport", id=str(data[str(i)]["Destination Port"]), body=dbody)
 
         # ////////////////// VISUALISATION CODE ////////////////////////
 
@@ -324,7 +324,7 @@ def dstvendor(data,es,i):
     else:
         config = dotenv_values(".env")
         ELASTIC_PASSWORD = config['ELASTIC_PASSWORD']
-        es =  Elasticsearch("http://localhost:9200",basic_auth=("elastic", ELASTIC_PASSWORD))
+        es =  Elasticsearch("http://localhost:9200",http_auth=("elastic", ELASTIC_PASSWORD))
         #es.indices.refresh(index="mac-vendors")
         #val = str(data[str(i)]["Destination MAC"])[0:8].upper()
         try:
@@ -349,7 +349,7 @@ def srcvendor(data,es,i):
     else:
         config = dotenv_values(".env")
         ELASTIC_PASSWORD = config['ELASTIC_PASSWORD']
-        es =  Elasticsearch("http://localhost:9200",basic_auth=("elastic", ELASTIC_PASSWORD))
+        es =  Elasticsearch("http://localhost:9200",http_auth=("elastic", ELASTIC_PASSWORD))
         #es.indices.refresh(index="mac-vendors")
         #val = str(data[str(i)]["Source MAC"])[0:8].upper()
         try:
@@ -437,7 +437,7 @@ def animatepi(i):
 def dash(packet,data,packet_dict,i):
     config = dotenv_values(".env")
     ELASTIC_PASSWORD = config['ELASTIC_PASSWORD']
-    es =  Elasticsearch("http://localhost:9200",basic_auth=("elastic", ELASTIC_PASSWORD))
+    es =  Elasticsearch("http://localhost:9200",http_auth=("elastic", ELASTIC_PASSWORD))
     
     #start = time.process_time()
     data[str(i)]["Source Port"] = srcport(packet_dict)
@@ -485,7 +485,7 @@ def dash(packet,data,packet_dict,i):
 
 config = dotenv_values(".env")
 ELASTIC_PASSWORD = config['ELASTIC_PASSWORD']
-es = Elasticsearch("http://localhost:9200",basic_auth=("elastic", ELASTIC_PASSWORD))
+es = Elasticsearch("http://localhost:9200",http_auth=("elastic", ELASTIC_PASSWORD))
 es.options(ignore_status=[400,404]).indices.delete(index='srcip')
 es.options(ignore_status=[400,404]).indices.delete(index='protocol')
 es.options(ignore_status=[400,404]).indices.delete(index='srcdst')
