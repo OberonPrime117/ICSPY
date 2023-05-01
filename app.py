@@ -1,37 +1,21 @@
-import multiprocessing
 from flask import Flask, render_template
-import os
 from flask import request
-from multiprocessing import Pool, Process
 import webbrowser
-import argparse
 from elasticsearch import Elasticsearch  # SEARCHING
-import json
-from dotenv import dotenv_values
-import sys
-import plotly
-import requests
 from scapy.all import Ether, IP, TCP, UDP, ICMP, Raw, rdpcap, PcapReader
 import scapy.contrib.modbus as mb
-import socket
-import threading
 import csv
-import uuid
 import plotly.graph_objects as go
 import plotly.offline as pyo
 from scapy.all import *
-import networkx as nx
 from pyvis.network import Network
 import pandas as pd
-from threading import Timer
-from matplotlib import pyplot as plt
 import threading
 import glob
 import networkx as nx
-import matplotlib.pyplot as plt
-import mpld3
-import plotly.express as px
-
+from scapy.utils import hexdump
+import shutil
+import binascii
 
 def search(csvfile, test, es):
     searchp = {
@@ -48,13 +32,18 @@ def search(csvfile, test, es):
 
         b = []
 
-        if test == "srcdst":
-            trial = impact["_id"].split("--")
-            b.append(trial[0])  # SOURCE
-            b.append(trial[1])  # DESTINATION
-        else:
+        if test == "payload":
             b.append(impact["_id"])
-        b.append(impact["_source"]["Number of Packets"])
+            b.append(impact["_source"]["Payload"])
+
+        else:
+            if test == "srcdst":
+                trial = impact["_id"].split("--")
+                b.append(trial[0])  # SOURCE
+                b.append(trial[1])  # DESTINATION
+            else:
+                b.append(impact["_id"])
+            b.append(impact["_source"]["Number of Packets"])
         d.append(b)
 
     for i in d:
@@ -185,7 +174,7 @@ def dstmac(packet_dict, i, es):
     ranking("dstmac", a, es)
 
 
-def proto(packet_dict, packet, i, es, sp, dp, mapping):
+def proto(packet_dict, packet, i, es, sp, dp):
     # print(packet_dict)
     if IP in packet_dict:
         a = proto_name_by_num(int(packet[IP].proto))  # 2
@@ -206,11 +195,14 @@ def proto(packet_dict, packet, i, es, sp, dp, mapping):
         a = a[:-1]
 
     if len(a) < 3:
-        ph = set(['TCP', 'UDP', 'LLC', 'STP', 'ARP', 'CIP'])
+        ph = set(['TCP', 'UDP', 'LLC', 'STP', 'ARP', 'CIP', 'DNS'])
         z = set(y)
         g = ph.intersection(z)
         # print(g)
-        a = list(g)[-1]
+        try:
+            a = list(g)[-1]
+        except:
+            pass
         # print(list(g)[-1])
 
     for bh in y:
@@ -222,10 +214,20 @@ def proto(packet_dict, packet, i, es, sp, dp, mapping):
         a = "SAMBA"
     elif mb.ModbusADUResponse in packet:
         a = "ModbusTCP"
-    elif sp in list(mapping.keys()):
-        a = mapping[sp]
-    elif dp in list(mapping.keys()):
-        a = mapping[dp]
+    elif 'DNS' in y or '|###[ DNS Question Record' in y:
+        a = "DNS"
+    
+    try:
+        resp = es.get(index="elasticproto", id=sp)
+        a = resp["_source"]["Protocol Name"]
+    except:
+        pass
+
+    try:
+        resp = es.get(index="elasticproto", id=dp)
+        a = resp["_source"]["Protocol Name"]
+    except:
+        pass
 
     #print(sp)
     #print(dp)
@@ -253,10 +255,6 @@ def dstvendor(packet_dict, es):
                 resp = es.get(index="mac-vendors", id=val)
                 a = resp['_source']["Vendor Name"]
             except:
-                abc = packet_dict
-                filename = "backup/data.json"
-                with open(filename, 'a', encoding='utf-8-sig') as f:
-                    json.dump(abc, f)
                 a = "N/A"
     
     if 'SNAP' in list(packet_dict.keys()):
@@ -286,10 +284,6 @@ def srcvendor(packet_dict, es):
                 resp = es.get(index="mac-vendors", id=val)
                 a = resp['_source']["Vendor Name"]
             except:
-                abc = packet_dict
-                filename = "backup/data.json"
-                with open(filename, 'a', encoding='utf-8-sig') as f:
-                    json.dump(abc, f)
                 a = "N/A"
 
     ranking("vendors", a, es)
@@ -375,13 +369,27 @@ def ip(packet, packet_dict, es):
     # print(b)
     ranking("srcdst", a, es, b)
 
+def payloadworks(packet,i):
+    raw = bytes(packet.lastlayer())
+
+    char_list = [chr(byte) if byte >= 32 and byte <= 126 else '.' for byte in raw]
+    result = ''.join(char_list)
+    result = "'" + str(result) + "'"
+    d = [i, result]
+    with open("results/payload.csv", mode='a', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(d)
 
 def work(es, packets):
+    
     global i
     i = 1
+    with open("results/payload.csv", mode='w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow('')
 
     for packet in packets:
-        # print(i)
+        payloadworks(packet,i)
 
         packet_dict = {}
         data = {}
@@ -398,9 +406,11 @@ def work(es, packets):
             elif '=' in line:
                 key, val = line.split('=', 1)
                 packet_dict[layer][key.strip()] = val.strip()
+        
+        #print(packet_dict)
 
         # ////////////////// MAIN FUNCTION ////////////////////////
-        # print(list(packet_dict.keys()))
+        #print(list(packet_dict.keys()))
 
         # p1 = threading.Thread(target=dash,args=(packet,packet_dict,i,es))
         dash(packet, packet_dict, i, es)
@@ -429,237 +439,6 @@ def work(es, packets):
 
 
 def dash(packet, packet_dict, i, es):
-    mapping = {
-        "20000":"DNP3",
-        "502": "ModbusTCP",
-        "47808": "BACnet",
-        "34980": "EtherCAT",
-        "55000": "FL-net",
-        "55001": "FL-net",
-        "55002": "FL-net",
-        "55003": "FL-net",
-        "102": "ICCP",
-        "4000": "ROC Plus",
-        "4840": "OPC UA Discovery Server",
-        
-        "44818": "EtherNet/IP",
-        "34962": "PROFINET",
-        "34963": "PROFINET",
-        "34964": "PROFINET",
-        "9600": "OMRON FINS",
-        "4000": "EMERSON FISHER",
-        "55555": "FOXBORO FOXAPI",
-        "45678": "FOXBORO AIMAPI",
-        "1541": "FOXBORO INFORMIX",
-        "18000": "ICONICS",
-        "11001": "MetaSys N1", 
-        "10307": "ABB Ranger 2003",
-        "10311": "ABB Ranger 2003",
-        "10364": "ABB Ranger 2003",
-        "10365": "ABB Ranger 2003",
-        "10407": "ABB Ranger 2003",
-        "10409": "ABB Ranger 2003",
-        "10410": "ABB Ranger 2003",
-        "10412": "ABB Ranger 2003",
-        "10414": "ABB Ranger 2003",
-        "10415": "ABB Ranger 2003",
-        "10428": "ABB Ranger 2003",
-        "10431": "ABB Ranger 2003",
-        "10432": "ABB Ranger 2003",
-        "10447": "ABB Ranger 2003",
-        "10449": "ABB Ranger 2003",
-        "10450": "ABB Ranger 2003",
-        "12316": "ABB Ranger 2003",
-        "12645": "ABB Ranger 2003",
-        "12647": "ABB Ranger 2003",
-        "12648": "ABB Ranger 2003",
-        "13722": "ABB Ranger 2003",
-        "13724": "ABB Ranger 2003",
-        "13782": "ABB Ranger 2003",
-        "13783": "ABB Ranger 2003",
-        "38589": "ABB Ranger 2003",
-        "38593": "ABB Ranger 2003",
-        "38600": "ABB Ranger 2003",
-        "38971": "ABB Ranger 2003",
-        "39129": "ABB Ranger 2003",
-        "39278": "ABB Ranger 2003",
-        "5450": "PI SERVER OSISOFT",
-        "50001": "SEIMENS SPECTRUM POWER TG",
-        "50002": "SEIMENS SPECTRUM POWER TG",
-        "50003": "SEIMENS SPECTRUM POWER TG",
-        "50004": "SEIMENS SPECTRUM POWER TG",
-        "50005": "SEIMENS SPECTRUM POWER TG",
-        "50006": "SEIMENS SPECTRUM POWER TG",
-        "50007": "SEIMENS SPECTRUM POWER TG",
-        "50008": "SEIMENS SPECTRUM POWER TG",
-        "50009": "SEIMENS SPECTRUM POWER TG",
-        "50010": "SEIMENS SPECTRUM POWER TG",
-        "50011": "SEIMENS SPECTRUM POWER TG",
-        "50012": "SEIMENS SPECTRUM POWER TG",
-        "50013": "SEIMENS SPECTRUM POWER TG",
-        "50014": "SEIMENS SPECTRUM POWER TG",
-        "50015": "SEIMENS SPECTRUM POWER TG",
-        "50016": "SEIMENS SPECTRUM POWER TG",
-        "50018": "SEIMENS SPECTRUM POWER TG",
-        "50019": "SEIMENS SPECTRUM POWER TG",
-        "50020": "SEIMENS SPECTRUM POWER TG",
-        "50021": "SEIMENS SPECTRUM POWER TG",
-        "50025": "SEIMENS SPECTRUM POWER TG",
-        "50026": "SEIMENS SPECTRUM POWER TG",
-        "50027": "SEIMENS SPECTRUM POWER TG",
-        "50028": "SEIMENS SPECTRUM POWER TG",
-        "50110": "SEIMENS SPECTRUM POWER TG",
-        "50111": "SEIMENS SPECTRUM POWER TG",
-        "38000": "SNC GENe",
-        "38001": "SNC GENe",
-        "38011": "SNC GENe",
-        "38012": "SNC GENe",
-        "38014": "SNC GENe",
-        "38015": "SNC GENe",
-        "38200": "SNC GENe",
-        "38210": "SNC GENe",
-        "38301": "SNC GENe",
-        "38400": "SNC GENe",
-        "38700": "SNC GENe",
-        "62900": "SNC GENe",
-        "62911": "SNC GENe",
-        "62924": "SNC GENe",
-        "62930": "SNC GENe",
-        "62938": "SNC GENe",
-        "62956": "SNC GENe",
-        "62957": "SNC GENe",
-        "62963": "SNC GENe",
-        "62981": "SNC GENe",
-        "62982": "SNC GENe",
-        "62985": "SNC GENe",
-        "62992": "SNC GENe",
-        "63012": "SNC GENe",
-        "63027": "SNC GENe",
-        "63028": "SNC GENe",
-        "63029": "SNC GENe",
-        "63030": "SNC GENe",
-        "63031": "SNC GENe",
-        "63032": "SNC GENe",
-        "63033": "SNC GENe",
-        "63034": "SNC GENe",
-        "63035": "SNC GENe",
-        "63036": "SNC GENe",
-        "63041": "SNC GENe",
-        "63075": "SNC GENe",
-        "63079": "SNC GENe",
-        "63082": "SNC GENe",
-        "63088": "SNC GENe",
-        "63094": "SNC GENe",
-        "65443": "SNC GENe",
-        "5050": "TELVENT OASyS DNA",
-        "5051": "TELVENT OASyS DNA",
-        "5052": "TELVENT OASyS DNA",
-        "5065": "TELVENT OASyS DNA",
-        "12135": "TELVENT OASyS DNA",
-        "12136": "TELVENT OASyS DNA",
-        "12137": "TELVENT OASyS DNA",
-        "56001": "TELVENT OASyS DNA",
-        "56002": "TELVENT OASyS DNA",
-        "56003": "TELVENT OASyS DNA",
-        "56004": "TELVENT OASyS DNA",
-        "56005": "TELVENT OASyS DNA",
-        "56006": "TELVENT OASyS DNA",
-        "56007": "TELVENT OASyS DNA",
-        "56008": "TELVENT OASyS DNA",
-        "56009": "TELVENT OASyS DNA",
-        "56010": "TELVENT OASyS DNA",
-        "56011": "TELVENT OASyS DNA",
-        "56012": "TELVENT OASyS DNA",
-        "56013": "TELVENT OASyS DNA",
-        "56014": "TELVENT OASyS DNA",
-        "56015": "TELVENT OASyS DNA",
-        "56016": "TELVENT OASyS DNA",
-        "56017": "TELVENT OASyS DNA",
-        "56018": "TELVENT OASyS DNA",
-        "56019": "TELVENT OASyS DNA",
-        "56020": "TELVENT OASyS DNA",
-        "56021": "TELVENT OASyS DNA",
-        "56022": "TELVENT OASyS DNA",
-        "56023": "TELVENT OASyS DNA",
-        "56024": "TELVENT OASyS DNA",
-        "56025": "TELVENT OASyS DNA",
-        "56026": "TELVENT OASyS DNA",
-        "56027": "TELVENT OASyS DNA",
-        "56028": "TELVENT OASyS DNA",
-        "56029": "TELVENT OASyS DNA",
-        "56030": "TELVENT OASyS DNA",
-        "56031": "TELVENT OASyS DNA",
-        "56032": "TELVENT OASyS DNA",
-        "56033": "TELVENT OASyS DNA",
-        "56034": "TELVENT OASyS DNA",
-        "56035": "TELVENT OASyS DNA",
-        "56036": "TELVENT OASyS DNA",
-        "56037": "TELVENT OASyS DNA",
-        "56038": "TELVENT OASyS DNA",
-        "56039": "TELVENT OASyS DNA",
-        "56040": "TELVENT OASyS DNA",
-        "56041": "TELVENT OASyS DNA",
-        "56042": "TELVENT OASyS DNA",
-        "56043": "TELVENT OASyS DNA",
-        "56044": "TELVENT OASyS DNA",
-        "56045": "TELVENT OASyS DNA",
-        "56046": "TELVENT OASyS DNA",
-        "56047": "TELVENT OASyS DNA",
-        "56048": "TELVENT OASyS DNA",
-        "56049": "TELVENT OASyS DNA",
-        "56050": "TELVENT OASyS DNA",
-        "56051": "TELVENT OASyS DNA",
-        "56052": "TELVENT OASyS DNA",
-        "56053": "TELVENT OASyS DNA",
-        "56054": "TELVENT OASyS DNA",
-        "56055": "TELVENT OASyS DNA",
-        "56056": "TELVENT OASyS DNA",
-        "56057": "TELVENT OASyS DNA",
-        "56058": "TELVENT OASyS DNA",
-        "56059": "TELVENT OASyS DNA",
-        "56060": "TELVENT OASyS DNA",
-        "56061": "TELVENT OASyS DNA",
-        "56062": "TELVENT OASyS DNA",
-        "56063": "TELVENT OASyS DNA",
-        "56064": "TELVENT OASyS DNA",
-        "56065": "TELVENT OASyS DNA",
-        "56066": "TELVENT OASyS DNA",
-        "56067": "TELVENT OASyS DNA",
-        "56068": "TELVENT OASyS DNA",
-        "56069": "TELVENT OASyS DNA",
-        "56070": "TELVENT OASyS DNA",
-        "56071": "TELVENT OASyS DNA",
-        "56072": "TELVENT OASyS DNA",
-        "56073": "TELVENT OASyS DNA",
-        "56074": "TELVENT OASyS DNA",
-        "56075": "TELVENT OASyS DNA",
-        "56076": "TELVENT OASyS DNA",
-        "56077": "TELVENT OASyS DNA",
-        "56078": "TELVENT OASyS DNA",
-        "56079": "TELVENT OASyS DNA",
-        "56080": "TELVENT OASyS DNA",
-        "56081": "TELVENT OASyS DNA",
-        "56082": "TELVENT OASyS DNA",
-        "56083": "TELVENT OASyS DNA",
-        "56084": "TELVENT OASyS DNA",
-        "56085": "TELVENT OASyS DNA",
-        "56086": "TELVENT OASyS DNA",
-        "56087": "TELVENT OASyS DNA",
-        "56088": "TELVENT OASyS DNA",
-        "56089": "TELVENT OASyS DNA",
-        "56090": "TELVENT OASyS DNA",
-        "56091": "TELVENT OASyS DNA",
-        "56092": "TELVENT OASyS DNA",
-        "56093": "TELVENT OASyS DNA",
-        "56094": "TELVENT OASyS DNA",
-        "56095": "TELVENT OASyS DNA",
-        "56096": "TELVENT OASyS DNA",
-        "56097": "TELVENT OASyS DNA",
-        "56098": "TELVENT OASyS DNA",
-        "56099": "TELVENT OASyS DNA",
-
-
-    }
     
     p1 = threading.Thread(target=srcmac, args=(packet_dict, i, es))
     p1.start()
@@ -672,7 +451,7 @@ def dash(packet, packet_dict, i, es):
     p5 = threading.Thread(target=srcvendor, args=(packet_dict, es))
     sp = srcport(packet_dict, packet, es)
     dp = dstport(packet_dict, packet, es)
-    proto(packet_dict, packet, i, es, sp, dp, mapping)
+    proto(packet_dict, packet, i, es, sp, dp)
     p1.join()
     p2.join()
     p3.join()
@@ -710,7 +489,6 @@ def pcap(filename):
     work(es, packets)
     export(es)
     networkgraph()
-
 
 def createme():
     createfile("src-dst.csv")

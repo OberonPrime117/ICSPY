@@ -1,0 +1,770 @@
+[
+    {
+        "20000": "DNP3"
+    },
+    {
+        "502": "ModbusTCP"
+    },
+    {
+        "47808": "BACnet"
+    },
+    {
+        "34980": "EtherCAT"
+    },
+    {
+        "55000": "FL-net"
+    },
+    {
+        "55001": "FL-net"
+    },
+    {
+        "55002": "FL-net"
+    },
+    {
+        "55003": "FL-net"
+    },
+    {
+        "102": "ICCP"
+    },
+    {
+        "4000": "ROC Plus"
+    },
+    {
+        "4840": "OPC UA Discovery Server"
+    },
+    {
+        "20": "FTP"
+    },
+    {
+        "21": "FTP"
+    },
+    {
+        "22": "SSH"
+    },
+    {
+        "23": "Telnet"
+    },
+    {
+        "25": "SMTP"
+    },
+    {
+        "69": "TFTP"
+    },
+    {
+        "53": "DNS"
+    },
+    {
+        "80": "HTTP"
+    },
+    {
+        "67": "DHCP"
+    },
+    {
+        "68": "DHCP"
+    },
+    {
+        "119": "NNTP"
+    },
+    {
+        "135": "NetBIOS"
+    },
+    {
+        "139": "NetBIOS"
+    },
+    {
+        "161": "SNMP"
+    },
+    {
+        "162": "SNMP"
+    },
+    {
+        "389": "LDAP"
+    },
+    {
+        "443": "TLS"
+    },
+    {
+        "143": "IMAP"
+    },
+    {
+        "3389": "ARP"
+    },
+    {
+        "179": "BGP"
+    },
+    {
+        "194": "IRC"
+    },
+    {
+        "3022": "NAT"
+    },
+    {
+        "445": "MADP"
+    },
+    {
+        "1026": "CAP"
+    },
+    {
+        "1701": "L2TP"
+    },
+    {
+        "1732": "PPTP"
+    },
+    {
+        "135": "RPC"
+    },
+    {
+        "110": "POP3"
+    },
+    {
+        "123": "NTP"
+    },
+    {
+        "44818": "EtherNet/IP"
+    },
+    {
+        "34962": "PROFINET"
+    },
+    {
+        "34963": "PROFINET"
+    },
+    {
+        "34964": "PROFINET"
+    },
+    {
+        "9600": "OMRON FINS"
+    },
+    {
+        "4000": "EMERSON FISHER"
+    },
+    {
+        "55555": "FOXBORO FOXAPI"
+    },
+    {
+        "45678": "FOXBORO AIMAPI"
+    },
+    {
+        "1541": "FOXBORO INFORMIX"
+    },
+    {
+        "18000": "ICONICS"
+    },
+    {
+        "11001": "MetaSys N1"
+    },
+    {
+        "10307": "ABB Ranger 2003"
+    },
+    {
+        "10311": "ABB Ranger 2003"
+    },
+    {
+        "10364": "ABB Ranger 2003"
+    },
+    {
+        "10365": "ABB Ranger 2003"
+    },
+    {
+        "10407": "ABB Ranger 2003"
+    },
+    {
+        "10409": "ABB Ranger 2003"
+    },
+    {
+        "10410": "ABB Ranger 2003"
+    },
+    {
+        "10412": "ABB Ranger 2003"
+    },
+    {
+        "10414": "ABB Ranger 2003"
+    },
+    {
+        "10415": "ABB Ranger 2003"
+    },
+    {
+        "10428": "ABB Ranger 2003"
+    },
+    {
+        "10431": "ABB Ranger 2003"
+    },
+    {
+        "10432": "ABB Ranger 2003"
+    },
+    {
+        "10447": "ABB Ranger 2003"
+    },
+    {
+        "10449": "ABB Ranger 2003"
+    },
+    {
+        "10450": "ABB Ranger 2003"
+    },
+    {
+        "12316": "ABB Ranger 2003"
+    },
+    {
+        "12645": "ABB Ranger 2003"
+    },
+    {
+        "12647": "ABB Ranger 2003"
+    },
+    {
+        "12648": "ABB Ranger 2003"
+    },
+    {
+        "13722": "ABB Ranger 2003"
+    },
+    {
+        "13724": "ABB Ranger 2003"
+    },
+    {
+        "13782": "ABB Ranger 2003"
+    },
+    {
+        "13783": "ABB Ranger 2003"
+    },
+    {
+        "38589": "ABB Ranger 2003"
+    },
+    {
+        "38593": "ABB Ranger 2003"
+    },
+    {
+        "38600": "ABB Ranger 2003"
+    },
+    {
+        "38971": "ABB Ranger 2003"
+    },
+    {
+        "39129": "ABB Ranger 2003"
+    },
+    {
+        "39278": "ABB Ranger 2003"
+    },
+    {
+        "5450": "PI SERVER OSISOFT"
+    },
+    {
+        "50001": "SEIMENS SPECTRUM POWER TG"
+    },
+    {
+        "50002": "SEIMENS SPECTRUM POWER TG"
+    },
+    {
+        "50003": "SEIMENS SPECTRUM POWER TG"
+    },
+    {
+        "50004": "SEIMENS SPECTRUM POWER TG"
+    },
+    {
+        "50005": "SEIMENS SPECTRUM POWER TG"
+    },
+    {
+        "50006": "SEIMENS SPECTRUM POWER TG"
+    },
+    {
+        "50007": "SEIMENS SPECTRUM POWER TG"
+    },
+    {
+        "50008": "SEIMENS SPECTRUM POWER TG"
+    },
+    {
+        "50009": "SEIMENS SPECTRUM POWER TG"
+    },
+    {
+        "50010": "SEIMENS SPECTRUM POWER TG"
+    },
+    {
+        "50011": "SEIMENS SPECTRUM POWER TG"
+    },
+    {
+        "50012": "SEIMENS SPECTRUM POWER TG"
+    },
+    {
+        "50013": "SEIMENS SPECTRUM POWER TG"
+    },
+    {
+        "50014": "SEIMENS SPECTRUM POWER TG"
+    },
+    {
+        "50015": "SEIMENS SPECTRUM POWER TG"
+    },
+    {
+        "50016": "SEIMENS SPECTRUM POWER TG"
+    },
+    {
+        "50018": "SEIMENS SPECTRUM POWER TG"
+    },
+    {
+        "50019": "SEIMENS SPECTRUM POWER TG"
+    },
+    {
+        "50020": "SEIMENS SPECTRUM POWER TG"
+    },
+    {
+        "50021": "SEIMENS SPECTRUM POWER TG"
+    },
+    {
+        "50025": "SEIMENS SPECTRUM POWER TG"
+    },
+    {
+        "50026": "SEIMENS SPECTRUM POWER TG"
+    },
+    {
+        "50027": "SEIMENS SPECTRUM POWER TG"
+    },
+    {
+        "50028": "SEIMENS SPECTRUM POWER TG"
+    },
+    {
+        "50110": "SEIMENS SPECTRUM POWER TG"
+    },
+    {
+        "50111": "SEIMENS SPECTRUM POWER TG"
+    },
+    {
+        "38000": "SNC GENe"
+    },
+    {
+        "38001": "SNC GENe"
+    },
+    {
+        "38011": "SNC GENe"
+    },
+    {
+        "38012": "SNC GENe"
+    },
+    {
+        "38014": "SNC GENe"
+    },
+    {
+        "38015": "SNC GENe"
+    },
+    {
+        "38200": "SNC GENe"
+    },
+    {
+        "38210": "SNC GENe"
+    },
+    {
+        "38301": "SNC GENe"
+    },
+    {
+        "38400": "SNC GENe"
+    },
+    {
+        "38700": "SNC GENe"
+    },
+    {
+        "62900": "SNC GENe"
+    },
+    {
+        "62911": "SNC GENe"
+    },
+    {
+        "62924": "SNC GENe"
+    },
+    {
+        "62930": "SNC GENe"
+    },
+    {
+        "62938": "SNC GENe"
+    },
+    {
+        "62956": "SNC GENe"
+    },
+    {
+        "62957": "SNC GENe"
+    },
+    {
+        "62963": "SNC GENe"
+    },
+    {
+        "62981": "SNC GENe"
+    },
+    {
+        "62982": "SNC GENe"
+    },
+    {
+        "62985": "SNC GENe"
+    },
+    {
+        "62992": "SNC GENe"
+    },
+    {
+        "63012": "SNC GENe"
+    },
+    {
+        "63027": "SNC GENe"
+    },
+    {
+        "63028": "SNC GENe"
+    },
+    {
+        "63029": "SNC GENe"
+    },
+    {
+        "63030": "SNC GENe"
+    },
+    {
+        "63031": "SNC GENe"
+    },
+    {
+        "63032": "SNC GENe"
+    },
+    {
+        "63033": "SNC GENe"
+    },
+    {
+        "63034": "SNC GENe"
+    },
+    {
+        "63035": "SNC GENe"
+    },
+    {
+        "63036": "SNC GENe"
+    },
+    {
+        "63041": "SNC GENe"
+    },
+    {
+        "63075": "SNC GENe"
+    },
+    {
+        "63079": "SNC GENe"
+    },
+    {
+        "63082": "SNC GENe"
+    },
+    {
+        "63088": "SNC GENe"
+    },
+    {
+        "63094": "SNC GENe"
+    },
+    {
+        "65443": "SNC GENe"
+    },
+    {
+        "5050": "TELVENT OASyS DNA"
+    },
+    {
+        "5051": "TELVENT OASyS DNA"
+    },
+    {
+        "5052": "TELVENT OASyS DNA"
+    },
+    {
+        "5065": "TELVENT OASyS DNA"
+    },
+    {
+        "12135": "TELVENT OASyS DNA"
+    },
+    {
+        "12136": "TELVENT OASyS DNA"
+    },
+    {
+        "12137": "TELVENT OASyS DNA"
+    },
+    {
+        "56001": "TELVENT OASyS DNA"
+    },
+    {
+        "56002": "TELVENT OASyS DNA"
+    },
+    {
+        "56003": "TELVENT OASyS DNA"
+    },
+    {
+        "56004": "TELVENT OASyS DNA"
+    },
+    {
+        "56005": "TELVENT OASyS DNA"
+    },
+    {
+        "56006": "TELVENT OASyS DNA"
+    },
+    {
+        "56007": "TELVENT OASyS DNA"
+    },
+    {
+        "56008": "TELVENT OASyS DNA"
+    },
+    {
+        "56009": "TELVENT OASyS DNA"
+    },
+    {
+        "56010": "TELVENT OASyS DNA"
+    },
+    {
+        "56011": "TELVENT OASyS DNA"
+    },
+    {
+        "56012": "TELVENT OASyS DNA"
+    },
+    {
+        "56013": "TELVENT OASyS DNA"
+    },
+    {
+        "56014": "TELVENT OASyS DNA"
+    },
+    {
+        "56015": "TELVENT OASyS DNA"
+    },
+    {
+        "56016": "TELVENT OASyS DNA"
+    },
+    {
+        "56017": "TELVENT OASyS DNA"
+    },
+    {
+        "56018": "TELVENT OASyS DNA"
+    },
+    {
+        "56019": "TELVENT OASyS DNA"
+    },
+    {
+        "56020": "TELVENT OASyS DNA"
+    },
+    {
+        "56021": "TELVENT OASyS DNA"
+    },
+    {
+        "56022": "TELVENT OASyS DNA"
+    },
+    {
+        "56023": "TELVENT OASyS DNA"
+    },
+    {
+        "56024": "TELVENT OASyS DNA"
+    },
+    {
+        "56025": "TELVENT OASyS DNA"
+    },
+    {
+        "56026": "TELVENT OASyS DNA"
+    },
+    {
+        "56027": "TELVENT OASyS DNA"
+    },
+    {
+        "56028": "TELVENT OASyS DNA"
+    },
+    {
+        "56029": "TELVENT OASyS DNA"
+    },
+    {
+        "56030": "TELVENT OASyS DNA"
+    },
+    {
+        "56031": "TELVENT OASyS DNA"
+    },
+    {
+        "56032": "TELVENT OASyS DNA"
+    },
+    {
+        "56033": "TELVENT OASyS DNA"
+    },
+    {
+        "56034": "TELVENT OASyS DNA"
+    },
+    {
+        "56035": "TELVENT OASyS DNA"
+    },
+    {
+        "56036": "TELVENT OASyS DNA"
+    },
+    {
+        "56037": "TELVENT OASyS DNA"
+    },
+    {
+        "56038": "TELVENT OASyS DNA"
+    },
+    {
+        "56039": "TELVENT OASyS DNA"
+    },
+    {
+        "56040": "TELVENT OASyS DNA"
+    },
+    {
+        "56041": "TELVENT OASyS DNA"
+    },
+    {
+        "56042": "TELVENT OASyS DNA"
+    },
+    {
+        "56043": "TELVENT OASyS DNA"
+    },
+    {
+        "56044": "TELVENT OASyS DNA"
+    },
+    {
+        "56045": "TELVENT OASyS DNA"
+    },
+    {
+        "56046": "TELVENT OASyS DNA"
+    },
+    {
+        "56047": "TELVENT OASyS DNA"
+    },
+    {
+        "56048": "TELVENT OASyS DNA"
+    },
+    {
+        "56049": "TELVENT OASyS DNA"
+    },
+    {
+        "56050": "TELVENT OASyS DNA"
+    },
+    {
+        "56051": "TELVENT OASyS DNA"
+    },
+    {
+        "56052": "TELVENT OASyS DNA"
+    },
+    {
+        "56053": "TELVENT OASyS DNA"
+    },
+    {
+        "56054": "TELVENT OASyS DNA"
+    },
+    {
+        "56055": "TELVENT OASyS DNA"
+    },
+    {
+        "56056": "TELVENT OASyS DNA"
+    },
+    {
+        "56057": "TELVENT OASyS DNA"
+    },
+    {
+        "56058": "TELVENT OASyS DNA"
+    },
+    {
+        "56059": "TELVENT OASyS DNA"
+    },
+    {
+        "56060": "TELVENT OASyS DNA"
+    },
+    {
+        "56061": "TELVENT OASyS DNA"
+    },
+    {
+        "56062": "TELVENT OASyS DNA"
+    },
+    {
+        "56063": "TELVENT OASyS DNA"
+    },
+    {
+        "56064": "TELVENT OASyS DNA"
+    },
+    {
+        "56065": "TELVENT OASyS DNA"
+    },
+    {
+        "56066": "TELVENT OASyS DNA"
+    },
+    {
+        "56067": "TELVENT OASyS DNA"
+    },
+    {
+        "56068": "TELVENT OASyS DNA"
+    },
+    {
+        "56069": "TELVENT OASyS DNA"
+    },
+    {
+        "56070": "TELVENT OASyS DNA"
+    },
+    {
+        "56071": "TELVENT OASyS DNA"
+    },
+    {
+        "56072": "TELVENT OASyS DNA"
+    },
+    {
+        "56073": "TELVENT OASyS DNA"
+    },
+    {
+        "56074": "TELVENT OASyS DNA"
+    },
+    {
+        "56075": "TELVENT OASyS DNA"
+    },
+    {
+        "56076": "TELVENT OASyS DNA"
+    },
+    {
+        "56077": "TELVENT OASyS DNA"
+    },
+    {
+        "56078": "TELVENT OASyS DNA"
+    },
+    {
+        "56079": "TELVENT OASyS DNA"
+    },
+    {
+        "56080": "TELVENT OASyS DNA"
+    },
+    {
+        "56081": "TELVENT OASyS DNA"
+    },
+    {
+        "56082": "TELVENT OASyS DNA"
+    },
+    {
+        "56083": "TELVENT OASyS DNA"
+    },
+    {
+        "56084": "TELVENT OASyS DNA"
+    },
+    {
+        "56085": "TELVENT OASyS DNA"
+    },
+    {
+        "56086": "TELVENT OASyS DNA"
+    },
+    {
+        "56087": "TELVENT OASyS DNA"
+    },
+    {
+        "56088": "TELVENT OASyS DNA"
+    },
+    {
+        "56089": "TELVENT OASyS DNA"
+    },
+    {
+        "56090": "TELVENT OASyS DNA"
+    },
+    {
+        "56091": "TELVENT OASyS DNA"
+    },
+    {
+        "56092": "TELVENT OASyS DNA"
+    },
+    {
+        "56093": "TELVENT OASyS DNA"
+    },
+    {
+        "56094": "TELVENT OASyS DNA"
+    },
+    {
+        "56095": "TELVENT OASyS DNA"
+    },
+    {
+        "56096": "TELVENT OASyS DNA"
+    },
+    {
+        "56097": "TELVENT OASyS DNA"
+    },
+    {
+        "56098": "TELVENT OASyS DNA"
+    },
+    {
+        "56099": "TELVENT OASyS DNA"
+    },
+    {
+        "5004": "RTP"
+    }
+]
