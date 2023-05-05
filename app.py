@@ -1,9 +1,9 @@
 from multiprocessing import Pool
-from flask import Flask, render_template
-from flask import request
+import shutil
+from flask import Flask, render_template, send_file, request
 import webbrowser
 from elasticsearch import Elasticsearch
-import numpy as np  # SEARCHING
+import zipfile
 from scapy.all import Ether, IP, TCP, UDP, ICMP, Raw, rdpcap, PcapReader
 import scapy.contrib.modbus as mb
 import csv
@@ -15,7 +15,7 @@ import pandas as pd
 import threading
 import glob
 import networkx as nx
-from scapy.utils import hexdump
+
 import json
 import concurrent.futures
 import requests
@@ -104,16 +104,21 @@ def iterate_deletecsv(filename):
 
 
 def delete():
+    iterate_deletecsv("results/payload.csv", )
     iterate_deletecsv("results/src-ip.csv", )
     iterate_deletecsv("results/dst-ip.csv", )
     iterate_deletecsv("results/src-port.csv", )
     iterate_deletecsv("results/dst-port.csv", )
     iterate_deletecsv("results/src-mac.csv", )
     iterate_deletecsv("results/dst-mac.csv", )
-    iterate_deletecsv("results/packet.json", )
     iterate_deletecsv("results/protocol.csv", )
     iterate_deletecsv("results/vendor.csv", )
     iterate_deletecsv("results/src-dst.csv", )
+    try:
+        shutil.rmtree("results/packet")
+    except Exception as e:
+        pass
+
 
 def proto_name_by_num(proto_num):
     for name, num in vars(socket).items():
@@ -142,7 +147,6 @@ def dstmac(packet_dict, i, es):
         a = ""
 
     ranking("dstmac", a, es)
-
 
 def proto(packet_dict, packet, i, es, sp, dp):
     if IP in packet_dict:
@@ -332,22 +336,21 @@ def payloadworks(packet,i):
     result = ''.join(char_list)
     result = "'" + str(result) + "'"
     d = [i, result]
-    with open("results/payload.csv", mode='a', newline='') as f:
-        writer = csv.writer(f)
-        writer.writerow(d)
+    if not os.path.exists("results/payload.csv"):
+        with open("results/payload.csv", mode='w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(d)
+    else:
+        with open("results/payload.csv", mode='a', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(d)
 
 def work(es, packets):
     
     global i
     i = 1
 
-    with open("results/payload.csv", mode='w', newline='') as f:
-        writer = csv.writer(f)
-        writer.writerow('')
-
     for packet in packets:
-
-        payloadworks(packet,i)
 
         packet_dict = {}
         data = {}
@@ -371,6 +374,8 @@ def work(es, packets):
 
             # ////////////////// FUTURE EXECUTION //////////////////
             future = executor.submit(dash, packet, new_dict, i, es)
+
+            payloadworks(packet,i)
 
             # ////////////////// EXPORTING //////////////////
             if len(str(i)) <= 3:
@@ -519,6 +524,22 @@ def upload():
 
 # -------------------------------------------
 
+
+@app.route("/download")
+def download_file():
+    folder_name = "results"
+    zip_filename = f"{folder_name}.zip"
+    folder_path = os.path.join(os.getcwd(), folder_name)
+
+    # Create the zip file
+    with zipfile.ZipFile(zip_filename, "w", zipfile.ZIP_DEFLATED) as zip:
+        for root, dirs, files in os.walk(folder_path):
+            for file in files:
+                file_path = os.path.join(root, file)
+                zip.write(file_path, os.path.relpath(file_path, folder_path))
+
+    return send_file(zip_filename, as_attachment=True)
+
 @app.route('/network')
 def graphtwo():
     return render_template('network.html')
@@ -547,13 +568,13 @@ def visualise(csvfile,title):
 
 # -------------------------------------------
 
-@app.route('/work', methods=['POST', 'GET'])
+@app.route('/dashboard', methods=['POST', 'GET'])
 def worktype():
     if request.method == 'POST':
         z = request.files['file']
         z.save(z.filename)
         dn = os.path.abspath(z.filename)
-        webbrowser.open_new('http://127.0.0.1:5000/work')
+        webbrowser.open_new('http://127.0.0.1:5000/dashboard')
         pcap(dn)
     time.sleep(7)
     a = visualise("results/protocol.csv","PROTOCOL")
@@ -566,6 +587,6 @@ def worktype():
     h = visualise("results/dst-mac.csv","DESTINATION MAC")
     return render_template('work.html', protocol=a, vendor=b, srcip=c, dstip=d,
                            srcport=e, dstport=f, srcmac=g,
-                           dstmac=h)
+                           dstmac=h,count=i)
 
 app.run()
