@@ -60,9 +60,10 @@ def get_doc(es):
 
 # DELETE ALL INDICES
 # es.indices.delete(index='macvendors')
-config = dotenv_values("../.env")
-ELASTIC_PASSWORD = config['ELASTIC_PASSWORD']
-headers = {'Content-Type': 'application/json','Accept': 'application/json'}
+#config = dotenv_values("../.env")
+#ELASTIC_PASSWORD = config['ELASTIC_PASSWORD']
+#headers = {'Content-Type': 'application/json','Accept': 'application/json'}
+ELASTIC_PASSWORD = "=32pcSO6OOtiGBcjKs19"
 es =  Elasticsearch("https://localhost:9200", http_auth=("elastic", ELASTIC_PASSWORD), verify_certs=False)
 #es.indices.delete(index='mac-vendors')
 i = index_doc(es)
