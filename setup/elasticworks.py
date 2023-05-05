@@ -63,7 +63,7 @@ def get_doc(es):
 config = dotenv_values("../.env")
 ELASTIC_PASSWORD = config['ELASTIC_PASSWORD']
 headers = {'Content-Type': 'application/json','Accept': 'application/json'}
-es =  Elasticsearch("http://localhost:9200", http_auth=("elastic", ELASTIC_PASSWORD))
+es =  Elasticsearch("https://localhost:9200", http_auth=("elastic", ELASTIC_PASSWORD), verify_certs=False)
 #es.indices.delete(index='mac-vendors')
 i = index_doc(es)
 refresh_index(es)

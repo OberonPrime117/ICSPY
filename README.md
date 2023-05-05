@@ -21,3 +21,6 @@ Create results and static folders
 Commands To Run ->
 1. python pcap.py --pcap pcapfilehere.pcap
 2. python app.py
+
+PyInstaller Command ->
+$ pyinstaller -D --add-data "templates;templates" --add-data "results;results" --collect-all pyvis --noconfirm app.py

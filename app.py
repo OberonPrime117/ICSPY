@@ -1,7 +1,9 @@
+from multiprocessing import Pool
 from flask import Flask, render_template
 from flask import request
 import webbrowser
-from elasticsearch import Elasticsearch  # SEARCHING
+from elasticsearch import Elasticsearch
+import numpy as np  # SEARCHING
 from scapy.all import Ether, IP, TCP, UDP, ICMP, Raw, rdpcap, PcapReader
 import scapy.contrib.modbus as mb
 import csv
@@ -14,8 +16,9 @@ import threading
 import glob
 import networkx as nx
 from scapy.utils import hexdump
-import shutil
-import binascii
+import json
+import concurrent.futures
+import requests
 
 def search(csvfile, test, es):
     searchp = {
@@ -39,8 +42,8 @@ def search(csvfile, test, es):
         else:
             if test == "srcdst":
                 trial = impact["_id"].split("--")
-                b.append(trial[0])  # SOURCE
-                b.append(trial[1])  # DESTINATION
+                b.append(trial[0]) 
+                b.append(trial[1])  
             else:
                 b.append(impact["_id"])
             b.append(impact["_source"]["Number of Packets"])
@@ -53,61 +56,45 @@ def search(csvfile, test, es):
 
 def export(es):
     createme()
-    p2 = threading.Thread(target=search, args=("results/src-ip.csv", "srcip", es))
-    p3 = threading.Thread(target=search, args=("results/dst-ip.csv", "dstip", es))
-    p4 = threading.Thread(target=search, args=("results/vendor.csv", "vendors", es))
-    p5 = threading.Thread(target=search,
-                          args=("results/protocol.csv", "protocol", es))
-    p6 = threading.Thread(target=search,
-                          args=("results/src-port.csv", "srcport", es))
-    p2.start()
-    p3.start()
-    p4.start()
-    p5.start()
-    p6.start()
+    search("results/src-ip.csv", "srcip", es)
+    search("results/dst-ip.csv", "dstip", es)
+    search("results/vendor.csv", "vendors", es)
+    search("results/protocol.csv", "protocol", es)
+    search("results/src-port.csv", "srcport", es)
     search("results/dst-port.csv", "dstport", es)
     search("results/dst-mac.csv", "dstmac", es)
     search("results/src-mac.csv", "srcmac", es)
     search("results/src-dst.csv", "srcdst", es)
-    p2.join()
-    p3.join()
-    p4.join()
-    p5.join()
-    p6.join()
 
+def esearch(es,esindex,esid,a):
+    es.index(index=esindex, id=esid, body=a)
 
-# ranking("srcmac",a,es)
-# case 1 - srcip 127.0.0.1 - 1
-# case 2 - src dst - 
 def ranking(esindex, esid, es, secondid=None):
 
     if secondid is None and esindex != "srcdst":
         try:
-            # CHECKING IF THE ESID EXISTS ALREADY
             resp = es.get(index=esindex, id=esid)
             a = resp["_source"]
             a["Number of Packets"] = int(a["Number of Packets"]) + 1
             resp = es.index(index=esindex, id=esid, body=a)
-        except:
-            # ESID DOES NOT EXIST
+
+        except Exception as e:
             a = {"Number of Packets": 1}
             resp = es.index(index=esindex, id=esid, body=a)
+
     elif esindex == "srcdst":
         eval = str(esid) + "--" + str(secondid)
         try:
-            # CHECKING IF THE ESID EXISTS ALREADY
             resp = es.get(index=esindex, id=eval)
             a = resp["_source"]
             a["Number of Packets"] = int(a["Number of Packets"]) + 1
             resp = es.index(index=esindex, id=eval, body=a)
         except:
-            # ESID DOES NOT EXIST
             a = {"Number of Packets": 1}
             resp = es.index(index=esindex, id=eval, body=a)
     else:
         print("ERROR IN RANKING - LINE 105")
         sys.exit()
-
 
 def iterate_deletecsv(filename):
     try:
@@ -117,33 +104,16 @@ def iterate_deletecsv(filename):
 
 
 def delete():
-    # config = dotenv_values(".env")
-    # ELASTIC_PASSWORD = config['ELASTIC_PASSWORD']
-    # ELASTIC_PASSWORD = "XQs+_IZI=JV7toA7PKrw"
-    # es =  Elasticsearch("http://localhost:9200",http_auth=("elastic", ELASTIC_PASSWORD))
-
-    p1 = threading.Thread(target=iterate_deletecsv, args=("results/dst-ip.csv",))
-    p2 = threading.Thread(target=iterate_deletecsv, args=("results/dst-port.csv",))
-    p3 = threading.Thread(target=iterate_deletecsv, args=("results/protocol.csv",))
-    p4 = threading.Thread(target=iterate_deletecsv, args=("results/src-ip.csv",))
-    p5 = threading.Thread(target=iterate_deletecsv, args=("results/src-port.csv",))
-    p6 = threading.Thread(target=iterate_deletecsv, args=("results/src-mac.csv",))
-    p1.start()
-    p2.start()
-    p3.start()
-    p4.start()
-    p5.start()
-    p6.start()
+    iterate_deletecsv("results/src-ip.csv", )
+    iterate_deletecsv("results/dst-ip.csv", )
+    iterate_deletecsv("results/src-port.csv", )
+    iterate_deletecsv("results/dst-port.csv", )
+    iterate_deletecsv("results/src-mac.csv", )
     iterate_deletecsv("results/dst-mac.csv", )
+    iterate_deletecsv("results/packet.json", )
+    iterate_deletecsv("results/protocol.csv", )
     iterate_deletecsv("results/vendor.csv", )
     iterate_deletecsv("results/src-dst.csv", )
-    p1.join()
-    p2.join()
-    p3.join()
-    p4.join()
-    p5.join()
-    p6.join()
-
 
 def proto_name_by_num(proto_num):
     for name, num in vars(socket).items():
@@ -175,11 +145,9 @@ def dstmac(packet_dict, i, es):
 
 
 def proto(packet_dict, packet, i, es, sp, dp):
-    # print(packet_dict)
     if IP in packet_dict:
-        a = proto_name_by_num(int(packet[IP].proto))  # 2
+        a = proto_name_by_num(int(packet[IP].proto))  
     else:
-        # data["Protocol"] = "Other" # 2
         flag = 0
         y = packet.summary().split()
         for b in y:
@@ -198,12 +166,10 @@ def proto(packet_dict, packet, i, es, sp, dp):
         ph = set(['TCP', 'UDP', 'LLC', 'STP', 'ARP', 'CIP', 'DNS'])
         z = set(y)
         g = ph.intersection(z)
-        # print(g)
         try:
             a = list(g)[-1]
         except:
             pass
-        # print(list(g)[-1])
 
     for bh in y:
         if '.' in str(bh):
@@ -229,10 +195,8 @@ def proto(packet_dict, packet, i, es, sp, dp):
     except:
         pass
 
-    #print(sp)
-    #print(dp)
-    #print(y)
     ranking("protocol", a, es)
+    return a
 
 
 def dstvendor(packet_dict, es):
@@ -240,9 +204,6 @@ def dstvendor(packet_dict, es):
     if "dst" in packet_dict[h] and packet_dict[h]["dst"] == 'ff:ff:ff:ff:ff:ff':
         a = "Broadcast"
     else:
-
-        # es.indices.refresh(index="mac-vendors")
-        # val = str(data["Destination MAC"])[0:8].upper()
         try:
             ab = packet_dict[h]["dst"]
             val = str(ab).upper()
@@ -259,7 +220,6 @@ def dstvendor(packet_dict, es):
     
     if 'SNAP' in list(packet_dict.keys()):
         a = str(packet_dict['SNAP']['OUI']).split("(")[0]
-        #print(a)
 
     ranking("vendors", a, es)
 
@@ -269,9 +229,6 @@ def srcvendor(packet_dict, es):
     if "src" in packet_dict[h] and packet_dict[h]["src"] == 'ff:ff:ff:ff:ff:ff':
         a = "Broadcast"
     else:
-
-        # es.indices.refresh(index="mac-vendors")
-        # val = str(data["Destination MAC"])[0:8].upper()
         try:
             ab = packet_dict[h]["src"]
             val = str(ab).upper()
@@ -336,37 +293,36 @@ def ip(packet, packet_dict, es):
     try:
 
         if IP in packet:
-            a = str(packet[IP].src)  # 0
+            a = str(packet["IP"].src)  
         else:
             try:
-                a = packet_dict["802.3"]["src"]  # 0
+                a = packet_dict["8023"]["src"]  
             except:
-                a = packet[Ether].src  # 0
+                a = packet[Ether].src  
     except:
         try:
-            a = packet_dict["802.3"]["src"]  # 0
+            a = packet_dict["8023"]["src"]  
         except:
-            a = packet[Ether].src  # 0
+            a = packet["Ethernet"].src  
 
     ranking("srcip", a, es)
 
     try:
         if IP in packet:
-            b = str(packet[IP].dst)  # 1
+            b = str(packet["IP"].dst)  
         else:
             try:
-                b = packet_dict["802.3"]["dst"]  # 1
+                b = packet_dict["8023"]["dst"]  
             except:
-                b = packet[Ether].dst  # 1
+                b = packet[Ether].dst  
     except:
         try:
-            b = packet_dict["802.3"]["dst"]  # 1
+            b = packet_dict["8023"]["dst"]  
         except:
-            b = packet[Ether].dst  # 1
+            b = packet["Ethernet"].dst  
 
     ranking("dstip", b, es)
-    # print(a)
-    # print(b)
+
     ranking("srcdst", a, es, b)
 
 def payloadworks(packet,i):
@@ -384,18 +340,20 @@ def work(es, packets):
     
     global i
     i = 1
+
     with open("results/payload.csv", mode='w', newline='') as f:
         writer = csv.writer(f)
         writer.writerow('')
 
     for packet in packets:
+
         payloadworks(packet,i)
 
         packet_dict = {}
         data = {}
         heights = []
         data["Frame Number"] = str(i)
-
+        new_dict = {}
         print("COUNT - " + str(i))
 
         for line in packet.show2(dump=True).split('\n'):
@@ -407,70 +365,94 @@ def work(es, packets):
                 key, val = line.split('=', 1)
                 packet_dict[layer][key.strip()] = val.strip()
         
-        #print(packet_dict)
+        new_dict = remove_special_chars(packet_dict)
 
-        # ////////////////// MAIN FUNCTION ////////////////////////
-        #print(list(packet_dict.keys()))
+        with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
 
-        # p1 = threading.Thread(target=dash,args=(packet,packet_dict,i,es))
-        dash(packet, packet_dict, i, es)
+            # ////////////////// FUTURE EXECUTION //////////////////
+            future = executor.submit(dash, packet, new_dict, i, es)
 
-        # p1.start()
-        if len(str(i)) <= 3:
-            val = 10 ** int(len(str(i)))
-            val = val / 2
-            if i % val == 0:
-                export(es)
-                networkgraph()
+            # ////////////////// EXPORTING //////////////////
+            if len(str(i)) <= 3:
+                val = 10 ** int(len(str(i)))
+                val = val / 2
+                if i % val == 0:
+                    export(es)
+                    networkgraph()
+            else:
+                val = 10 ** int(len(str(i)))
+                val = val / 5
+                if i % val == 0:
+                    export(es)
+                    networkgraph()
+            
+            # ////////////////// WAITING FOR THREAD TO FINISH //////////////////
+            res = future.result()
 
-            # 3 digits - 100 , 400 45455
-        else:
-            # 5000 , 10,000
-            val = 10 ** int(len(str(i)))
-            val = val / 5
-            if i % val == 0:
-                export(es)
-                networkgraph()
-
-        # p1.join()
-
-        # rankme(es,data)
         i = i + 1
+    return new_dict
+
+def remove_special_chars(d):
+    keys = list(d.keys())
+    for k in keys:
+        new_key = re.sub(r'[^\w\s]', '', k)
+        if new_key != k:
+            d[new_key] = d[k]
+            del d[k]
+            k = new_key
+
+        if isinstance(d[new_key], dict):
+            remove_special_chars(d[new_key])
+            
+            if new_key != k:
+                d[new_key] = d[k]
+                del d[k]
+                
+        elif isinstance(d[new_key], list):
+            for item in d[new_key]:
+                if isinstance(item, dict):
+                    remove_special_chars(item)
+                    
+    return d
 
 
 def dash(packet, packet_dict, i, es):
-    
-    p1 = threading.Thread(target=srcmac, args=(packet_dict, i, es))
-    p1.start()
-    p2 = threading.Thread(target=dstmac, args=(packet_dict, i, es))
-    p2.start()
-    p3 = threading.Thread(target=dstvendor, args=(packet_dict, es))
-    p3.start()
-    p4 = threading.Thread(target=ip, args=(packet, packet_dict, es))
-    p4.start()
-    p5 = threading.Thread(target=srcvendor, args=(packet_dict, es))
-    sp = srcport(packet_dict, packet, es)
-    dp = dstport(packet_dict, packet, es)
-    proto(packet_dict, packet, i, es, sp, dp)
-    p1.join()
-    p2.join()
-    p3.join()
-    p4.join()
 
-    '''
-    srcport(packet_dict,es)
-    dstport(packet_dict,es)
+    sp = srcport(packet_dict,packet,es)
+    dp = dstport(packet_dict,packet,es)
     dstmac(packet_dict,i,es)
     srcmac(packet_dict,i,es)
     dstvendor(packet_dict,es)
     srcvendor(packet_dict,es)
-    proto(packet_dict, packet,i,es)
-    ip(packet, packet_dict,es)'''
+    protocol_used = proto(packet_dict, packet, i, es, sp, dp)
+    ip(packet, packet_dict,es)
 
+    # ////////////////// APPLICATION LAYER DATA EXPORT //////////////////
+    folder_name = "results\packet"
+    insider_folder = "results\packet\\" + str(protocol_used)
+    total_folder = insider_folder + "\\" + str(i) + ".json"
+    
+    if not os.path.exists(folder_name):
+        os.makedirs(folder_name)
+        if not os.path.exists(insider_folder):
+            os.makedirs(insider_folder)
+            with open(total_folder, 'w') as f:
+                json.dump(packet_dict, f, indent=6)
+        else:
+            with open(total_folder, 'w') as f:
+                json.dump(packet_dict, f, indent=6)
+    else:
+        if not os.path.exists(insider_folder):
+            os.makedirs(insider_folder)
+            with open(total_folder, 'w') as f:
+                json.dump(packet_dict, f, indent=6)
+        else:
+            with open(total_folder, 'w') as f:
+                json.dump(packet_dict, f, indent=6)
 
 def pcap(filename):
-    ELASTIC_PASSWORD = "XQs+_IZI=JV7toA7PKrw"
-    es = Elasticsearch("http://localhost:9200", http_auth=("elastic", ELASTIC_PASSWORD))
+    ELASTIC_PASSWORD = "=32pcSO6OOtiGBcjKs19"
+    es = Elasticsearch("https://localhost:9200", http_auth=("elastic", ELASTIC_PASSWORD),maxsize=25,verify_certs=False)
     es.options(ignore_status=[400, 404]).indices.delete(index='srcdst')
     es.options(ignore_status=[400, 404]).indices.delete(index='srcip')
     es.options(ignore_status=[400, 404]).indices.delete(index='dstip')
@@ -481,11 +463,8 @@ def pcap(filename):
     es.options(ignore_status=[400, 404]).indices.delete(index='srcmac')
     es.options(ignore_status=[400, 404]).indices.delete(index='dstmac')
     packets = PcapReader(filename)
-    # else:
-    #    sys.exit()zzzzz
 
     delete()
-    # createme()
     work(es, packets)
     export(es)
     networkgraph()
@@ -510,12 +489,6 @@ def createfile(file):
 def networkgraph():
     df = pd.read_csv('results/src-dst.csv')
     G = nx.from_pandas_edgelist(df, source='Source', target='Destination', edge_attr=True)
-    # nx.draw(G, with_labels=True, node_color='lightblue', edge_color='grey')
-    '''plt.savefig('static/images/network.png')
-    html = mpld3.fig_to_html(plt.gcf())
-    # print(html)
-    with open('templates/network.html', 'w') as f:
-        f.write(html)'''
 
     net = Network(
         notebook=True,
@@ -528,29 +501,13 @@ def networkgraph():
 
     net.write_html('templates/network.html')
 
-    '''
-    df = pd.read_csv('results/src-dst.csv')
-    G = nx.from_pandas_edgelist( df, source='Source', target='Destination', edge_attr=True)
-    net = Network(    
-    notebook=True,
-    cdn_resources="remote",
-    bgcolor="#222222", 
-    font_color="white",
-    height="4000px",
-    width="4000px",
-)
-    net.from_nx(G)
-    net.show("templates/network-graph.html")'''
-
-
 pcap_files = glob.glob("*.pcap")
+requests.packages.urllib3.disable_warnings()
 
-# Loop through the files and delete them
 for pcap_file in pcap_files:
     os.remove(pcap_file)
 pcap_files = glob.glob("*.pcapng")
 
-# Loop through the files and delete them
 for pcap_file in pcap_files:
     os.remove(pcap_file)
 app = Flask(__name__)
@@ -583,18 +540,9 @@ def visualise(csvfile,title):
                 values.append(int(row[1]))
 
     fig = go.Figure(data=[go.Pie(labels=labels, values=values, pull=[0.1, 0.1, 0.1, 0.1])])
-    # fig = px.pie(values=values, names=labels)
-    # fig.update_layout(showlegend=False)
     fig.update_layout(template='seaborn')
     fig.update_layout(title=title)
     h = pyo.plot(fig, include_plotlyjs=False, output_type='div')
-
-    # graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
-
-    # chart_html = pyo.plot(fig,include_plotlyjs=False, output_type='div')
-    # fig.write_html(img_static)
-    # fig.write_html(img_static)
-    # print(h)
     return h
 
 # -------------------------------------------

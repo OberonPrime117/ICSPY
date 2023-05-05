@@ -62,10 +62,10 @@ config = dotenv_values("../.env")
 ELASTIC_PASSWORD = config['ELASTIC_PASSWORD']
 headers = {'Content-Type': 'application/json','Accept': 'application/json'}
 
-ELASTIC_PASSWORD = "XQs+_IZI=JV7toA7PKrw"
-es =  Elasticsearch("http://localhost:9200", http_auth=("elastic", ELASTIC_PASSWORD))
+ELASTIC_PASSWORD = "=32pcSO6OOtiGBcjKs19"
+es =  Elasticsearch("https://localhost:9200", http_auth=("elastic", ELASTIC_PASSWORD),verify_certs=False)
 
-es.indices.delete(index='elasticproto')
+#es.indices.delete(index='elasticproto')
 i = index_doc(es)
 refresh_index(es)
 #search()
