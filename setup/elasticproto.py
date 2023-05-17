@@ -3,7 +3,6 @@ from elasticsearch import Elasticsearch
 import json
 import requests
 import os
-from dotenv import dotenv_values
 import time
 
 def index_doc(es):
@@ -62,9 +61,8 @@ def get_doc(es):
 #ELASTIC_PASSWORD = config['ELASTIC_PASSWORD']
 #headers = {'Content-Type': 'application/json','Accept': 'application/json'}
 
-ELASTIC_PASSWORD = "=32pcSO6OOtiGBcjKs19"
-es =  Elasticsearch("https://localhost:9200", http_auth=("elastic", ELASTIC_PASSWORD),verify_certs=False)
-
+ELASTIC_PASSWORD = "h2j7YFosV5*ekbze3Qy5"
+es =  Elasticsearch("https://3.110.40.37:9200", http_auth=("elastic", ELASTIC_PASSWORD),verify_certs=False)
 #es.indices.delete(index='elasticproto')
 i = index_doc(es)
 refresh_index(es)

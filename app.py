@@ -357,7 +357,7 @@ def work(es, packets):
         heights = []
         data["Frame Number"] = str(i)
         new_dict = {}
-        print("COUNT - " + str(i))
+        #print("COUNT - " + str(i))
 
         for line in packet.show2(dump=True).split('\n'):
             if '###' in line:
@@ -456,8 +456,8 @@ def dash(packet, packet_dict, i, es):
                 json.dump(packet_dict, f, indent=6)
 
 def pcap(filename):
-    ELASTIC_PASSWORD = "=32pcSO6OOtiGBcjKs19"
-    es = Elasticsearch("https://localhost:9200", http_auth=("elastic", ELASTIC_PASSWORD),maxsize=25,verify_certs=False)
+    ELASTIC_PASSWORD = "h2j7YFosV5*ekbze3Qy5"
+    es = Elasticsearch("https://3.110.40.37:9200", http_auth=("elastic", ELASTIC_PASSWORD),maxsize=25,verify_certs=False)
     es.options(ignore_status=[400, 404]).indices.delete(index='srcdst')
     es.options(ignore_status=[400, 404]).indices.delete(index='srcip')
     es.options(ignore_status=[400, 404]).indices.delete(index='dstip')
@@ -516,14 +516,13 @@ pcap_files = glob.glob("*.pcapng")
 for pcap_file in pcap_files:
     os.remove(pcap_file)
 app = Flask(__name__)
-
+webbrowser.open_new('http://127.0.0.1:5000/')
 
 @app.route('/')
 def upload():
     return render_template('upload.html')
 
 # -------------------------------------------
-
 
 @app.route("/download")
 def download_file():
