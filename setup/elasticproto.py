@@ -61,8 +61,8 @@ def get_doc(es):
 #ELASTIC_PASSWORD = config['ELASTIC_PASSWORD']
 #headers = {'Content-Type': 'application/json','Accept': 'application/json'}
 
-ELASTIC_PASSWORD = "h2j7YFosV5*ekbze3Qy5"
-es =  Elasticsearch("https://3.110.40.37:9200", http_auth=("elastic", ELASTIC_PASSWORD),verify_certs=False)
+ELASTIC_PASSWORD = "Lc6Hb=asU1TOhDHgPS5M"
+es =  Elasticsearch("https://65.2.3.32:9200", http_auth=("elastic", ELASTIC_PASSWORD),verify_certs=False)
 #es.indices.delete(index='elasticproto')
 i = index_doc(es)
 refresh_index(es)

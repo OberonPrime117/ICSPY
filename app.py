@@ -292,38 +292,44 @@ def dstport(packet_dict, packet, es):
     ranking("dstport", a, es)
     return a
 
+def get_all_keys(dictionary):
 
+    keys = []
+    for key, value in dictionary.items():
+        key.replace(" ","_")
+        keys.append(key)
+        if isinstance(value, dict):
+            nested_keys = get_all_keys(value)
+            for nested_key in nested_keys:
+                keys.append(key + '.' + nested_key)
+    return keys
+
+def get_value_by_key(dictionary, target_key):
+    for key, value in dictionary.items():
+        if key == target_key:
+            return value
+        elif isinstance(value, dict):
+            nested_value = get_value_by_key(value, target_key)
+            if nested_value is not None:
+                return nested_value
+    return None
+
+# 802154_Data.src_addr
 def ip(packet, packet_dict, es):
-    try:
 
-        if IP in packet:
-            a = str(packet["IP"].src)  
-        else:
-            try:
-                a = packet_dict["8023"]["src"]  
-            except:
-                a = packet[Ether].src  
-    except:
-        try:
-            a = packet_dict["8023"]["src"]  
-        except:
-            a = packet["Ethernet"].src  
+    all_keys = get_all_keys(packet_dict)
+
+    for i in all_keys:
+        if "src" in i:
+            txt = i.split(".")[-1]
+            a = get_value_by_key(packet_dict, txt)
 
     ranking("srcip", a, es)
 
-    try:
-        if IP in packet:
-            b = str(packet["IP"].dst)  
-        else:
-            try:
-                b = packet_dict["8023"]["dst"]  
-            except:
-                b = packet[Ether].dst  
-    except:
-        try:
-            b = packet_dict["8023"]["dst"]  
-        except:
-            b = packet["Ethernet"].dst  
+    for i in all_keys:
+        if "dst" in i or "dest" in i:
+            txt = i.split(".")[-1]
+            b = get_value_by_key(packet_dict, txt)
 
     ranking("dstip", b, es)
 
@@ -336,21 +342,23 @@ def payloadworks(packet,i):
     result = ''.join(char_list)
     result = "'" + str(result) + "'"
     d = [i, result]
-    if not os.path.exists("results/payload.csv"):
-        with open("results/payload.csv", mode='w', newline='') as f:
+    if not os.path.exists(os.path.join("results", "payload.csv")):
+        with open(os.path.join("results", "payload.csv"), mode='w', newline='') as f:
             writer = csv.writer(f)
             writer.writerow(d)
     else:
-        with open("results/payload.csv", mode='a', newline='') as f:
+        with open(os.path.join("results", "payload.csv"), mode='a', newline='') as f:
             writer = csv.writer(f)
             writer.writerow(d)
 
 def work(es, packets):
     
-    global i
     i = 1
 
     for packet in packets:
+        print(i)
+        with open(os.path.join("results", "number.txt"), 'w') as file:
+            file.write(str(i))
 
         packet_dict = {}
         data = {}
@@ -393,7 +401,8 @@ def work(es, packets):
             
             # ////////////////// WAITING FOR THREAD TO FINISH //////////////////
             res = future.result()
-
+        
+        
         i = i + 1
     return new_dict
 
@@ -433,9 +442,10 @@ def dash(packet, packet_dict, i, es):
     ip(packet, packet_dict,es)
 
     # ////////////////// APPLICATION LAYER DATA EXPORT //////////////////
-    folder_name = "results\packet"
-    insider_folder = "results\packet\\" + str(protocol_used)
-    total_folder = insider_folder + "\\" + str(i) + ".json"
+    folder_name = os.path.join("results", "packet")
+    insider_folder = os.path.join("results", "packet", str(protocol_used))
+    s = str(i) + ".json"
+    total_folder = os.path.join("results", "packet", str(protocol_used) , str(s))
     
     if not os.path.exists(folder_name):
         os.makedirs(folder_name)
@@ -456,8 +466,8 @@ def dash(packet, packet_dict, i, es):
                 json.dump(packet_dict, f, indent=6)
 
 def pcap(filename):
-    ELASTIC_PASSWORD = "h2j7YFosV5*ekbze3Qy5"
-    es = Elasticsearch("https://3.110.40.37:9200", http_auth=("elastic", ELASTIC_PASSWORD),maxsize=25,verify_certs=False)
+    ELASTIC_PASSWORD = "Lc6Hb=asU1TOhDHgPS5M"
+    es = Elasticsearch("https://13.232.69.171:9200", http_auth=("elastic", ELASTIC_PASSWORD),maxsize=25,verify_certs=False)
     es.options(ignore_status=[400, 404]).indices.delete(index='srcdst')
     es.options(ignore_status=[400, 404]).indices.delete(index='srcip')
     es.options(ignore_status=[400, 404]).indices.delete(index='dstip')
@@ -575,17 +585,19 @@ def worktype():
         dn = os.path.abspath(z.filename)
         webbrowser.open_new('http://127.0.0.1:5000/dashboard')
         pcap(dn)
-    time.sleep(7)
-    a = visualise("results/protocol.csv","PROTOCOL")
-    b = visualise("results/vendor.csv","VENDOR")
-    c = visualise("results/src-ip.csv","SOURCE IP")
-    d = visualise("results/dst-ip.csv","DESTINATION IP")
-    e = visualise("results/src-port.csv","SOURCE PORT")
-    f = visualise("results/dst-port.csv","DESTINATION PORT")
-    g = visualise("results/src-mac.csv","SOURCE MAC")
-    h = visualise("results/dst-mac.csv","DESTINATION MAC")
-    return render_template('work.html', protocol=a, vendor=b, srcip=c, dstip=d,
-                           srcport=e, dstport=f, srcmac=g,
-                           dstmac=h,count=i)
+
+    if request.method == 'GET':
+        with open(os.path.join("results", "number.txt"),'r') as file:
+            content = file.read()
+            i = int(content)
+        a = visualise("results/protocol.csv","PROTOCOL")
+        b = visualise("results/vendor.csv","VENDOR")
+        c = visualise("results/src-ip.csv","SOURCE IP")
+        d = visualise("results/dst-ip.csv","DESTINATION IP")
+        e = visualise("results/src-port.csv","SOURCE PORT")
+        f = visualise("results/dst-port.csv","DESTINATION PORT")
+        g = visualise("results/src-mac.csv","SOURCE MAC")
+        h = visualise("results/dst-mac.csv","DESTINATION MAC")
+        return render_template('work.html', protocol=a, vendor=b, srcip=c, dstip=d,srcport=e, dstport=f, srcmac=g,dstmac=h,count=i)
 
 app.run()
