@@ -24,3 +24,5 @@ Commands To Run ->
 
 PyInstaller Command ->
 $ pyinstaller -D --add-data "templates;templates" --add-data "results;results" --collect-all pyvis --noconfirm app.py
+
+pyinstaller --noconfirm --onedir --windowed --add-data "/home/aditya/Documents/GitHub/python-pcap-parser/virtualpcap:virtualpcap/" --add-data "/home/aditya/Documents/GitHub/python-pcap-parser/templates:templates/" --add-data "/home/aditya/Documents/GitHub/python-pcap-parser/results:results/" --collect-all "pyvis"  "/home/aditya/Documents/GitHub/python-pcap-parser/app.py"

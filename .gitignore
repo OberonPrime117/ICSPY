@@ -4,3 +4,4 @@ virtualpcap/
 build/
 dist/
 results/packet/
+output/

@@ -15,10 +15,11 @@ import pandas as pd
 import threading
 import glob
 import networkx as nx
-
+import pyshark
 import json
 import concurrent.futures
 import requests
+import sys
 
 def search(csvfile, test, es):
     searchp = {
@@ -35,18 +36,18 @@ def search(csvfile, test, es):
 
         b = []
 
-        if test == "payload":
-            b.append(impact["_id"])
-            b.append(impact["_source"]["Payload"])
+        #if test == "payload":
+        #    b.append(impact["_id"])
+        #    b.append(impact["_source"]["Payload"])
 
+        #else:
+        if test == "srcdst":
+            trial = impact["_id"].split("--")
+            b.append(trial[0]) 
+            b.append(trial[1])  
         else:
-            if test == "srcdst":
-                trial = impact["_id"].split("--")
-                b.append(trial[0]) 
-                b.append(trial[1])  
-            else:
-                b.append(impact["_id"])
-            b.append(impact["_source"]["Number of Packets"])
+            b.append(impact["_id"])
+        b.append(impact["_source"]["Number of Packets"])
         d.append(b)
 
     for i in d:
@@ -104,7 +105,7 @@ def iterate_deletecsv(filename):
 
 
 def delete():
-    iterate_deletecsv("results/payload.csv", )
+    #iterate_deletecsv("results/payload.csv", )
     iterate_deletecsv("results/src-ip.csv", )
     iterate_deletecsv("results/dst-ip.csv", )
     iterate_deletecsv("results/src-port.csv", )
@@ -133,8 +134,12 @@ def srcmac(packet_dict, i, es):
     try:
         a = packet_dict[h]["src"]
     except:
-        a = ""
-
+        all_keys = get_all_keys(packet_dict)
+        for i in all_keys:
+            if "src" in i:
+                txt = i.split(".")[-1]
+                a = get_value_by_key(packet_dict, txt)
+    #print(a)
     ranking("srcmac", a, es)
 
 
@@ -144,11 +149,17 @@ def dstmac(packet_dict, i, es):
     try:
         a = packet_dict[h]["dst"]
     except:
-        a = ""
-
+        all_keys = get_all_keys(packet_dict)
+        for i in all_keys:
+            if "dst" in i or "dest" in i:
+                txt = i.split(".")[-1]
+                a = get_value_by_key(packet_dict, txt)
+    
+    #print(a)
     ranking("dstmac", a, es)
 
 def proto(packet_dict, packet, i, es, sp, dp):
+    
     if IP in packet_dict:
         a = proto_name_by_num(int(packet[IP].proto))  
     else:
@@ -182,11 +193,21 @@ def proto(packet_dict, packet, i, es, sp, dp):
                 a = "SSDP"
     if 'NBTSession' in y:
         a = "SAMBA"
+        ranking("protocol", a, es)
+        return a
     elif mb.ModbusADUResponse in packet:
         a = "ModbusTCP"
+        ranking("protocol", a, es)
+        return a
     elif 'DNS' in y or '|###[ DNS Question Record' in y:
         a = "DNS"
-    
+        ranking("protocol", a, es)
+        return a
+    elif "0x88ab" == packet_dict["Ethernet"]["type"]:
+        a = "POWERLINK"
+        ranking("protocol", a, es)
+        return a
+
     try:
         resp = es.get(index="elasticproto", id=sp)
         a = resp["_source"]["Protocol Name"]
@@ -250,44 +271,31 @@ def srcvendor(packet_dict, es):
     ranking("vendors", a, es)
 
 
-def srcport(packet_dict, packet, es):
+def srcport(packet_dict, packet, pypacket, es):
     
     if 'UDP' in list(packet_dict.keys()):
-        a = packet_dict["UDP"]['sport']
+        a = pypacket.udp.srcport
 
     elif 'TCP' in list(packet_dict.keys()):
-        a = packet_dict["TCP"]['sport']
+        a = pypacket.tcp.srcport
 
     else:
         a = "N/A"
-    
-    y = packet.summary().split()
-    for b in y:
-        if '.' in b and ':' in b:
-            d = b.split(":")
-            a = d[1]
 
     ranking("srcport", a, es)
     return a
 
 
-def dstport(packet_dict, packet, es):
-    
+def dstport(packet_dict, packet, pypacket, es):
     
     if 'UDP' in list(packet_dict.keys()):
-        a = packet_dict["UDP"]['dport']
+        a = pypacket.udp.dstport
 
     elif 'TCP' in list(packet_dict.keys()):
-        a = packet_dict["TCP"]['dport']
+        a = pypacket.tcp.dstport
 
     else:
         a = "N/A"
-
-    y = packet.summary().split()
-    for b in y:
-        if '.' in b and ':' in b:
-            d = b.split(":")
-            a = d[1]
     
     ranking("dstport", a, es)
     return a
@@ -317,19 +325,53 @@ def get_value_by_key(dictionary, target_key):
 # 802154_Data.src_addr
 def ip(packet, packet_dict, es):
 
-    all_keys = get_all_keys(packet_dict)
+    try:
+        if IP in packet:
+            a = str(packet["IP"].src)  
+        else:
+            try:
+                a = packet_dict["8023"]["src"]  
+            except:
+                a = packet[Ether].src  
+    except:
+        try:
+            a = packet_dict["8023"]["src"]  
+        except:
+            try:
+                a = packet["Ethernet"].src 
+            except:
 
-    for i in all_keys:
-        if "src" in i:
-            txt = i.split(".")[-1]
-            a = get_value_by_key(packet_dict, txt)
+                all_keys = get_all_keys(packet_dict)
+
+                for i in all_keys:
+                    if "src" in i:
+                        #print(i)
+                        txt = i.split(".")[-1]
+                        a = get_value_by_key(packet_dict, txt)
 
     ranking("srcip", a, es)
 
-    for i in all_keys:
-        if "dst" in i or "dest" in i:
-            txt = i.split(".")[-1]
-            b = get_value_by_key(packet_dict, txt)
+    try:
+        if IP in packet:
+            b = str(packet["IP"].dst)  
+        else:
+            try:
+                b = packet_dict["8023"]["dst"]  
+            except:
+                b = packet[Ether].dst  
+    except:
+        try:
+            b = packet_dict["8023"]["dst"]  
+        except:
+            try:
+                b = packet["Ethernet"].dst
+            except:
+                all_keys = get_all_keys(packet_dict)
+                for i in all_keys:
+                    if "dst" in i or "dest" in i:
+                        #print(i)
+                        txt = i.split(".")[-1]
+                        b = get_value_by_key(packet_dict, txt)
 
     ranking("dstip", b, es)
 
@@ -351,14 +393,11 @@ def payloadworks(packet,i):
             writer = csv.writer(f)
             writer.writerow(d)
 
-def work(es, packets):
+def work(es, packets, pypackets):
     
     i = 1
 
-    for packet in packets:
-        print(i)
-        with open(os.path.join("results", "number.txt"), 'w') as file:
-            file.write(str(i))
+    for packet, pypacket in zip(packets, pypackets):
 
         packet_dict = {}
         data = {}
@@ -381,9 +420,9 @@ def work(es, packets):
         with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
 
             # ////////////////// FUTURE EXECUTION //////////////////
-            future = executor.submit(dash, packet, new_dict, i, es)
+            future = executor.submit(dash, packet, new_dict, pypacket, i, es)
 
-            payloadworks(packet,i)
+            #payloadworks(packet,i)
 
             # ////////////////// EXPORTING //////////////////
             if len(str(i)) <= 3:
@@ -430,10 +469,10 @@ def remove_special_chars(d):
     return d
 
 
-def dash(packet, packet_dict, i, es):
+def dash(packet, packet_dict, pypacket, i, es):
 
-    sp = srcport(packet_dict,packet,es)
-    dp = dstport(packet_dict,packet,es)
+    sp = srcport(packet_dict,packet,pypacket,es)
+    dp = dstport(packet_dict,packet,pypacket,es)
     dstmac(packet_dict,i,es)
     srcmac(packet_dict,i,es)
     dstvendor(packet_dict,es)
@@ -444,30 +483,36 @@ def dash(packet, packet_dict, i, es):
     # ////////////////// APPLICATION LAYER DATA EXPORT //////////////////
     folder_name = os.path.join("results", "packet")
     insider_folder = os.path.join("results", "packet", str(protocol_used))
-    s = str(i) + ".json"
+    s = str(i) + ".txt"
     total_folder = os.path.join("results", "packet", str(protocol_used) , str(s))
-    
+
     if not os.path.exists(folder_name):
         os.makedirs(folder_name)
         if not os.path.exists(insider_folder):
             os.makedirs(insider_folder)
-            with open(total_folder, 'w') as f:
-                json.dump(packet_dict, f, indent=6)
+            sys.stdout=open(total_folder,"w")
+            print(pypacket)
+            sys.stdout.close()
         else:
-            with open(total_folder, 'w') as f:
-                json.dump(packet_dict, f, indent=6)
+            sys.stdout=open(total_folder,"w")
+            print(pypacket)
+            sys.stdout.close()
     else:
         if not os.path.exists(insider_folder):
             os.makedirs(insider_folder)
-            with open(total_folder, 'w') as f:
-                json.dump(packet_dict, f, indent=6)
+            sys.stdout=open(total_folder,"w")
+            print(pypacket)
+            sys.stdout.close()
         else:
-            with open(total_folder, 'w') as f:
-                json.dump(packet_dict, f, indent=6)
+            sys.stdout=open(total_folder,"w")
+            print(pypacket)
+            sys.stdout.close()
 
 def pcap(filename):
-    ELASTIC_PASSWORD = "Lc6Hb=asU1TOhDHgPS5M"
-    es = Elasticsearch("https://13.232.69.171:9200", http_auth=("elastic", ELASTIC_PASSWORD),maxsize=25,verify_certs=False)
+    AWS_ELASTIC_PASSWORD = "Lc6Hb=asU1TOhDHgPS5M"
+    ELASTIC_PASSWORD = "J3aMrcz8p*Gx5qvSJ4+B"
+
+    es = Elasticsearch("https://localhost:9200", http_auth=("elastic", ELASTIC_PASSWORD),maxsize=25,verify_certs=False)
     es.options(ignore_status=[400, 404]).indices.delete(index='srcdst')
     es.options(ignore_status=[400, 404]).indices.delete(index='srcip')
     es.options(ignore_status=[400, 404]).indices.delete(index='dstip')
@@ -478,9 +523,10 @@ def pcap(filename):
     es.options(ignore_status=[400, 404]).indices.delete(index='srcmac')
     es.options(ignore_status=[400, 404]).indices.delete(index='dstmac')
     packets = PcapReader(filename)
+    pypackets = pyshark.FileCapture(filename)
 
     delete()
-    work(es, packets)
+    work(es, packets, pypackets)
     export(es)
     networkgraph()
 
@@ -587,9 +633,7 @@ def worktype():
         pcap(dn)
 
     if request.method == 'GET':
-        with open(os.path.join("results", "number.txt"),'r') as file:
-            content = file.read()
-            i = int(content)
+
         a = visualise("results/protocol.csv","PROTOCOL")
         b = visualise("results/vendor.csv","VENDOR")
         c = visualise("results/src-ip.csv","SOURCE IP")
@@ -598,6 +642,6 @@ def worktype():
         f = visualise("results/dst-port.csv","DESTINATION PORT")
         g = visualise("results/src-mac.csv","SOURCE MAC")
         h = visualise("results/dst-mac.csv","DESTINATION MAC")
-        return render_template('work.html', protocol=a, vendor=b, srcip=c, dstip=d,srcport=e, dstport=f, srcmac=g,dstmac=h,count=i)
+        return render_template('work.html', protocol=a, vendor=b, srcip=c, dstip=d,srcport=e, dstport=f, srcmac=g,dstmac=h)
 
 app.run()
