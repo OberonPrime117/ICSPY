@@ -417,7 +417,7 @@ def work(es, packets, pypackets):
         
         new_dict = remove_special_chars(packet_dict)
 
-        with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=50) as executor:
 
             # ////////////////// FUTURE EXECUTION //////////////////
             future = executor.submit(dash, packet, new_dict, pypacket, i, es)
@@ -512,7 +512,7 @@ def pcap(filename):
     AWS_ELASTIC_PASSWORD = "Lc6Hb=asU1TOhDHgPS5M"
     ELASTIC_PASSWORD = "J3aMrcz8p*Gx5qvSJ4+B"
 
-    es = Elasticsearch("https://localhost:9200", http_auth=("elastic", ELASTIC_PASSWORD),maxsize=25,verify_certs=False)
+    es = Elasticsearch("https://52.66.29.154:9200", http_auth=("elastic", AWS_ELASTIC_PASSWORD),maxsize=25,verify_certs=False)
     es.options(ignore_status=[400, 404]).indices.delete(index='srcdst')
     es.options(ignore_status=[400, 404]).indices.delete(index='srcip')
     es.options(ignore_status=[400, 404]).indices.delete(index='dstip')
@@ -523,6 +523,7 @@ def pcap(filename):
     es.options(ignore_status=[400, 404]).indices.delete(index='srcmac')
     es.options(ignore_status=[400, 404]).indices.delete(index='dstmac')
     packets = PcapReader(filename)
+    #pyshark.tshark.tshark.set_tshark_path('./pyshark/tshark')
     pypackets = pyshark.FileCapture(filename)
 
     delete()

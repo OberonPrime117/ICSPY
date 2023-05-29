@@ -3,12 +3,11 @@ from elasticsearch import Elasticsearch
 import json
 import requests
 import os
-from dotenv import dotenv_values
 import time
 
 def index_doc(es):
   headers = {'Content-Type': 'application/json','Accept': 'application/json'}
-  with open("vendor.json", encoding='utf-8-sig') as f:
+  with open("vendor1.json", encoding='utf-8-sig') as f:
     read = f.read()
     dicta = json.loads(read)
   i = 0
@@ -26,7 +25,7 @@ def search():
   # config = dotenv_values(".env")
   # ELASTIC_PASSWORD = config['ELASTIC_PASSWORD']
   headers = {'Content-Type': 'application/json','Accept': 'application/json'}
-  es = Elasticsearch("http://localhost:9200",http_auth=("elastic", ELASTIC_PASSWORD))
+  es = Elasticsearch("http://localhost:9200",http_auth=("elastic", AWS_ELASTIC_PASSWORD))
   #value = str(input("Enter mac address to search : "))
   #searchtime = value
   #searchp = {"Mac Prefix" : ""}
@@ -65,7 +64,7 @@ def get_doc(es):
 #headers = {'Content-Type': 'application/json','Accept': 'application/json'}
 AWS_ELASTIC_PASSWORD = "Lc6Hb=asU1TOhDHgPS5M"
 ELASTIC_PASSWORD = "J3aMrcz8p*Gx5qvSJ4+B"
-es =  Elasticsearch("https://localhost:9200", http_auth=("elastic", ELASTIC_PASSWORD), verify_certs=False)
+es =  Elasticsearch("https://35.154.252.206:9200", http_auth=("elastic", AWS_ELASTIC_PASSWORD), verify_certs=False)
 #es.indices.delete(index='mac-vendors')
 i = index_doc(es)
 refresh_index(es)
