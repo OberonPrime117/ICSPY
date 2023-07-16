@@ -1,4 +1,5 @@
 from multiprocessing import Pool
+import os
 import shutil
 from flask import Flask, render_template, send_file, request
 import webbrowser
@@ -15,7 +16,6 @@ import pandas as pd
 import threading
 import glob
 import networkx as nx
-import pyshark
 import json
 import concurrent.futures
 import requests
@@ -203,10 +203,11 @@ def proto(packet_dict, packet, i, es, sp, dp):
         a = "DNS"
         ranking("protocol", a, es)
         return a
-    elif "0x88ab" == packet_dict["Ethernet"]["type"]:
-        a = "POWERLINK"
-        ranking("protocol", a, es)
-        return a
+    elif "Ethernet" in y:
+        if "0x88ab" == packet_dict["Ethernet"]["type"]:
+            a = "POWERLINK"
+            ranking("protocol", a, es)
+            return a
 
     try:
         resp = es.get(index="elasticproto", id=sp)
@@ -271,13 +272,13 @@ def srcvendor(packet_dict, es):
     ranking("vendors", a, es)
 
 
-def srcport(packet_dict, packet, pypacket, es):
+def srcport(packet_dict, packet, es):
     
     if 'UDP' in list(packet_dict.keys()):
-        a = pypacket.udp.srcport
+        a = packet_dict["UDP"]['sport']
 
     elif 'TCP' in list(packet_dict.keys()):
-        a = pypacket.tcp.srcport
+        a = packet_dict["TCP"]['sport']
 
     else:
         a = "N/A"
@@ -286,13 +287,13 @@ def srcport(packet_dict, packet, pypacket, es):
     return a
 
 
-def dstport(packet_dict, packet, pypacket, es):
+def dstport(packet_dict, packet, es):
     
     if 'UDP' in list(packet_dict.keys()):
-        a = pypacket.udp.dstport
+        a = packet_dict["UDP"]['dport']
 
     elif 'TCP' in list(packet_dict.keys()):
-        a = pypacket.tcp.dstport
+        a = packet_dict["TCP"]['dport']
 
     else:
         a = "N/A"
@@ -393,11 +394,11 @@ def payloadworks(packet,i):
             writer = csv.writer(f)
             writer.writerow(d)
 
-def work(es, packets, pypackets):
+def work(es, packets):
     
     i = 1
 
-    for packet, pypacket in zip(packets, pypackets):
+    for packet in packets:
 
         packet_dict = {}
         data = {}
@@ -420,7 +421,7 @@ def work(es, packets, pypackets):
         with concurrent.futures.ThreadPoolExecutor(max_workers=50) as executor:
 
             # ////////////////// FUTURE EXECUTION //////////////////
-            future = executor.submit(dash, packet, new_dict, pypacket, i, es)
+            future = executor.submit(dash, packet, new_dict, i, es)
 
             #payloadworks(packet,i)
 
@@ -469,10 +470,10 @@ def remove_special_chars(d):
     return d
 
 
-def dash(packet, packet_dict, pypacket, i, es):
+def dash(packet, packet_dict, i, es):
 
-    sp = srcport(packet_dict,packet,pypacket,es)
-    dp = dstport(packet_dict,packet,pypacket,es)
+    sp = srcport(packet_dict,packet,es)
+    dp = dstport(packet_dict,packet,es)
     dstmac(packet_dict,i,es)
     srcmac(packet_dict,i,es)
     dstvendor(packet_dict,es)
@@ -483,36 +484,32 @@ def dash(packet, packet_dict, pypacket, i, es):
     # ////////////////// APPLICATION LAYER DATA EXPORT //////////////////
     folder_name = os.path.join("results", "packet")
     insider_folder = os.path.join("results", "packet", str(protocol_used))
-    s = str(i) + ".txt"
+    s = str(i) + ".json"
     total_folder = os.path.join("results", "packet", str(protocol_used) , str(s))
 
     if not os.path.exists(folder_name):
         os.makedirs(folder_name)
         if not os.path.exists(insider_folder):
             os.makedirs(insider_folder)
-            sys.stdout=open(total_folder,"w")
-            print(pypacket)
-            sys.stdout.close()
+            with open(total_folder, 'w') as f:
+                json.dump(packet_dict, f, indent=6)
         else:
-            sys.stdout=open(total_folder,"w")
-            print(pypacket)
-            sys.stdout.close()
+            with open(total_folder, 'w') as f:
+                json.dump(packet_dict, f, indent=6)
     else:
         if not os.path.exists(insider_folder):
             os.makedirs(insider_folder)
-            sys.stdout=open(total_folder,"w")
-            print(pypacket)
-            sys.stdout.close()
+            with open(total_folder, 'w') as f:
+                json.dump(packet_dict, f, indent=6)
         else:
-            sys.stdout=open(total_folder,"w")
-            print(pypacket)
-            sys.stdout.close()
+            with open(total_folder, 'w') as f:
+                json.dump(packet_dict, f, indent=6)
 
 def pcap(filename):
     AWS_ELASTIC_PASSWORD = "Lc6Hb=asU1TOhDHgPS5M"
-    ELASTIC_PASSWORD = "J3aMrcz8p*Gx5qvSJ4+B"
+    ELASTIC_PASSWORD = "z=f1p=Xrl2NkwM6fpoXr"
 
-    es = Elasticsearch("https://52.66.29.154:9200", http_auth=("elastic", AWS_ELASTIC_PASSWORD),maxsize=25,verify_certs=False)
+    es = Elasticsearch("https://ec2-3-110-28-38.ap-south-1.compute.amazonaws.com:9200", http_auth=("elastic", AWS_ELASTIC_PASSWORD),maxsize=25,verify_certs=False)
     es.options(ignore_status=[400, 404]).indices.delete(index='srcdst')
     es.options(ignore_status=[400, 404]).indices.delete(index='srcip')
     es.options(ignore_status=[400, 404]).indices.delete(index='dstip')
@@ -524,10 +521,10 @@ def pcap(filename):
     es.options(ignore_status=[400, 404]).indices.delete(index='dstmac')
     packets = PcapReader(filename)
     #pyshark.tshark.tshark.set_tshark_path('./pyshark/tshark')
-    pypackets = pyshark.FileCapture(filename)
+    #pypackets = pyshark.FileCapture(filename)
 
     delete()
-    work(es, packets, pypackets)
+    work(es, packets)
     export(es)
     networkgraph()
 
