@@ -1,28 +1,31 @@
-# pcap-python-parser
+# ICSPY
 
-Link to mac-vendors file - [here](https://drive.google.com/file/d/1g3bEM2UwhTfZIG3CDh-zTg6mESr2IbgC/view?usp=sharing)
+### VM SETUP
 
-Currently using a raw dump of mac vendors with future plans to use elasticsearch to have quick lookups for mac address lookups
+1. Download Elasticsearch onto EC2 Machine.
+   
+2. Clone this GitHub repository onto the EC2 Machine.
+   
+3. Change the configuration in `config/elasticsearch.yml`. Take reference from the repository `setup/elasticsearch.yml`
+   
+4. Run `elasticsearch` executable inside the `bin` directory, the `elasticsearch_*` refers to the elasticsearch directory.
 
-IMP Files - 
-1. elasticsearch/elasticworks.py - for pushing mac - vendors data to elasticsearch
-2. Edit ELASTIC_PASSWORD with your password for 'elastic' user
-3. Comment functions according
+> NOTE - Upon running the elasticsearch executable, the commandline will print the elasticsearch password. Note this password for future steps.
 
-Create a virtual environment !! Steps are as follows ->
-1. python3 -m venv pcap-python
-2. source pcap-python/bin/activate
-3. python3 -m pip install -r requirements.txt
+1. Run the python scripts stored in the `setup` directory from the GitHub repository. These will populate protocols and vendor data for lookup.
 
-And exit virtual env when no longer needed by running "deactivate"
+### LOCAL MACHINE
 
-Create results and static folders
-
-Commands To Run ->
-1. python pcap.py --pcap pcapfilehere.pcap
-2. python app.py
-
-PyInstaller Command ->
-$ pyinstaller -D --add-data "templates;templates" --add-data "results;results" --collect-all pyvis --noconfirm app.py
-
-pyinstaller --noconfirm --onedir --windowed --add-data "/home/aditya/Documents/GitHub/python-pcap-parser/virtualpcap:virtualpcap/" --add-data "/home/aditya/Documents/GitHub/python-pcap-parser/templates:templates/" --add-data "/home/aditya/Documents/GitHub/python-pcap-parser/results:results/" --collect-all "pyvis"  "/home/aditya/Documents/GitHub/python-pcap-parser/app.py"
+1. Download the GitHub repository onto local machine.
+   
+2. Create a virtual environment `virtualenv` in the root of the project directory.
+   
+3. Enter the virtual environment.
+   
+4. Install the necessary python modules via `pip install -r requirements.txt`
+   
+5. Create `.env` file in the root of the project directory.
+   
+6. Refer `.env.sample` and fill the elasticsearch password and EC2 instance public DNS.
+   
+7. Now run the following command in the root of the project directory => `python pcap.py --pcap pcapfilehere.pcap`

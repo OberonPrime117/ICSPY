@@ -20,6 +20,8 @@ import json
 import concurrent.futures
 import requests
 import sys
+import re
+from dotenv import dotenv_values
 
 def search(csvfile, test, es):
     searchp = {
@@ -506,10 +508,11 @@ def dash(packet, packet_dict, i, es):
                 json.dump(packet_dict, f, indent=6)
 
 def pcap(filename):
-    AWS_ELASTIC_PASSWORD = "Lc6Hb=asU1TOhDHgPS5M"
-    ELASTIC_PASSWORD = "z=f1p=Xrl2NkwM6fpoXr"
-
-    es = Elasticsearch("https://ec2-3-110-28-38.ap-south-1.compute.amazonaws.com:9200", http_auth=("elastic", AWS_ELASTIC_PASSWORD),maxsize=25,verify_certs=False)
+    config = dotenv_values(".env") 
+    AWS_ELASTIC_PASSWORD = config['AWS_ELASTIC_PASSWORD']
+    AWS_EC2 = config['AWS_EC2']
+    
+    es = Elasticsearch(AWS_EC2, http_auth=("elastic", AWS_ELASTIC_PASSWORD),maxsize=25,verify_certs=False)
     es.options(ignore_status=[400, 404]).indices.delete(index='srcdst')
     es.options(ignore_status=[400, 404]).indices.delete(index='srcip')
     es.options(ignore_status=[400, 404]).indices.delete(index='dstip')

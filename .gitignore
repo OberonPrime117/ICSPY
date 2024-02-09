@@ -1,6 +1,5 @@
 **/__pycache__
 virtualpcap/
-.env
 build/
 dist/
 results/packet/
