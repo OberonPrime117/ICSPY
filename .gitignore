@@ -6,3 +6,5 @@ dist/
 results/packet/
 output/
 results/
+templates/network.html
+*.pcap
