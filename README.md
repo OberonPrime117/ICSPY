@@ -1,4 +1,4 @@
-# ICSPY
+# ICSPY - A PCAP Parser Configured for ICS/OT environments
 
 ### VM SETUP
 
@@ -8,11 +8,11 @@
    
 3. Change the configuration in `config/elasticsearch.yml`. Take reference from the repository `setup/elasticsearch.yml`
    
-4. Run `elasticsearch` executable inside the `bin` directory, the `elasticsearch_*` refers to the elasticsearch directory.
+4. Run `elasticsearch` executable inside the `bin` directory.
 
 > NOTE - Upon running the elasticsearch executable, the commandline will print the elasticsearch password. Note this password for future steps.
 
-1. Run the python scripts stored in the `setup` directory from the GitHub repository. These will populate protocols and vendor data for lookup.
+5. Run the python scripts stored in the `setup` directory from the GitHub repository. These will populate protocols and vendor data for lookup.
 
 ### LOCAL MACHINE
 
