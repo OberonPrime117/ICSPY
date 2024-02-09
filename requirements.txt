@@ -10,3 +10,4 @@ scapy==2.4.5
 pyvis==0.3.2
 auto-py-to-exe==2.35.0
 python-dotenv
+Werkzeug==2.2.2

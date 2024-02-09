@@ -28,4 +28,6 @@
    
 6. Refer `.env.sample` and fill the elasticsearch password and EC2 instance public DNS.
    
-7. Now run the following command in the root of the project directory => `python pcap.py --pcap pcapfilehere.pcap`
+7. Now run the following command in the root of the project directory => `python app.py`
+
+8. Upload the PCAP file into the HTML form.
