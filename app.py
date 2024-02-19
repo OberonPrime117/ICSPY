@@ -22,17 +22,17 @@ import re
 # from dotenv import dotenv_values
 
 def search(csvfile, test, es):
-    searchp = {
-        "match_all": {}
-    }
+    # searchp = {
+    #     "match_all": {}
+    # }
 
-    resp = es.search(index=test, query=searchp)
+    resp = es.search(index=test)
     d = []
     if test == "srcdst":
         d.append(['Source', 'Destination', 'Number of Packets'])
 
     for j in resp["hits"]["hits"]:
-        impact = es.get(index=test, id=j["_id"])
+        impact = es.get(doc_type="_doc", index=test, id=j["_id"])
 
         b = []
 
@@ -70,32 +70,32 @@ def export(es):
 
 
 def esearch(es, esindex, esid, a):
-    es.index(index=esindex, id=esid, body=a)
+    es.index(index=esindex, doc_type="_doc", id=esid, body=a)
 
 
 def ranking(esindex, esid, es, secondid=None):
 
     if secondid is None and esindex != "srcdst":
         try:
-            resp = es.get(index=esindex, id=esid)
+            resp = es.get(doc_type="_doc", index=esindex, id=esid)
             a = resp["_source"]
             a["Number of Packets"] = int(a["Number of Packets"]) + 1
-            resp = es.index(index=esindex, id=esid, body=a)
+            resp = es.index(index=esindex, doc_type="_doc", id=esid, body=a)
 
         except Exception as e:
             a = {"Number of Packets": 1}
-            resp = es.index(index=esindex, id=esid, body=a)
+            resp = es.index(index=esindex, doc_type="_doc", id=esid, body=a)
 
     elif esindex == "srcdst":
         eval = str(esid) + "--" + str(secondid)
         try:
-            resp = es.get(index=esindex, id=eval)
+            resp = es.get(doc_type="_doc", index=esindex, id=eval)
             a = resp["_source"]
             a["Number of Packets"] = int(a["Number of Packets"]) + 1
-            resp = es.index(index=esindex, id=eval, body=a)
+            resp = es.index(index=esindex, doc_type="_doc", id=eval, body=a)
         except:
             a = {"Number of Packets": 1}
-            resp = es.index(index=esindex, id=eval, body=a)
+            resp = es.index(index=esindex, doc_type="_doc", id=eval, body=a)
     else:
         print("ERROR IN RANKING - LINE 105")
         sys.exit()
@@ -215,13 +215,13 @@ def proto(packet_dict, packet, i, es, sp, dp):
             return a
 
     try:
-        resp = es.get(index="elasticproto", doc_type="_doc", id=sp)
+        resp = es.get(doc_type="_doc", index="elasticproto", id=sp)
         a = resp["_source"]["Protocol Name"]
     except:
         pass
 
     try:
-        resp = es.get(index="elasticproto", doc_type="_doc", id=dp)
+        resp = es.get(doc_type="_doc", index="elasticproto", id=dp)
         a = resp["_source"]["Protocol Name"]
     except:
         pass
@@ -238,13 +238,13 @@ def dstvendor(packet_dict, es):
         try:
             ab = packet_dict[h]["dst"]
             val = str(ab).upper()
-            resp = es.get(index="mac-vendors", doc_type="_doc", id=val)
+            resp = es.get(doc_type="_doc", index="mac-vendors", id=val)
             a = resp['_source']["Vendor Name"]
         except:
             try:
                 ab = packet_dict[h]["dst"]
                 val = str(ab)[0:8].upper()
-                resp = es.get(index="mac-vendors", doc_type="_doc", id=val)
+                resp = es.get(doc_type="_doc", index="mac-vendors", id=val)
                 a = resp['_source']["Vendor Name"]
             except:
                 a = "N/A"
@@ -263,13 +263,13 @@ def srcvendor(packet_dict, es):
         try:
             ab = packet_dict[h]["src"]
             val = str(ab).upper()
-            resp = es.get(index="mac-vendors", doc_type="_doc", id=val)
+            resp = es.get(doc_type="_doc", index="mac-vendors", id=val)
             a = resp['_source']["Vendor Name"]
         except:
             try:
                 ab = packet_dict[h]["src"]
                 val = str(ab)[0:8].upper()
-                resp = es.get(index="mac-vendors", doc_type="_doc", id=val)
+                resp = es.get(doc_type="_doc", index="mac-vendors", id=val)
                 a = resp['_source']["Vendor Name"]
             except:
                 a = "N/A"
@@ -525,15 +525,28 @@ def pcap(filename):
     # AWS_EC2 = config['AWS_EC2']
     AWS_EC2 = "https://saflu608fd:hn4wq7ssu4@testing-6258629515.us-east-1.bonsaisearch.net:443"
     es = Elasticsearch(AWS_EC2, verify_certs=False)
-    es.options(ignore_status=[400, 404]).indices.delete(index='srcdst')
-    es.options(ignore_status=[400, 404]).indices.delete(index='srcip')
-    es.options(ignore_status=[400, 404]).indices.delete(index='dstip')
-    es.options(ignore_status=[400, 404]).indices.delete(index='vendors')
-    es.options(ignore_status=[400, 404]).indices.delete(index='protocol')
-    es.options(ignore_status=[400, 404]).indices.delete(index='srcport')
-    es.options(ignore_status=[400, 404]).indices.delete(index='dstport')
-    es.options(ignore_status=[400, 404]).indices.delete(index='srcmac')
-    es.options(ignore_status=[400, 404]).indices.delete(index='dstmac')
+    try:
+        es.indices.delete(index='srcdst')
+        es.indices.delete(index='srcip')
+        es.indices.delete(index='dstip')
+        es.indices.delete(index='vendors')
+        es.indices.delete(index='protocol')
+        es.indices.delete(index='srcport')
+        es.indices.delete(index='dstport')
+        es.indices.delete(index='srcmac')
+        es.indices.delete(index='dstmac')
+    except Exception as e:
+        print(e)
+    
+    es.indices.create(index="srcdst")
+    es.indices.create(index="srcip")
+    es.indices.create(index="dstip")
+    es.indices.create(index="vendors")
+    es.indices.create(index="protocol")
+    es.indices.create(index="srcport")
+    es.indices.create(index="dstport")
+    es.indices.create(index="srcmac")
+    es.indices.create(index="dstmac")
     packets = PcapReader(filename)
     # pyshark.tshark.tshark.set_tshark_path('./pyshark/tshark')
     # pypackets = pyshark.FileCapture(filename)
