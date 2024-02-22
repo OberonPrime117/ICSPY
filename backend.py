@@ -1,3 +1,5 @@
+from threading import Timer
+import time
 import pandas as pd
 import networkx as nx
 from pyvis.network import Network
@@ -454,10 +456,10 @@ def networkgraph():
 def dash(packet, packet_dict, i, es):
 
     # CALLING FUNCTIONS
-    sp = srcport(packet_dict, packet, es)
-    dp = dstport(packet_dict, packet, es)
-    dstmac(packet_dict, es)
-    srcmac(packet_dict, es)
+    sp = srcport(packet_dict)
+    dp = dstport(packet_dict)
+    dstmac(packet_dict)
+    srcmac(packet_dict)
     dstvendor(packet_dict, es)
     srcvendor(packet_dict, es)
     protocol_used = proto(packet_dict, packet, es, sp, dp)
@@ -586,16 +588,7 @@ def iterate_deletecsv(filename):
 
 def delete_csv():
 
-    pcap_files = glob.glob("*.pcap")
-    requests.packages.urllib3.disable_warnings()
-
-    for pcap_file in pcap_files:
-        os.remove(pcap_file)
     
-    pcap_files = glob.glob("*.pcapng")
-
-    for pcap_file in pcap_files:
-        os.remove(pcap_file)
 
     list_of_files = ["results/src-ip.csv", "results/dst-ip.csv", "results/src-port.csv", "results/dst-port.csv",
                      "results/src-mac.csv", "results/dst-mac.csv", "results/protocol.csv", "results/vendor.csv", "results/src-dst.csv"]
@@ -611,23 +604,23 @@ def delete_csv():
     except Exception as e:
         pass
 
-
 if __name__ == "__main__":
 
     # DELETE CSV IF THEY EXIST
     delete_csv()
+    
+    requests.packages.urllib3.disable_warnings()
+    
+    webbrowser.open("http://127.0.0.1:5000/dashboard", new=2)
 
     # CREATE RESULTS FOLDER IF IT DOES NOT EXISTS
     if not os.path.exists("results"):
         os.makedirs(os.path.join("results"))
-
+    
     # EXTRACT FILE UPLOADED BY USER
-    z = request.files['file']
-    z.save(z.filename)
-    dn = os.path.abspath(z.filename)
-
-    # OPEN BROWSER URL
-    webbrowser.open_new('http://127.0.0.1:5000/dashboard')
-
-    # CALL PCAP FUNCTION
-    pcap(dn)
+    pcap_files = glob.glob("*.pcap")
+    if len(pcap_files) == 0:
+        pcap_files = glob.glob("*.pcapng")
+    
+    for pcap_file in pcap_files:
+        pcap(pcap_file)            

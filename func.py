@@ -7,6 +7,8 @@ import plotly.graph_objects as go
 import plotly.offline as pyo
 from scapy.all import *
 from threading import Timer
+import glob
+import subprocess
 
 app = Flask(__name__)
 
@@ -58,9 +60,25 @@ def visualise(csvfile, title):
 
 @app.route('/dashboard', methods=['POST', 'GET'])
 def worktype():
+    
     if request.method == 'POST':
-        os.system("python backend.py")
+        pcap_files = glob.glob("*.pcap")
 
+        for pcap_file in pcap_files:
+            os.remove(pcap_file)
+        
+        pcap_files = glob.glob("*.pcapng")
+
+        for pcap_file in pcap_files:
+            os.remove(pcap_file)
+            
+        z = request.files['file']
+        z.save(z.filename)
+                
+        os.system("./backend")
+        
+        return render_template('upload.html')
+    
     if request.method == 'GET':
 
         a = visualise("results/protocol.csv", "PROTOCOL")
@@ -75,4 +93,4 @@ def worktype():
 
 if __name__ == "__main__":
     Timer(0.5, openBrowser).start()
-    app.run(debug=False)
+    app.run()
