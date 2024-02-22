@@ -21,6 +21,7 @@ import sys
 import re
 # from dotenv import dotenv_values
 
+
 def search(csvfile, test, es):
     # searchp = {
     #     "match_all": {}
@@ -100,10 +101,11 @@ def ranking(esindex, esid, es, secondid=None):
         print("ERROR IN RANKING - LINE 105")
         sys.exit()
 
+
 def increment_val(id, data, srcdst=None):
-    
+
     if srcdst is None:
-        if id in data:  
+        if id in data:
             data[id] += 1
         else:
             data[id] = 1
@@ -113,8 +115,9 @@ def increment_val(id, data, srcdst=None):
             data[key] += 1
         else:
             data[key] = 1
-    
+
     return data
+
 
 def iterate_deletecsv(filename):
     try:
@@ -181,7 +184,7 @@ def dstmac(packet_dict, i, es):
 
 
 def proto(packet_dict, packet, i, es, sp, dp):
-
+    
     if IP in packet_dict:
         a = proto_name_by_num(int(packet[IP].proto))
     else:
@@ -200,13 +203,52 @@ def proto(packet_dict, packet, i, es, sp, dp):
         a = a[:-1]
 
     if len(a) < 3:
-        ph = set(['TCP', 'UDP', 'LLC', 'STP', 'ARP', 'CIP', 'DNS'])
+        ph = set(['TCP', 'UDP', 'ICMP','LLC', 'STP', 'ARP', 'CIP', 'DNS'])
         z = set(y)
+        print(z)
         g = ph.intersection(z)
         try:
             a = list(g)[-1]
         except:
             pass
+
+    
+    val_dict = list(packet_dict.keys())
+    
+    mydict = [i.strip() for i in val_dict]
+    
+    total_k = []
+    
+    for j in mydict:
+        k = j.split(" ")
+        total_k.extend(k)
+    
+    total_k = list(set(total_k))
+        
+    # proto_list = set(["TCP","UDP","DNS","STP","ICMP","ARP","LLC","CIP"])
+    y = set(packet.summary().split())
+    print(total_k)
+    if "CIP" in total_k:
+        a = "CIP"
+    elif "ICMP" in total_k:
+        a = "ICMP"
+        print("ICMP")
+    elif "(LOOP)" in y:
+        a = "LOOP"
+    elif "DNS" in total_k:
+        a = "DNS"
+        print("DNS")
+    elif "STP" in total_k:
+        a = "STP"
+    elif "ARP" in total_k:
+        a = "ARP"
+    elif "LLC" in total_k:
+        a = "LLC"
+    elif "UDP" in total_k:
+        a = "UDP"
+    elif "TCP" in total_k:
+        a = "TCP"    
+    
 
     for bh in y:
         if '.' in str(bh):
@@ -220,11 +262,6 @@ def proto(packet_dict, packet, i, es, sp, dp):
         return a
     elif mb.ModbusADUResponse in packet:
         a = "ModbusTCP"
-        # ranking("protocol", a, es)
-        datatocsv("protocol.csv", a)
-        return a
-    elif 'DNS' in y or '|###[ DNS Question Record' in y:
-        a = "DNS"
         # ranking("protocol", a, es)
         datatocsv("protocol.csv", a)
         return a
@@ -247,8 +284,18 @@ def proto(packet_dict, packet, i, es, sp, dp):
     except:
         pass
 
+    if "bacnet" == sp or "bacnet" == dp:
+        a = "BACnet"
+    elif "dnp" == sp or "dnp" == dp:
+        a = "DNP3"
+    elif "mbap" == sp or "mbap" == dp:
+        a = "MODBUS"
+
     # ranking("protocol", a, es)
-    datatocsv("protocol.csv", a)
+    try:
+        datatocsv("protocol.csv", a)
+    finally:
+        print(y)
     return a
 
 
@@ -275,35 +322,38 @@ def dstvendor(packet_dict, es):
         a = str(packet_dict['SNAP']['OUI']).split("(")[0]
 
     # ranking("vendors", a, es)
+    a = a.upper()
     datatocsv("vendor.csv", a)
 
 # KEY = SRC, SRCDST = DST
+
+
 def datatocsv(csvfile, key, srcdst=None):
-    
-    csvfile = os.path.join("results",csvfile)
-    
+
+    csvfile = os.path.join("results", csvfile)
+
     if srcdst is None:
-        
+
         data = {}
-        
+
         if os.path.exists(csvfile):
             with open(csvfile) as f:
                 reader = csv.reader(f)
                 for row in reader:
                     id, count = row
                     data[id] = int(count)
-        
+
         data = increment_val(key, data)
-        
-        with open(csvfile,'w') as f:
+
+        with open(csvfile, 'w') as f:
             writer = csv.writer(f)
             for id, count in data.items():
                 writer.writerow([id, count])
-    
+
     else:
-        
+
         data = {}
-        
+
         if os.path.exists(csvfile):
             with open(csvfile) as f:
                 reader = csv.reader(f)
@@ -314,23 +364,23 @@ def datatocsv(csvfile, key, srcdst=None):
                         data[key] = int(count)
                     except:
                         pass
-        
+
         data = increment_val(key, data, srcdst)
-        
+
         # with open(csvfile, 'w') as f:
         #     writer = csv.writer(f)
-        #     # writer.writerow(["id", "key", "count"]) 
+        #     # writer.writerow(["id", "key", "count"])
         #     for id, nested in data.items():
         #         for key, count in nested.items():
         #             writer.writerow([id, key, count])
-        
-        with open(csvfile,'w') as f:
+
+        with open(csvfile, 'w') as f:
             writer = csv.writer(f)
-            writer.writerow(["Source", "Destination", "Number of Packets"]) 
+            writer.writerow(["Source", "Destination", "Number of Packets"])
             for id, count in data.items():
                 storeval = id.split("___")
                 writer.writerow([storeval[0], storeval[1], count])
-        
+
 
 def srcvendor(packet_dict, es):
     h = list(packet_dict.keys())[0]
@@ -350,8 +400,9 @@ def srcvendor(packet_dict, es):
                 a = resp['_source']["Vendor Name"]
             except:
                 a = "N/A"
-    
+
     # ranking("vendors", a, es)
+    a = a.upper()
     datatocsv("vendor.csv", a)
 
 
@@ -466,7 +517,7 @@ def ip(packet, packet_dict, es):
 
     # ranking("dstip", b, es)
     datatocsv("dst-ip.csv", b)
-    
+
     datatocsv("src-dst.csv", a, b)
 
     # ranking("srcdst", a, es, b)
@@ -621,7 +672,7 @@ def pcap(filename):
     #     es.indices.delete(index='dstmac')
     # except Exception as e:
     #     print(e)
-    
+
     # es.indices.create(index="srcdst")
     # es.indices.create(index="srcip")
     # es.indices.create(index="dstip")
@@ -631,13 +682,11 @@ def pcap(filename):
     # es.indices.create(index="dstport")
     # es.indices.create(index="srcmac")
     # es.indices.create(index="dstmac")
-    
-    
+
     packets = PcapReader(filename)
     # pyshark.tshark.tshark.set_tshark_path('./pyshark/tshark')
     # pypackets = pyshark.FileCapture(filename)
 
-    
     work(es, packets)
     # export(es)
     networkgraph()
@@ -748,11 +797,16 @@ def visualise(csvfile, title):
 def worktype():
     if request.method == 'POST':
         delete()
+        if os.path.exists("results"):
+            pass
+        else:
+            os.makedirs(os.path.join("results"))
         z = request.files['file']
         z.save(z.filename)
         dn = os.path.abspath(z.filename)
         webbrowser.open_new('http://127.0.0.1:5000/dashboard')
         pcap(dn)
+        return "Success"
 
     if request.method == 'GET':
 
