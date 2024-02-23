@@ -48,8 +48,9 @@ def datatocsv(csvfile, key, srcdst=None):
             with open(csvfile) as f:
                 reader = csv.reader(f)
                 for row in reader:
-                    id, count = row
-                    data[id] = int(count)
+                    if len(row)>1:
+                        id, count = row
+                        data[id] = int(count)
         
         # INCREMENT COUNT
         data = increment_val(key, data)
@@ -70,12 +71,13 @@ def datatocsv(csvfile, key, srcdst=None):
             with open(csvfile) as f:
                 reader = csv.reader(f)
                 for row in reader:
-                    src, dst, count = row
-                    key = str(src) + "___" + str(dst)
-                    try:
-                        data[key] = int(count)
-                    except:
-                        pass
+                    if len(row)>1:
+                        src, dst, count = row
+                        key = str(src) + "___" + str(dst)
+                        try:
+                            data[key] = int(count)
+                        except:
+                            pass
 
         # INCREMENT COUNT
         data = increment_val(key, data, srcdst)
@@ -180,7 +182,6 @@ def proto(packet_dict, packet, es, sp, dp):
     if len(final_protocol) < 3:
         ph = set(['TCP', 'UDP', 'ICMP', 'LLC', 'STP', 'ARP', 'CIP', 'DNS'])
         z = set(y)
-        print(z)
         g = ph.intersection(z)
         try:
             final_protocol = list(g)[-1]
@@ -450,7 +451,7 @@ def networkgraph():
     net.from_nx(G)
 
     # WRITE NETWORK HTML
-    net.write_html('templates/network.html')
+    net.write_html(os.path.join("_internal","templates","network.html"))
 
 
 def dash(packet, packet_dict, i, es):
@@ -604,6 +605,10 @@ def delete_csv():
     except Exception as e:
         pass
 
+def openDashboard():
+    ip = "http://127.0.0.1:5000/dashboard"
+    webbrowser.open(ip, new=2)
+
 if __name__ == "__main__":
 
     # DELETE CSV IF THEY EXIST
@@ -611,7 +616,8 @@ if __name__ == "__main__":
     
     requests.packages.urllib3.disable_warnings()
     
-    webbrowser.open("http://127.0.0.1:5000/dashboard", new=2)
+    Timer(5, openDashboard).start()
+    # webbrowser.open("http://127.0.0.1:5000/dashboard", new=2)
 
     # CREATE RESULTS FOLDER IF IT DOES NOT EXISTS
     if not os.path.exists("results"):
