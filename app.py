@@ -523,8 +523,6 @@ def pcap(filename):
     es.options(ignore_status=[400, 404]).indices.delete(index='srcmac')
     es.options(ignore_status=[400, 404]).indices.delete(index='dstmac')
     packets = PcapReader(filename)
-    #pyshark.tshark.tshark.set_tshark_path('./pyshark/tshark')
-    #pypackets = pyshark.FileCapture(filename)
 
     delete()
     work(es, packets)
